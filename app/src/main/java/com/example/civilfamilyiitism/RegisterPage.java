@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +25,8 @@ public class RegisterPage extends AppCompatActivity {
     private Button registerBtn;
     private TextView alreadyregistered;
     private String username1,email1, phone1,password1,uid;
+    public String year="notselected";
+    private RadioButton rdbtn1,rdbtn2,rdbtn3,rdbtn4,rdbtn5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +39,11 @@ public class RegisterPage extends AppCompatActivity {
         password = findViewById(R.id.editTextTextPassword2);
         registerBtn = findViewById(R.id.button2);
         alreadyregistered = findViewById(R.id.textView4);
+        rdbtn1 = findViewById(R.id.radioButton);
+        rdbtn2 = findViewById(R.id.radioButton4);
+        rdbtn3 = findViewById(R.id.radioButton3);
+        rdbtn4 = findViewById(R.id.radioButton2);
+        rdbtn5 = findViewById(R.id.radioButton5);
 
         alreadyregistered.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,12 +59,28 @@ public class RegisterPage extends AppCompatActivity {
                 phone1 = phone.getText().toString();
                 password1 = password.getText().toString();
 
+                if(rdbtn5.isChecked()){
+                   year = "zero" ;
+                }
+                else if(rdbtn1.isChecked()){
+                    year ="first";
+                }
+                else if(rdbtn2.isChecked()){
+                    year = "second" ;
+                }
+                else if(rdbtn3.isChecked()){
+                    year = "third";
+                }
+                else if(rdbtn4.isChecked()){
+                    year = "fourth";
+                }
+
                 FirebaseAuth.getInstance().createUserWithEmailAndPassword(email1,password1).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             uid = FirebaseAuth.getInstance().getUid();
-                            studentinfo student = new studentinfo(username1,email1,phone1,password1,uid);
+                            studentinfo student = new studentinfo(username1,email1,phone1,password1,uid,year);
                             FirebaseDatabase.getInstance().getReference().child("UserInfo").child(phone1).setValue(student).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {

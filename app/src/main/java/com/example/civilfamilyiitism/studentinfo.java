@@ -1,17 +1,26 @@
 package com.example.civilfamilyiitism;
 
 public class studentinfo {
-    private String username,email,phone , password,uid;
+    private String username,email,phone , password,uid,year;
 
     public studentinfo() {
     }
 
-    public studentinfo(String username, String email, String phone, String password,String uid) {
+    public studentinfo(String username, String email, String phone, String password,String uid,String year) {
         this.username = username;
         this.email = email;
         this.phone = phone;
         this.password = password;
         this.uid = uid;
+        this.year = year;
+    }
+
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
     }
 
     public String getUid() {
