@@ -15,13 +15,15 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.UserInfo;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterPage extends AppCompatActivity {
 
     private EditText username , email , phone , password;
     private Button registerBtn;
     private TextView alreadyregistered;
-    private String username1,email1, phone1,password1;
+    private String username1,email1, phone1,password1,uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +55,20 @@ public class RegisterPage extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            Toast.makeText(RegisterPage.this, "Registeration Successful!", Toast.LENGTH_SHORT).show();
+                            uid = FirebaseAuth.getInstance().getUid();
+                            studentinfo student = new studentinfo(username1,email1,phone1,password1,uid);
+                            FirebaseDatabase.getInstance().getReference().child("UserInfo").child(phone1).setValue(student).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if(task.isSuccessful()){
+                                        FirebaseDatabase.getInstance().getReference().child("UserInfoWithUid").child(uid).setValue(student);
+                                        Toast.makeText(RegisterPage.this, "Registeration Successful!", Toast.LENGTH_SHORT).show();
+                                        startActivity(new Intent(RegisterPage.this,Mainpage.class));
+                                    }
+                                }
+                            });
+
+
                         }
                         else{
                             Toast.makeText(RegisterPage.this, "OOps! Try Again Later", Toast.LENGTH_SHORT).show();
