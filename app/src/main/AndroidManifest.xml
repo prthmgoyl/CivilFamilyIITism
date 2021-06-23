@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CivilFamilyIITism">
-        <activity android:name=".Mainpage"></activity>
+        <activity android:name=".Professormainpage"></activity>
+        <activity android:name=".Mainpage" />
         <activity android:name=".RegisterPage" />
         <activity android:name=".MainActivity">
             <intent-filter>

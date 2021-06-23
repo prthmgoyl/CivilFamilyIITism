@@ -85,9 +85,17 @@ public class RegisterPage extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if(task.isSuccessful()){
-                                        FirebaseDatabase.getInstance().getReference().child("UserInfoWithUid").child(uid).setValue(student);
-                                        Toast.makeText(RegisterPage.this, "Registeration Successful!", Toast.LENGTH_SHORT).show();
-                                        startActivity(new Intent(RegisterPage.this,Mainpage.class));
+                                        FirebaseDatabase.getInstance().getReference().child(year).child(uid).setValue(student);
+                                        if(year.equals("zero")){
+                                            Toast.makeText(RegisterPage.this, "Registeration Successful!", Toast.LENGTH_SHORT).show();
+                                            startActivity(new Intent(RegisterPage.this,Professormainpage.class));
+                                        }
+                                        else{
+                                            FirebaseDatabase.getInstance().getReference().child("UserInfoWithUid").child(uid).setValue(student);
+                                            Toast.makeText(RegisterPage.this, "Registeration Successful!", Toast.LENGTH_SHORT).show();
+                                            startActivity(new Intent(RegisterPage.this,Mainpage.class));
+                                        }
+
                                     }
                                 }
                             });
