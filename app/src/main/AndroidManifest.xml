@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CivilFamilyIITism">
-        <activity android:name=".Ascepage"></activity>
+        <activity android:name=".Friendslistviewer"></activity>
+        <activity android:name=".Ascepage" />
         <activity android:name=".UploadPdfpage" />
         <activity android:name=".Studentlistviewer" />
         <activity android:name=".Professormainpage" />

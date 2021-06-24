@@ -15,6 +15,6 @@ public class Ascepage extends AppCompatActivity {
         setContentView(R.layout.activity_ascepage);
 
         edt1= findViewById(R.id.editTextTextMultiLine);
-        edt1.setText("abcdefghijklmnopqrstuvwxyz 1234567890 ABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890 abcdefghijklmnopqrstuvwxyz 1234567890 1234567890");
+
     }
 }

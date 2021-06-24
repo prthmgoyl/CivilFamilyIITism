@@ -8,9 +8,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class Professormainpage extends AppCompatActivity {
 
-    private ImageView img1,img2,img3,img4,img5,img6,img7;
+    private ImageView img1,img2,img3,img4,img5,img6,img7,img8;
     String check = "null";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +26,7 @@ public class Professormainpage extends AppCompatActivity {
         img5 = findViewById(R.id.imageView9);
         img6 = findViewById(R.id.imageView);
         img7 = findViewById(R.id.imageView11);
+        img8 = findViewById(R.id.imageView10);
 
         img1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,6 +86,12 @@ public class Professormainpage extends AppCompatActivity {
             public void onClick(View v) {
                 Toast.makeText(Professormainpage.this, "ASCE PAGE!", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(Professormainpage.this,Ascepage.class));
+            }
+        });
+        img8.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               // startActivity(new Intent(Professormainpage.this,Studentaddpage.class));
             }
         });
 

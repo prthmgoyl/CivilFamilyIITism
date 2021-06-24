@@ -66,7 +66,7 @@ public class UploadPdfpage extends AppCompatActivity {
 
     private void uploadPDFfile(Uri data) {
 
-        final ProgressDialog progressdialog = new ProgressDialog(this);
+        ProgressDialog progressdialog = new ProgressDialog(this);
         progressdialog.setTitle("Uploading...");
     //    FirebaseStorage.getInstance().getReference().child("uploads/"+System.currentTimeMillis()+".pdf");
         FirebaseStorage.getInstance().getReference().child("uploads/"+System.currentTimeMillis()+".pdf").putFile(data)
