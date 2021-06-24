@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 public class Professormainpage extends AppCompatActivity {
 
-    private ImageView img1,img2,img3,img4;
+    private ImageView img1,img2,img3,img4,img5;
     String check = "null";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +21,7 @@ public class Professormainpage extends AppCompatActivity {
         img2 = findViewById(R.id.imageView12);
         img3 = findViewById(R.id.imageView15);
         img4 = findViewById(R.id.imageView14);
+        img5 = findViewById(R.id.imageView9);
 
         img1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,6 +62,12 @@ public class Professormainpage extends AppCompatActivity {
                 Intent intent = new Intent(Professormainpage.this,Studentlistviewer.class);
                 intent.putExtra("keycheck",check);
                 startActivity(intent);
+            }
+        });
+        img5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                  startActivity(new Intent(Professormainpage.this,UploadPdfpage.class));
             }
         });
 
