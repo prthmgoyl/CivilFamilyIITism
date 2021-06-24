@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 public class Professormainpage extends AppCompatActivity {
 
-    private ImageView img1,img2,img3,img4,img5;
+    private ImageView img1,img2,img3,img4,img5,img6,img7;
     String check = "null";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +22,8 @@ public class Professormainpage extends AppCompatActivity {
         img3 = findViewById(R.id.imageView15);
         img4 = findViewById(R.id.imageView14);
         img5 = findViewById(R.id.imageView9);
+        img6 = findViewById(R.id.imageView);
+        img7 = findViewById(R.id.imageView11);
 
         img1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,6 +70,19 @@ public class Professormainpage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                   startActivity(new Intent(Professormainpage.this,UploadPdfpage.class));
+            }
+        });
+        img6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        img7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(Professormainpage.this, "ASCE PAGE!", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(Professormainpage.this,Ascepage.class));
             }
         });
 

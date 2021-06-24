@@ -100,7 +100,7 @@
                     android:layout_marginRight="10sp"
                     android:layout_marginBottom="10sp"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/ic_launcher_foreground" />
+                    app:srcCompat="@drawable/notice" />
             </LinearLayout>
 
             <LinearLayout
@@ -117,7 +117,7 @@
                     android:layout_marginRight="10sp"
                     android:layout_marginBottom="10sp"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/ic_launcher_foreground" />
+                    app:srcCompat="@drawable/imageasce" />
 
                 <ImageView
                     android:id="@+id/imageView10"
