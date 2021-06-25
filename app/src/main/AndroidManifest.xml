@@ -12,20 +12,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CivilFamilyIITism">
-        <activity android:name=".Friendslistviewer"></activity>
-        <activity android:name=".Ascepage" />
-        <activity android:name=".UploadPdfpage" />
-        <activity android:name=".Studentlistviewer" />
-        <activity android:name=".Professormainpage" />
-        <activity android:name=".Mainpage" />
-        <activity android:name=".RegisterPage" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".Stopregisteration"></activity>
+        <activity
+            android:name=".Splashscreen"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Friendslistviewer" />
+        <activity android:name=".Ascepage" />
+        <activity android:name=".UploadPdfpage" />
+        <activity android:name=".Studentlistviewer" />
+        <activity android:name=".Professormainpage" />
+        <activity android:name=".Mainpage" />
+        <activity android:name=".RegisterPage" />
+        <activity android:name=".MainActivity"></activity>
     </application>
 
 </manifest>

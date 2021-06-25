@@ -42,7 +42,7 @@ public class RecyclerViewAdapter extends FirebaseRecyclerAdapter<studentinfo,Rec
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder= new AlertDialog.Builder(holder.txv2.getContext());
-                builder.setTitle("Dalete Panel");
+                builder.setTitle("Delete Panel");
                 builder.setMessage("Are You Sure...?");
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override

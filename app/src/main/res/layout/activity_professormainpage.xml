@@ -145,7 +145,7 @@
                     android:layout_marginRight="10sp"
                     android:layout_marginBottom="10sp"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/ic_launcher_foreground" />
+                    app:srcCompat="@drawable/blacklisted" />
 
                 <ImageView
                     android:id="@+id/imageView16"
@@ -156,7 +156,7 @@
                     android:layout_marginRight="10sp"
                     android:layout_marginBottom="10sp"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/ic_launcher_foreground" />
+                    app:srcCompat="@drawable/stop" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

@@ -12,7 +12,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class Professormainpage extends AppCompatActivity {
 
-    private ImageView img1,img2,img3,img4,img5,img6,img7,img8;
+    private ImageView img1,img2,img3,img4,img5,img6,img7,img8,img9,img10;
     String check = "null";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +27,8 @@ public class Professormainpage extends AppCompatActivity {
         img6 = findViewById(R.id.imageView);
         img7 = findViewById(R.id.imageView11);
         img8 = findViewById(R.id.imageView10);
+        img9 = findViewById(R.id.imageView17);
+        img10 = findViewById(R.id.imageView16);
 
         img1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,6 +94,19 @@ public class Professormainpage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                // startActivity(new Intent(Professormainpage.this,Studentaddpage.class));
+            }
+        });
+        img9.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(Professormainpage.this, "img9", Toast.LENGTH_SHORT).show();
+            }
+        });
+        img10.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(Professormainpage.this, "img10", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(Professormainpage.this,Stopregisteration.class));
             }
         });
 

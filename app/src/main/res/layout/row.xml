@@ -32,9 +32,8 @@
                     android:id="@+id/textView7"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="5sp"
-                    android:layout_marginLeft="5sp"
                     android:background="#8A43F312"
+                    android:paddingLeft="5sp"
                     android:textColor="#000"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -43,18 +42,16 @@
                     android:id="@+id/textView6"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="5sp"
-                    android:layout_marginLeft="5sp"
                     android:background="#8A43F312"
+                    android:paddingLeft="5sp"
                     android:textColor="#000" />
 
                 <TextView
                     android:id="@+id/textView5"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="5sp"
-                    android:layout_marginLeft="5sp"
                     android:background="#8A43F312"
+                    android:paddingLeft="5sp"
                     android:textColor="#000" />
             </LinearLayout>
 
