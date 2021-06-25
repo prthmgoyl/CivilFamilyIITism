@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.DownloadManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -16,23 +17,37 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 public class Splashscreen extends AppCompatActivity {
 
     FirebaseUser user;
-    String uid;
+    String uid,dateTime;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splashscreen);
 
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+        dateTime = simpleDateFormat.format(calendar.getTime());
+
+
         Thread thread = new Thread(){
             public void run(){
                 try {
                     sleep(3000);
+
                     user = FirebaseAuth.getInstance().getCurrentUser();
                     if(user !=null){
                        uid= FirebaseAuth.getInstance().getUid();
+                        FirebaseDatabase.getInstance().getReference().child("UsersActivity")
+                                .child(dateTime +" "+String.valueOf(System.currentTimeMillis())).setValue(uid);
+
                         Query checkuser = FirebaseDatabase.getInstance().getReference().child("zero")
                                 .orderByChild("uid").equalTo(uid);
                         checkuser.addListenerForSingleValueEvent(new ValueEventListener() {

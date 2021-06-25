@@ -9,88 +9,72 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.UserInfo;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class RegisterPage extends AppCompatActivity {
+public class ProfessorAddStudent extends AppCompatActivity {
 
+    private String username1,email1, phone1,password1,uid;
     private EditText username , email , phone , password;
     private Button registerBtn;
-    private TextView alreadyregistered;
-    String access;
-    DatabaseReference reference;
-    private String username1,email1, phone1,password1,uid;
     public String year="notselected";
     private RadioButton rdbtn1,rdbtn2,rdbtn3,rdbtn4,rdbtn5;
+    String profuid,e,email12,password12;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register_page);
+        setContentView(R.layout.activity_professor_add_student);
 
-        username = findViewById(R.id.editTextTextPersonName);
-        email = findViewById(R.id.editTextTextEmailAddress2);
-        phone = findViewById(R.id.editTextPhone);
-        password = findViewById(R.id.editTextTextPassword2);
-        registerBtn = findViewById(R.id.button2);
-        alreadyregistered = findViewById(R.id.textView4);
-        rdbtn1 = findViewById(R.id.radioButton);
-        rdbtn2 = findViewById(R.id.radioButton4);
-        rdbtn3 = findViewById(R.id.radioButton3);
-        rdbtn4 = findViewById(R.id.radioButton2);
-        rdbtn5 = findViewById(R.id.radioButton5);
-        reference = FirebaseDatabase.getInstance().getReference();
+        username = findViewById(R.id.editTextTextPersonName5);
+        email = findViewById(R.id.editTextTextEmailAddress4);
+        phone = findViewById(R.id.editTextPhone3);
+        password = findViewById(R.id.editTextTextPassword3);
+        registerBtn = findViewById(R.id.button7);
+        rdbtn1 = findViewById(R.id.radioButton6);
+        rdbtn2 = findViewById(R.id.radioButton7);
+        rdbtn3 = findViewById(R.id.radioButton8);
+        rdbtn4 = findViewById(R.id.radioButton9);
+        rdbtn5 = findViewById(R.id.radioButton10);
 
-        alreadyregistered.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(RegisterPage.this,MainActivity.class));
-            }
-        });
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                profuid = FirebaseAuth.getInstance().getUid();
+                FirebaseAuth.getInstance().signOut();
+                createUser();
+                FirebaseAuth.getInstance().signOut();
+                studentinfo studentinfo = new studentinfo();
+                FirebaseDatabase.getInstance().getReference().child("UserInfoWithUid").child(profuid)
+                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                email12 = snapshot.child("email").getValue(String.class);
+                                password12 = snapshot.child("password").getValue(String.class);
 
-                reference.child("Access").addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if(snapshot.exists()){
-                            access=snapshot.getValue(String.class);
-                            if(access.equalsIgnoreCase("deny")){
-                                Toast.makeText(RegisterPage.this, "Contact Professor!", Toast.LENGTH_SHORT).show();
+                                FirebaseAuth.getInstance().signInWithEmailAndPassword(email12,password12);
+                                Toast.makeText(ProfessorAddStudent.this, "Added Successfully!", Toast.LENGTH_SHORT).show();
                             }
-                            else{
-                                createUser();
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                Toast.makeText(ProfessorAddStudent.this, "E", Toast.LENGTH_SHORT).show();
                             }
-
-                        }
-                        else{
-                            createUser();
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        Toast.makeText(RegisterPage.this, "Connection Lost!", Toast.LENGTH_SHORT).show();
-                    }
-                });
-
+                        });
 
             }
         });
 
     }
+
     public void createUser(){
 
         username1 = username.getText().toString();
@@ -98,19 +82,19 @@ public class RegisterPage extends AppCompatActivity {
         phone1 = phone.getText().toString();
         password1 = password.getText().toString();
 
-        if(rdbtn5.isChecked()){
+        if(rdbtn1.isChecked()){
             year = "zero" ;
         }
-        else if(rdbtn1.isChecked()){
+        else if(rdbtn2.isChecked()){
             year ="first";
         }
-        else if(rdbtn2.isChecked()){
+        else if(rdbtn3.isChecked()){
             year = "second" ;
         }
-        else if(rdbtn3.isChecked()){
+        else if(rdbtn4.isChecked()){
             year = "third";
         }
-        else if(rdbtn4.isChecked()){
+        else if(rdbtn5.isChecked()){
             year = "fourth";
         }
 
@@ -127,13 +111,11 @@ public class RegisterPage extends AppCompatActivity {
                                 FirebaseDatabase.getInstance().getReference().child(year).child(uid).setValue(student);
                                 if(year.equals("zero")){
                                     FirebaseDatabase.getInstance().getReference().child("UserInfoWithUid").child(uid).setValue(student);
-                                    Toast.makeText(RegisterPage.this, "Registeration Successful!", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(RegisterPage.this,Professormainpage.class));
+                                    Toast.makeText(ProfessorAddStudent.this, "Registeration Successful!", Toast.LENGTH_SHORT).show();
                                 }
                                 else{
                                     FirebaseDatabase.getInstance().getReference().child("UserInfoWithUid").child(uid).setValue(student);
-                                    Toast.makeText(RegisterPage.this, "Registeration Successful!", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(RegisterPage.this,Mainpage.class));
+                                    Toast.makeText(ProfessorAddStudent.this, "Registeration Successful!", Toast.LENGTH_SHORT).show();
                                 }
 
                             }
@@ -143,7 +125,7 @@ public class RegisterPage extends AppCompatActivity {
 
                 }
                 else{
-                    Toast.makeText(RegisterPage.this, "OOps! Try Again Later", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ProfessorAddStudent.this, "OOps! Try Again Later", Toast.LENGTH_SHORT).show();
                 }
             }
         });

@@ -122,7 +122,7 @@ public class Professormainpage extends AppCompatActivity {
         img8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // startActivity(new Intent(Professormainpage.this,Studentaddpage.class));
+              startActivity(new Intent(Professormainpage.this,ProfessorAddStudent.class));
             }
         });
         img9.setOnClickListener(new View.OnClickListener() {
