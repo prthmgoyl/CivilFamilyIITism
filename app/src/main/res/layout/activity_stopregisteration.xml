@@ -36,6 +36,8 @@
         android:layout_marginLeft="10sp"
         android:layout_marginEnd="10sp"
         android:layout_marginRight="10sp"
+        android:paddingLeft="10sp"
+        android:paddingRight="10sp"
         android:text="Write ( Allow / Deny ) For New Registerations"
         android:textColor="#000"
         android:textSize="20sp"

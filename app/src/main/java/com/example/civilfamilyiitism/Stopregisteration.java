@@ -56,6 +56,7 @@ public class Stopregisteration extends AppCompatActivity {
           public void onClick(View v) {
               reference.child("Access").setValue(edt.getText().toString());
               edt.setText(edt.getText().toString());
+              Toast.makeText(Stopregisteration.this, "Access "+edt.getText().toString(), Toast.LENGTH_SHORT).show();
           }
       });
     //    edt.setText(reference.child("Access").child("type").get);
