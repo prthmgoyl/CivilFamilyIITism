@@ -33,8 +33,8 @@ public class RecyclerViewAdapterone extends FirebaseRecyclerAdapter<studentinfo,
     @Override
     protected void onBindViewHolder(@NonNull final holder holder, final int position, @NonNull studentinfo model) {
         holder.txv1.setText(model.getUsername());
-    //    holder.txv2.setText(model.getEmail());
-   //     holder.txv3.setText(model.getPhone());
+        holder.txv2.setText(model.getEmail());
+        holder.txv3.setText(model.getPhone());
     }
 
     @NonNull
@@ -53,8 +53,8 @@ public class RecyclerViewAdapterone extends FirebaseRecyclerAdapter<studentinfo,
         //    itemView.setOnClickListener(this);
 
             txv1=(TextView)itemView.findViewById(R.id.textView10);
-       //     txv2=(TextView)itemView.findViewById(R.id.textView11);
-       //     txv3=(TextView)itemView.findViewById(R.id.textView12);
+            txv2=(TextView)itemView.findViewById(R.id.textView11);
+            txv3=(TextView)itemView.findViewById(R.id.textView12);
 
         }
     }
