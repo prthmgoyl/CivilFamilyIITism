@@ -3,6 +3,7 @@ package com.example.civilfamilyiitism;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -33,6 +34,7 @@ public class RegisterPage extends AppCompatActivity {
     private String username1,email1, phone1,password1,uid;
     public String year="notselected";
     private RadioButton rdbtn1,rdbtn2,rdbtn3,rdbtn4,rdbtn5;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,11 +58,22 @@ public class RegisterPage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(RegisterPage.this,MainActivity.class));
+                 finish();
             }
         });
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+                progressDialog = new ProgressDialog(RegisterPage.this);
+                progressDialog.show();
+                progressDialog.setContentView(R.layout.progressbar_dialog);
+                progressDialog.getWindow().setBackgroundDrawableResource(
+
+                        android.R.color.transparent
+                );
+
 
                 reference.child("Access").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -68,6 +81,7 @@ public class RegisterPage extends AppCompatActivity {
                         if(snapshot.exists()){
                             access=snapshot.getValue(String.class);
                             if(access.equalsIgnoreCase("deny")){
+                                progressDialog.dismiss();
                                 Toast.makeText(RegisterPage.this, "Contact Professor!", Toast.LENGTH_SHORT).show();
                             }
                             else{
@@ -82,6 +96,7 @@ public class RegisterPage extends AppCompatActivity {
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
+                        progressDialog.dismiss();
                         Toast.makeText(RegisterPage.this, "Connection Lost!", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -128,12 +143,16 @@ public class RegisterPage extends AppCompatActivity {
                                 if(year.equals("zero")){
                                     FirebaseDatabase.getInstance().getReference().child("UserInfoWithUid").child(uid).setValue(student);
                                     Toast.makeText(RegisterPage.this, "Registeration Successful!", Toast.LENGTH_SHORT).show();
+                                    progressDialog.dismiss();
                                     startActivity(new Intent(RegisterPage.this,Professormainpage.class));
+                                    finish();
                                 }
                                 else{
                                     FirebaseDatabase.getInstance().getReference().child("UserInfoWithUid").child(uid).setValue(student);
                                     Toast.makeText(RegisterPage.this, "Registeration Successful!", Toast.LENGTH_SHORT).show();
+                                    progressDialog.dismiss();
                                     startActivity(new Intent(RegisterPage.this,Mainpage.class));
+                                    finish();
                                 }
 
                             }
@@ -143,6 +162,7 @@ public class RegisterPage extends AppCompatActivity {
 
                 }
                 else{
+                    progressDialog.dismiss();
                     Toast.makeText(RegisterPage.this, "OOps! Try Again Later", Toast.LENGTH_SHORT).show();
                 }
             }

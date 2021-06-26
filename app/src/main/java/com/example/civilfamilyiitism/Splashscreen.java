@@ -40,7 +40,7 @@ public class Splashscreen extends AppCompatActivity {
         Thread thread = new Thread(){
             public void run(){
                 try {
-                    sleep(3000);
+                   // sleep(3000);
 
                     user = FirebaseAuth.getInstance().getCurrentUser();
                     if(user !=null){
@@ -56,10 +56,12 @@ public class Splashscreen extends AppCompatActivity {
                                 if(snapshot.exists()){
                                     Toast.makeText(Splashscreen.this, "Professor Login Successful!", Toast.LENGTH_SHORT).show();
                                     startActivity(new Intent(Splashscreen.this,Professormainpage.class));
+                                    finish();
                                 }
                                 else{
                                     Toast.makeText(Splashscreen.this, "Login Successful!", Toast.LENGTH_SHORT).show();
                                     startActivity(new Intent(Splashscreen.this,Mainpage.class));
+                                    finish();
                                 }
                             }
 
@@ -70,9 +72,11 @@ public class Splashscreen extends AppCompatActivity {
                         });
                     }
                     else{
+                        sleep(2000);
                         startActivity(new Intent(Splashscreen.this,MainActivity.class));
+                        finish();
                     }
-                } catch (InterruptedException e) {
+                } catch (Exception e) {
                     Toast.makeText(Splashscreen.this, "No Connection!", Toast.LENGTH_SHORT).show();
                 }
             }
