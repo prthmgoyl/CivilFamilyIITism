@@ -68,20 +68,20 @@ public class UploadPdfpage extends AppCompatActivity {
 
         ProgressDialog progressdialog = new ProgressDialog(this);
         progressdialog.setTitle("Uploading...");
+        progressdialog.show();
     //    FirebaseStorage.getInstance().getReference().child("uploads/"+System.currentTimeMillis()+".pdf");
-        FirebaseStorage.getInstance().getReference().child("uploads/"+System.currentTimeMillis()+".pdf").putFile(data)
+        FirebaseStorage.getInstance().getReference().child("uploads/"+String.valueOf(System.currentTimeMillis())+".pdf").putFile(data)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         Task<Uri> uri = taskSnapshot.getStorage().getDownloadUrl();
-                        while (!uri.isComplete()){
+                        while (!uri.isComplete());
                             Uri url = uri.getResult();
 
                             putpdf putpdf = new putpdf(filename,url.toString());
                             FirebaseDatabase.getInstance().getReference().child("uploads").child(filename).setValue(putpdf);
                             Toast.makeText(UploadPdfpage.this, "Successful!", Toast.LENGTH_SHORT).show();
                             progressdialog.dismiss();
-                        }
 
                     }
                 }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
