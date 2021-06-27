@@ -12,7 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CivilFamilyIITism">
-        <activity android:name=".ProffAccountConfirmation"></activity>
+        <activity android:name=".ProffAccountConfirmation"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
+        </activity>
         <activity android:name=".PdfPageStudentSide" />
         <activity android:name=".ProfessorAddStudent" />
         <activity android:name=".Stopregisteration" />

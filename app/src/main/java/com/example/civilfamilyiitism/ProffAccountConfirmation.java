@@ -73,8 +73,8 @@ public class ProffAccountConfirmation extends AppCompatActivity {
                             if (securitycode.equals(check)) {
                                 createUser();
                                 progressDialog.dismiss();
-                                startActivity(new Intent(ProffAccountConfirmation.this, Professormainpage.class));
-                                finish();
+                            //    startActivity(new Intent(ProffAccountConfirmation.this, Professormainpage.class));
+                             //   finish();
                             } else {
                                progressDialog.dismiss();
                                 Toast.makeText(ProffAccountConfirmation.this, "Sorry!Wrong Security Code", Toast.LENGTH_SHORT).show();
@@ -82,6 +82,7 @@ public class ProffAccountConfirmation extends AppCompatActivity {
                             }
                         }
                         else{
+                            progressDialog.dismiss();
                             Toast.makeText(ProffAccountConfirmation.this, "Please Set a security code!", Toast.LENGTH_SHORT).show();
                         }
                     }

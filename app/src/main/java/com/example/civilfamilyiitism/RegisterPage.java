@@ -138,6 +138,7 @@ public class RegisterPage extends AppCompatActivity {
             intent.putExtra("phone",phone1);
             intent.putExtra("password",password1);
             startActivity(intent);
+            finish();
         }
         else{
             FirebaseAuth.getInstance().createUserWithEmailAndPassword(email1,password1).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
