@@ -12,8 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CivilFamilyIITism">
-        <activity android:name=".PdfPageStudentSide"></activity>
-        <activity android:name=".ProfessorAddStudent"></activity>
+        <activity android:name=".ProffAccountConfirmation"></activity>
+        <activity android:name=".PdfPageStudentSide" />
+        <activity android:name=".ProfessorAddStudent" />
         <activity android:name=".Stopregisteration" />
         <activity
             android:name=".Splashscreen"
@@ -30,13 +31,12 @@
         <activity android:name=".Studentlistviewer" />
         <activity android:name=".Professormainpage" />
         <activity android:name=".Mainpage" />
-        <activity android:name=".RegisterPage"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
-        </activity>
-
-        <activity android:name=".MainActivity"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
-        </activity>
+        <activity
+            android:name=".RegisterPage"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"></activity>
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"></activity>
     </application>
 
 </manifest>

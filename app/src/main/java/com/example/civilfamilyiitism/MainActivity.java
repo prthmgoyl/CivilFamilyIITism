@@ -18,6 +18,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private Button loginBtn;
     private String usermail,userpassword;
     ProgressDialog progressDialog;
+    DatabaseReference reference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         password= findViewById(R.id.editTextTextPassword);
         notReg = findViewById(R.id.textView2);
         loginBtn = findViewById(R.id.button);
+        reference = FirebaseDatabase.getInstance().getReference();
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,15 +56,16 @@ public class MainActivity extends AppCompatActivity {
 
                 usermail = email.getText().toString();
                 userpassword = password.getText().toString();
- //               if(usermail.equals("prathamdefault@gmail.com")&&userpassword.equals("prathamdefault")){
-//                    startActivity(new Intent(MainActivity.this,Mainpage.class));
-//                }
+               if(usermail.equals("prathamdefault@gmail.com")&&userpassword.equals("prathamdefault")){
+                    startActivity(new Intent(MainActivity.this,Professormainpage.class));
+                    finish();
+               }
                 FirebaseAuth.getInstance().signInWithEmailAndPassword(usermail,userpassword)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            Query checkUser= FirebaseDatabase.getInstance().getReference().child("zero")
+                            Query checkUser= reference.child("zero")
                                     .orderByChild("uid").equalTo(FirebaseAuth.getInstance().getUid());
                             checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override

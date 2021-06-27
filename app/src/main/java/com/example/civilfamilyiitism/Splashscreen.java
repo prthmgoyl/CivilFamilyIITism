@@ -33,7 +33,7 @@ public class Splashscreen extends AppCompatActivity {
         setContentView(R.layout.activity_splashscreen);
 
         Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss aa");
         dateTime = simpleDateFormat.format(calendar.getTime());
 
 
@@ -72,7 +72,7 @@ public class Splashscreen extends AppCompatActivity {
                         });
                     }
                     else{
-                        sleep(2000);
+                        sleep(1000);
                         startActivity(new Intent(Splashscreen.this,MainActivity.class));
                         finish();
                     }

@@ -35,6 +35,7 @@ public class RegisterPage extends AppCompatActivity {
     public String year="notselected";
     private RadioButton rdbtn1,rdbtn2,rdbtn3,rdbtn4,rdbtn5;
     ProgressDialog progressDialog;
+    String designation = "student";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,43 +130,49 @@ public class RegisterPage extends AppCompatActivity {
             year = "fourth";
         }
 
-        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email1,password1).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
-                    uid = FirebaseAuth.getInstance().getUid();
-                    studentinfo student = new studentinfo(username1,email1,phone1,password1,uid,year);
-                    FirebaseDatabase.getInstance().getReference().child("UserInfo").child(phone1).setValue(student).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if(task.isSuccessful()){
-                                FirebaseDatabase.getInstance().getReference().child(year).child(uid).setValue(student);
-                                if(year.equals("zero")){
-                                    FirebaseDatabase.getInstance().getReference().child("UserInfoWithUid").child(uid).setValue(student);
-                                    Toast.makeText(RegisterPage.this, "Registeration Successful!", Toast.LENGTH_SHORT).show();
-                                    progressDialog.dismiss();
-                                    startActivity(new Intent(RegisterPage.this,Professormainpage.class));
-                                    finish();
-                                }
-                                else{
-                                    FirebaseDatabase.getInstance().getReference().child("UserInfoWithUid").child(uid).setValue(student);
-                                    Toast.makeText(RegisterPage.this, "Registeration Successful!", Toast.LENGTH_SHORT).show();
-                                    progressDialog.dismiss();
-                                    startActivity(new Intent(RegisterPage.this,Mainpage.class));
-                                    finish();
-                                }
 
+        if(year.equals("zero")){
+            Intent intent = new Intent(this,ProffAccountConfirmation.class);
+            intent.putExtra("username",username1);
+            intent.putExtra("email",email1);
+            intent.putExtra("phone",phone1);
+            intent.putExtra("password",password1);
+            startActivity(intent);
+        }
+        else{
+            FirebaseAuth.getInstance().createUserWithEmailAndPassword(email1,password1).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if(task.isSuccessful()){
+                        uid = FirebaseAuth.getInstance().getUid();
+                        studentinfo student = new studentinfo(username1,email1,phone1,password1,uid,year,designation);
+                        reference.child("UserInfo").child(phone1).setValue(student).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if(task.isSuccessful()){
+                                    reference.child(year).child(uid).setValue(student);
+                                        reference.child("UserInfoWithUid").child(uid).setValue(student);
+                                        Toast.makeText(RegisterPage.this, "Registeration Successful!", Toast.LENGTH_SHORT).show();
+                                        progressDialog.dismiss();
+                                        startActivity(new Intent(RegisterPage.this,Mainpage.class));
+                                        finish();
+                                }
                             }
-                        }
-                    });
+                        });
 
 
+                    }
+                    else{
+                        progressDialog.dismiss();
+                        Toast.makeText(RegisterPage.this, "OOps! Try Again Later", Toast.LENGTH_SHORT).show();
+                    }
                 }
-                else{
-                    progressDialog.dismiss();
-                    Toast.makeText(RegisterPage.this, "OOps! Try Again Later", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+            });
+        }
+
+
+
+
+
     }
 }
