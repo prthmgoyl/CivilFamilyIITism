@@ -29,7 +29,7 @@ public class ProfessorAddStudent extends AppCompatActivity {
     public String year="notselected";
     String designation = "student";
     private RadioButton rdbtn1,rdbtn2,rdbtn3,rdbtn4,rdbtn5;
-    String profuid,e,email12,password12;
+    String profuid,email12,password12;
     DatabaseReference reference;
 
     @Override
@@ -49,6 +49,8 @@ public class ProfessorAddStudent extends AppCompatActivity {
         rdbtn4 = findViewById(R.id.radioButton9);
         rdbtn5 = findViewById(R.id.radioButton10);
 
+        reference = FirebaseDatabase.getInstance().getReference();
+
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,7 +59,7 @@ public class ProfessorAddStudent extends AppCompatActivity {
                 createUser();
                 FirebaseAuth.getInstance().signOut();
                 studentinfo studentinfo = new studentinfo();
-                FirebaseDatabase.getInstance().getReference().child("UserInfoWithUid").child(profuid)
+                reference.child("UserInfoWithUid").child(profuid)
                         .addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
