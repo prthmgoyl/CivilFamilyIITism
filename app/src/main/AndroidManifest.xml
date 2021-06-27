@@ -30,8 +30,13 @@
         <activity android:name=".Studentlistviewer" />
         <activity android:name=".Professormainpage" />
         <activity android:name=".Mainpage" />
-        <activity android:name=".RegisterPage" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".RegisterPage"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
+        </activity>
+
+        <activity android:name=".MainActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

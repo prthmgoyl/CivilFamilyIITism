@@ -72,19 +72,27 @@
             </LinearLayout>
 
             <ImageView
+                android:id="@+id/imageView27"
+                android:layout_width="30dp"
+                android:layout_height="25dp"
+                app:layout_constraintBottom_toTopOf="@+id/imageView19"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/menuoptionimage" />
+
+            <ImageView
                 android:id="@+id/imageView19"
-                android:layout_width="52dp"
-                android:layout_height="34dp"
+                android:layout_width="30dp"
+                android:layout_height="25dp"
                 android:background="@drawable/myrowdesign"
                 app:layout_constraintBottom_toTopOf="@+id/imageView18"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@android:drawable/ic_menu_delete" />
 
             <ImageView
                 android:id="@+id/imageView18"
-                android:layout_width="52dp"
-                android:layout_height="36dp"
+                android:layout_width="30dp"
+                android:layout_height="25dp"
                 android:layout_marginBottom="2sp"
                 android:background="@drawable/myrowdesign"
                 app:layout_constraintBottom_toBottomOf="parent"
