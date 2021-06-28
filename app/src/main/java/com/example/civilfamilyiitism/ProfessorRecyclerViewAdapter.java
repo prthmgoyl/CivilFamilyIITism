@@ -25,8 +25,8 @@ public class ProfessorRecyclerViewAdapter extends FirebaseRecyclerAdapter<studen
 
     @Override
     protected void onBindViewHolder(@NonNull final holder holder, final int position, @NonNull studentinfo model) {
-        holder.txv1.setText(model.getUsername());
- //       holder.txv2.setText(model.getEmail());
+        holder.txv1.setText(model.getUsername().toUpperCase());
+        holder.txv2.setText(model.getDesignation().toUpperCase());
    //     holder.txv3.setText(model.getPhone());
 
 
@@ -70,7 +70,7 @@ public class ProfessorRecyclerViewAdapter extends FirebaseRecyclerAdapter<studen
     }
 
     class holder extends RecyclerView.ViewHolder{
-        TextView txv1;
+        TextView txv1,txv2;
         ImageView call , mail;
      //   ,txv2,txv3
         public holder(@NonNull View itemView) {
@@ -81,6 +81,8 @@ public class ProfessorRecyclerViewAdapter extends FirebaseRecyclerAdapter<studen
             txv1=(TextView)itemView.findViewById(R.id.textView13);
             call = (ImageView)itemView.findViewById(R.id.imageView22);
             mail = (ImageView)itemView.findViewById(R.id.imageView23);
+            txv2 = (TextView)itemView.findViewById(R.id.textView19);
+
        //     txv2=(TextView)itemView.findViewById(R.id.textView11);
       //      txv3=(TextView)itemView.findViewById(R.id.textView12);
 

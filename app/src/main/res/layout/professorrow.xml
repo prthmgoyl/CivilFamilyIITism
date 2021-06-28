@@ -8,20 +8,18 @@
     <androidx.cardview.widget.CardView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/proffcardviewdesign"
+        app:cardBackgroundColor="#fff"
+        app:cardCornerRadius="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintStart_toStartOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@drawable/proffcardviewdesign"
             android:orientation="vertical">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -32,23 +30,25 @@
                     android:id="@+id/imageView21"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    android:background="@drawable/myrowdesign"
+                    android:background="@drawable/proffcardviewdesign"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="?android:attr/fingerprintAuthDrawable" />
 
                 <TextView
-                    android:id="@+id/textView15"
+                    android:id="@+id/textView19"
                     android:layout_width="0dp"
                     android:layout_height="22dp"
-                    android:background="@drawable/myrowdesign"
+                    android:background="@drawable/proffcardviewdesign"
+                    android:fontFamily="sans-serif"
                     android:gravity="center"
-                    android:textColor="#FBF6F6"
+                    android:includeFontPadding="false"
+                    android:textColor="#000"
                     android:textSize="10sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toEndOf="@+id/imageView21"
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -57,11 +57,13 @@
                 android:id="@+id/textView13"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/myrowdesign"
+                android:background="@drawable/proffcardviewdesign"
+                android:fontFamily="sans-serif"
                 android:gravity="center"
-                android:textColor="#FBF6F6"
-                android:textSize="15sp"
-                android:textStyle="bold" />
+                android:includeFontPadding="false"
+                android:padding="5sp"
+                android:textColor="#000"
+                android:textSize="15sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -72,19 +74,29 @@
                     android:id="@+id/imageView22"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="5sp"
+                    android:layout_marginStart="1sp"
+                    android:layout_marginLeft="1sp"
+                    android:layout_marginTop="1sp"
+                    android:layout_marginEnd="1sp"
+                    android:layout_marginRight="1sp"
+                    android:layout_marginBottom="1sp"
                     android:layout_weight="1"
-                    android:background="@drawable/myrowdesign"
-                    app:srcCompat="@android:drawable/ic_menu_call" />
+                    android:background="@drawable/proffcardviewdesign"
+                    app:srcCompat="@drawable/ic_baseline_call_24" />
 
                 <ImageView
                     android:id="@+id/imageView23"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5sp"
+                    android:layout_marginStart="1sp"
+                    android:layout_marginLeft="1sp"
+                    android:layout_marginTop="1sp"
+                    android:layout_marginEnd="1sp"
+                    android:layout_marginRight="1sp"
+                    android:layout_marginBottom="1sp"
                     android:layout_weight="1"
-                    android:background="@drawable/myrowdesign"
-                    app:srcCompat="@android:drawable/ic_dialog_email" />
+                    android:background="@drawable/proffcardviewdesign"
+                    app:srcCompat="@drawable/ic_outline_mail_outline_24" />
             </LinearLayout>
 
         </LinearLayout>

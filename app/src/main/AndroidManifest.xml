@@ -31,7 +31,8 @@
         <activity android:name=".Ascepage" />
         <activity android:name=".UploadPdfpage" />
         <activity android:name=".Studentlistviewer" />
-        <activity android:name=".Professormainpage" />
+        <activity android:name=".Professormainpage" android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
+        </activity>
         <activity android:name=".Mainpage" />
         <activity
             android:name=".RegisterPage"

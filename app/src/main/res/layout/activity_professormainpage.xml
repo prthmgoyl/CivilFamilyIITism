@@ -5,9 +5,28 @@
     android:id="@+id/recyclerView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/proffpagedesign"
     tools:context=".Professormainpage">
 
+    <View
+        android:id="@+id/view7"
+        android:layout_width="wrap_content"
+        android:layout_height="160dp"
+        android:background="#44AF1D"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/view6"
+        android:layout_width="500dp"
+        android:layout_height="320dp"
+        android:background="@drawable/professormainpagedesignbackground"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -23,7 +42,13 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewproff"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="100dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="10dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -39,7 +64,8 @@
                     android:layout_marginRight="10sp"
                     android:layout_marginBottom="10sp"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/fourth" />
+                    android:background="@drawable/proffpagedesign"
+                    app:srcCompat="@drawable/ic_baseline_looks_4_24" />
 
                 <ImageView
                     android:id="@+id/imageView12"
@@ -50,7 +76,7 @@
                     android:layout_marginRight="10sp"
                     android:layout_marginBottom="10sp"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/third" />
+                    app:srcCompat="@drawable/ic_baseline_looks_3_24" />
             </LinearLayout>
 
             <LinearLayout
@@ -67,7 +93,8 @@
                     android:layout_marginRight="10sp"
                     android:layout_marginBottom="10sp"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/second" />
+                    android:background="@drawable/proffpagedesign"
+                    app:srcCompat="@drawable/ic_baseline_looks_two_24" />
 
                 <ImageView
                     android:id="@+id/imageView14"
@@ -78,7 +105,8 @@
                     android:layout_marginRight="10sp"
                     android:layout_marginBottom="10sp"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/first" />
+                    android:background="@drawable/proffpagedesign"
+                    app:srcCompat="@drawable/ic_baseline_looks_one_24" />
             </LinearLayout>
 
             <LinearLayout
@@ -95,7 +123,8 @@
                     android:layout_marginRight="10sp"
                     android:layout_marginBottom="10sp"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/upload" />
+                    android:background="@drawable/proffpagedesign"
+                    app:srcCompat="@drawable/ic_round_filter_drama_24" />
 
                 <ImageView
                     android:id="@+id/imageView"
@@ -106,7 +135,8 @@
                     android:layout_marginRight="10sp"
                     android:layout_marginBottom="10sp"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/notice" />
+                    android:background="@drawable/proffpagedesign"
+                    app:srcCompat="@drawable/ic_baseline_notification_important_24" />
             </LinearLayout>
 
             <LinearLayout
@@ -123,6 +153,7 @@
                     android:layout_marginRight="10sp"
                     android:layout_marginBottom="10sp"
                     android:layout_weight="1"
+                    android:background="@drawable/proffpagedesign"
                     app:srcCompat="@drawable/imageasce" />
 
                 <ImageView
@@ -134,7 +165,8 @@
                     android:layout_marginRight="10sp"
                     android:layout_marginBottom="10sp"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/addstudent" />
+                    android:background="@drawable/proffpagedesign"
+                    app:srcCompat="@drawable/ic_baseline_person_add_alt_1_24" />
             </LinearLayout>
 
             <LinearLayout
@@ -151,6 +183,7 @@
                     android:layout_marginRight="10sp"
                     android:layout_marginBottom="10sp"
                     android:layout_weight="1"
+                    android:background="@drawable/proffpagedesign"
                     app:srcCompat="@drawable/blacklisted" />
 
                 <ImageView
@@ -162,9 +195,22 @@
                     android:layout_marginRight="10sp"
                     android:layout_marginBottom="10sp"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/stop" />
+                    android:background="@drawable/proffpagedesign"
+                    app:srcCompat="@drawable/ic_outline_stop_screen_share_24" />
             </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
+
+    <View
+        android:id="@+id/view10"
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:layout_marginTop="35dp"
+        android:background="@drawable/bardesignprofessormainpage"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

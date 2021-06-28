@@ -35,6 +35,7 @@ public class RecyclerViewAdapterone extends FirebaseRecyclerAdapter<studentinfo,
         holder.txv1.setText(model.getUsername());
         holder.txv2.setText(model.getEmail());
         holder.txv3.setText(model.getPhone());
+       // holder.txv4.setText(model.getDesignation());
     }
 
     @NonNull
@@ -55,6 +56,7 @@ public class RecyclerViewAdapterone extends FirebaseRecyclerAdapter<studentinfo,
             txv1=(TextView)itemView.findViewById(R.id.textView10);
             txv2=(TextView)itemView.findViewById(R.id.textView11);
             txv3=(TextView)itemView.findViewById(R.id.textView12);
+        //    txv4 = (TextView)itemView.findViewById(R.id.textView19);
 
         }
     }
