@@ -56,48 +56,59 @@ public class MainActivity extends AppCompatActivity {
 
                 usermail = email.getText().toString();
                 userpassword = password.getText().toString();
-               if(usermail.equals("prathamdefault@gmail.com")&&userpassword.equals("prathamdefault")){
-                    startActivity(new Intent(MainActivity.this,Professormainpage.class));
-                    finish();
-               }
-                FirebaseAuth.getInstance().signInWithEmailAndPassword(usermail,userpassword)
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
-                            Query checkUser= reference.child("zero")
-                                    .orderByChild("uid").equalTo(FirebaseAuth.getInstance().getUid());
-                            checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
+
+                if(usermail.isEmpty()){
+                   email.setError("Please Enter a mailId");
+                    progressDialog.dismiss();
+                }
+                else if(userpassword.isEmpty()){
+                   password.setError("Please Enter Password!");
+                    progressDialog.dismiss();
+                }
+                else{
+                    if(usermail.equals("prathamdefault@gmail.com")&&userpassword.equals("prathamdefault")){
+                        startActivity(new Intent(MainActivity.this,Professormainpage.class));
+                        progressDialog.dismiss();
+                        finish();
+                    }
+                    FirebaseAuth.getInstance().signInWithEmailAndPassword(usermail,userpassword)
+                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    if(snapshot.exists()){
-                                        progressDialog.dismiss();
-                                        Toast.makeText(MainActivity.this, "Professor Login Successful!", Toast.LENGTH_SHORT).show();
-                                        startActivity(new Intent(MainActivity.this,Professormainpage.class));
-                                        finish();
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if(task.isSuccessful()){
+                                        Query checkUser= reference.child("zero")
+                                                .orderByChild("uid").equalTo(FirebaseAuth.getInstance().getUid());
+                                        checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                if(snapshot.exists()){
+                                                    progressDialog.dismiss();
+                                                    Toast.makeText(MainActivity.this, "Professor Login Successful!", Toast.LENGTH_SHORT).show();
+                                                    startActivity(new Intent(MainActivity.this,Professormainpage.class));
+                                                    finish();
+                                                }
+                                                else{
+                                                    progressDialog.dismiss();
+                                                    Toast.makeText(MainActivity.this, "Login Successful!", Toast.LENGTH_SHORT).show();
+                                                    startActivity(new Intent(MainActivity.this,Mainpage.class));
+                                                    finish();
+
+                                                }
+                                            }
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError error) {
+                                                progressDialog.dismiss();
+                                                Toast.makeText(MainActivity.this, "Oops!Connection Lost", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
                                     }
                                     else{
                                         progressDialog.dismiss();
-                                        Toast.makeText(MainActivity.this, "Login Successful!", Toast.LENGTH_SHORT).show();
-                                        startActivity(new Intent(MainActivity.this,Mainpage.class));
-                                        finish();
-
+                                        Toast.makeText(MainActivity.this, "Invalid Details!", Toast.LENGTH_SHORT).show();
                                     }
                                 }
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-                                    progressDialog.dismiss();
-                                    Toast.makeText(MainActivity.this, "Oops!Connection Lost", Toast.LENGTH_SHORT).show();
-                                }
                             });
-                        }
-                        else{
-                            progressDialog.dismiss();
-                            Toast.makeText(MainActivity.this, "Invalid Details!", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-
+                }
             }
         });
     }

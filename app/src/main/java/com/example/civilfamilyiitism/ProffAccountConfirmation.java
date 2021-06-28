@@ -57,51 +57,53 @@ public class ProffAccountConfirmation extends AppCompatActivity {
                 progressDialog.show();
                 progressDialog.setContentView(R.layout.progressbar_dialog);
                progressDialog.getWindow().setBackgroundDrawableResource(
-
                        android.R.color.transparent
               );
 
                 designation = edt1.getText().toString();
                 securitycode = edt2.getText().toString();
 
+                if(designation.isEmpty()){
+                    edt1.setError("Please Enter Your Designation");
+                    progressDialog.dismiss();
+                }
+                else if(securitycode.isEmpty()){
+                    edt2.setError("Please enter SecurityCode");
+                    progressDialog.dismiss();
+                }
+                else{
+                    reference.child("Access").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.exists()) {
+                                check = snapshot.getValue(String.class);
+                                if (securitycode.equals(check)) {
+                                    createUser();
+                                    progressDialog.dismiss();
+                                    //    startActivity(new Intent(ProffAccountConfirmation.this, Professormainpage.class));
+                                    //   finish();
+                                } else {
+                                    progressDialog.dismiss();
+                                    Toast.makeText(ProffAccountConfirmation.this, "Sorry!Wrong Security Code", Toast.LENGTH_SHORT).show();
 
-                reference.child("Access").addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.exists()) {
-                            check = snapshot.getValue(String.class);
-                            if (securitycode.equals(check)) {
-                                createUser();
+                                }
+                            }
+                            else{
                                 progressDialog.dismiss();
-                            //    startActivity(new Intent(ProffAccountConfirmation.this, Professormainpage.class));
-                             //   finish();
-                            } else {
-                               progressDialog.dismiss();
-                                Toast.makeText(ProffAccountConfirmation.this, "Sorry!Wrong Security Code", Toast.LENGTH_SHORT).show();
-
+                                Toast.makeText(ProffAccountConfirmation.this, "Please Set a security code!", Toast.LENGTH_SHORT).show();
                             }
                         }
-                        else{
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
                             progressDialog.dismiss();
-                            Toast.makeText(ProffAccountConfirmation.this, "Please Set a security code!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ProffAccountConfirmation.this, "Try Again Later!", Toast.LENGTH_SHORT).show();
                         }
-                    }
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                       progressDialog.dismiss();
-                        Toast.makeText(ProffAccountConfirmation.this, "Try Again Later!", Toast.LENGTH_SHORT).show();
-                    }
-                });
-
+                    });
+                }
             }
         });
-
-
-
     }
     public void createUser(){
-
-
             FirebaseAuth.getInstance().createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {

@@ -27,7 +27,7 @@ public class ProfessorAddStudent extends AppCompatActivity {
     private EditText username , email , phone , password,desig;
     private Button registerBtn;
     public String year="notselected";
-    String designation = "student";
+    String designation = "null";
     private RadioButton rdbtn1,rdbtn2,rdbtn3,rdbtn4,rdbtn5;
     String profuid,email12,password12;
     DatabaseReference reference;
@@ -94,41 +94,67 @@ public class ProfessorAddStudent extends AppCompatActivity {
         }
         else if(rdbtn2.isChecked()){
             year ="first";
+            designation = "firstyear";
         }
         else if(rdbtn3.isChecked()){
             year = "second" ;
+            designation = "secondyear";
         }
         else if(rdbtn4.isChecked()){
             year = "third";
+            designation = "thirdyear";
         }
         else if(rdbtn5.isChecked()){
             year = "fourth";
+            designation = "fourthyear";
+        }
+        else{
+            designation = "null";
         }
 
 
-            FirebaseAuth.getInstance().createUserWithEmailAndPassword(email1,password1).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if(task.isSuccessful()){
-                        uid = FirebaseAuth.getInstance().getUid();
-                        studentinfo student = new studentinfo(username1,email1,phone1,password1,uid,year,designation);
-                        reference.child("UserInfo").child(phone1).setValue(student).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if(task.isSuccessful()){
-                                    reference.child(year).child(uid).setValue(student);
-                                    reference.child("UserInfoWithUid").child(uid).setValue(student);
-                                    Toast.makeText(ProfessorAddStudent.this, "Registeration Successful!", Toast.LENGTH_SHORT).show();
+
+        if (username1.isEmpty()) {
+            username.setError("Please Enter Username");
+        } else if (email1.isEmpty()) {
+            email.setError("Please Enter a emailId");
+        } else if ((phone1.length() <= 9) || (phone1.length() >= 11)||(phone1.startsWith("+91"))) {
+            phone.setError("Please Enter a valid Phone Number!");
+        } else if (password1.length() <= 7) {
+            password.setError("Password length must be greater than 8");
+        } else if (designation.equals("null")) {
+            Toast.makeText(this, "You! must select your account type", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            if(email1.endsWith("iitism.ac.in") ){
+                FirebaseAuth.getInstance().createUserWithEmailAndPassword(email1,password1).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful()){
+                            uid = FirebaseAuth.getInstance().getUid();
+                            studentinfo student = new studentinfo(username1,email1,phone1,password1,uid,year,designation);
+                            reference.child("UserInfo").child(phone1).setValue(student).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if(task.isSuccessful()){
+                                        reference.child(year).child(uid).setValue(student);
+                                        reference.child("UserInfoWithUid").child(uid).setValue(student);
+                                        Toast.makeText(ProfessorAddStudent.this, "Registeration Successful!", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
-                            }
-                        });
+                            });
 
 
+                        }
+                        else{
+                            Toast.makeText(ProfessorAddStudent.this, "OOps! Try Again Later", Toast.LENGTH_SHORT).show();
+                        }
                     }
-                    else{
-                        Toast.makeText(ProfessorAddStudent.this, "OOps! Try Again Later", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
+                });
+            }
+                else {
+                    email.setError("Sorry!! Only Official accounts are allowed");
+              }
         }
+    }
 }
