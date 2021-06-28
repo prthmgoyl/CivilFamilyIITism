@@ -5,7 +5,7 @@
     android:id="@+id/recyclerView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/proffpagedesign"
+    android:background="#EFEFEF"
     tools:context=".Professormainpage">
 
     <View
@@ -76,6 +76,7 @@
                     android:layout_marginRight="10sp"
                     android:layout_marginBottom="10sp"
                     android:layout_weight="1"
+                    android:background="@drawable/proffpagedesign"
                     app:srcCompat="@drawable/ic_baseline_looks_3_24" />
             </LinearLayout>
 
@@ -172,6 +173,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginBottom="40dp"
                 android:orientation="horizontal">
 
                 <ImageView
