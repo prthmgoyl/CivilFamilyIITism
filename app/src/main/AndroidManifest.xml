@@ -33,7 +33,8 @@
         <activity android:name=".Studentlistviewer" />
         <activity android:name=".Professormainpage" android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
         </activity>
-        <activity android:name=".Mainpage" />
+        <activity android:name=".Mainpage" android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
+        </activity>
         <activity
             android:name=".RegisterPage"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"></activity>
