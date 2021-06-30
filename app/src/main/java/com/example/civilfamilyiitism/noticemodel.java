@@ -1,17 +1,35 @@
 package com.example.civilfamilyiitism;
 
 public class noticemodel {
-    String uid , time , message ,year, username;
+    String uid , time , message ,year, username , timeone , to;
 
     public noticemodel() {
     }
 
-    public noticemodel(String uid, String time, String message, String year , String username) {
+    public noticemodel(String uid, String time, String message, String to , String username , String timeone , String year) {
         this.uid = uid;
         this.time = time;
         this.message = message;
         this.year=year;
         this.username = username;
+        this.timeone = timeone;
+        this.to = to;
+    }
+
+    public String getTo() {
+        return to;
+    }
+
+    public void setTo(String to) {
+        this.to = to;
+    }
+
+    public String getTimeone() {
+        return timeone;
+    }
+
+    public void setTimeone(String timeone) {
+        this.timeone = timeone;
     }
 
     public String getUsername() {

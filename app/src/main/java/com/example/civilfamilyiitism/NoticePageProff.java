@@ -111,7 +111,8 @@ public class NoticePageProff extends AppCompatActivity {
                         else{
                             if(rdbtn1.isChecked()){
                                 to = "all";
-                                noticemodel messageinfo = new noticemodel(uid , timeone ,noticemessage , to , username);
+                                year = "all";
+                                noticemodel messageinfo = new noticemodel(uid , timeone ,noticemessage , to , username , time , year);
                                 reference.child("Notice").child("all").child(time).setValue(messageinfo);
 
                                 year = "first";
@@ -128,36 +129,36 @@ public class NoticePageProff extends AppCompatActivity {
                                 dialogPlus.dismiss();
                             }
                             else if(rdbtn2.isChecked()){
-                                to = "all";
+                                to = "first";
                                 year = "first";
-                                noticemodel messageinfo = new noticemodel(uid , timeone ,noticemessage , to, username);
+                                noticemodel messageinfo = new noticemodel(uid , timeone ,noticemessage , to, username , time , year);
                                 //Toast.makeText(NoticePageProff.this, "=="+noticemessage, Toast.LENGTH_SHORT).show();
                                 reference.child("Notice").child(year).child(time).setValue(messageinfo);
                                 reference.child("Notice").child("all").child(time).setValue(messageinfo);
                                 dialogPlus.dismiss();
                             }
                             else if (rdbtn3.isChecked()){
-                                to = "all";
+                                to = "second";
                                 year = "second";
-                                noticemodel messageinfo = new noticemodel(uid , timeone ,noticemessage , to, username);
+                                noticemodel messageinfo = new noticemodel(uid , timeone ,noticemessage , to, username , time , year);
                                 //Toast.makeText(NoticePageProff.this, "=="+noticemessage, Toast.LENGTH_SHORT).show();
                                 reference.child("Notice").child(year).child(time).setValue(messageinfo);
                                 reference.child("Notice").child("all").child(time).setValue(messageinfo);
                                 dialogPlus.dismiss();
                             }
                             else if(rdbtn4.isChecked()){
-                                to = "all";
+                                to = "third";
                                 year = "third";
-                                noticemodel messageinfo = new noticemodel(uid , timeone ,noticemessage , to, username);
+                                noticemodel messageinfo = new noticemodel(uid , timeone ,noticemessage , to, username , time,year);
                                 //Toast.makeText(NoticePageProff.this, "=="+noticemessage, Toast.LENGTH_SHORT).show();
                                 reference.child("Notice").child(year).child(time).setValue(messageinfo);
                                 reference.child("Notice").child("all").child(time).setValue(messageinfo);
                                 dialogPlus.dismiss();
                             }
                             else if(rdbtn5.isChecked()){
-                                to = "all";
+                                to = "fourth";
                                 year = "fourth";
-                                noticemodel messageinfo = new noticemodel(uid , timeone ,noticemessage , to, username);
+                                noticemodel messageinfo = new noticemodel(uid , timeone ,noticemessage , to, username , time,year);
                                 //Toast.makeText(NoticePageProff.this, "=="+noticemessage, Toast.LENGTH_SHORT).show();
                                 reference.child("Notice").child(year).child(time).setValue(messageinfo);
                                 reference.child("Notice").child("all").child(time).setValue(messageinfo);
