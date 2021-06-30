@@ -109,7 +109,8 @@ public class Professormainpage extends AppCompatActivity {
         img6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Toast.makeText(Professormainpage.this, "img6", Toast.LENGTH_SHORT).show();
+                      startActivity(new Intent(Professormainpage.this,NoticePageProff.class));
             }
         });
         img7.setOnClickListener(new View.OnClickListener() {

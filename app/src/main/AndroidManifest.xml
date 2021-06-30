@@ -12,11 +12,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CivilFamilyIITism">
-        <activity android:name=".ProffAccountConfirmation"
+        <activity android:name=".Noticepagestudent"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
+
+        </activity>
+        <activity
+            android:name=".NoticePageProff"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"></activity>
+        <activity
+            android:name=".ProffAccountConfirmation"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+        <activity android:name=".PdfPageStudentSide" />
+        <activity android:name=".ProfessorAddStudent"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
         </activity>
-        <activity android:name=".PdfPageStudentSide" />
-        <activity android:name=".ProfessorAddStudent" />
         <activity android:name=".Stopregisteration" />
         <activity
             android:name=".Splashscreen"
@@ -31,16 +40,18 @@
         <activity android:name=".Ascepage" />
         <activity android:name=".UploadPdfpage" />
         <activity android:name=".Studentlistviewer" />
-        <activity android:name=".Professormainpage" android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
-        </activity>
-        <activity android:name=".Mainpage" android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
-        </activity>
+        <activity
+            android:name=".Professormainpage"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+        <activity
+            android:name=".Mainpage"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
         <activity
             android:name=".RegisterPage"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"></activity>
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
         <activity
             android:name=".MainActivity"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"></activity>
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
     </application>
 
 </manifest>

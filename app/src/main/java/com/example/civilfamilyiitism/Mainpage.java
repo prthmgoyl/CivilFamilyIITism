@@ -1,5 +1,6 @@
 package com.example.civilfamilyiitism;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,15 +12,21 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class Mainpage extends AppCompatActivity {
 
     private ImageView img1,img2,img3,img4,img5,img6,img7,img8;
     String check = "null";
+    String check2 = "null";
 
     RecyclerView rcv;
     ProfessorRecyclerViewAdapter adapter;
+    String myuid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +41,7 @@ public class Mainpage extends AppCompatActivity {
         img6=findViewById(R.id.imageView6);
         img7=findViewById(R.id.imageView7);
         img8=findViewById(R.id.imageView8);
-
-
+        myuid = FirebaseAuth.getInstance().getUid();
 
 
         rcv = (RecyclerView)findViewById(R.id.recyclerViewproffstudentside);
@@ -47,6 +53,36 @@ public class Mainpage extends AppCompatActivity {
 
         adapter=new ProfessorRecyclerViewAdapter(options);
         rcv.setAdapter(adapter);
+
+
+
+
+        FirebaseDatabase.getInstance().getReference().child("UserInfoWithUid").child(myuid)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        String year = snapshot.child("year").getValue(String.class);
+                        // Toast.makeText(Noticepagestudent.this, "this"+year, Toast.LENGTH_SHORT).show();
+                        if (year.equals("first")) {
+                            check2 = "first";
+                        } else if (year.equals("second")) {
+                            check2 = "second";
+                        } else if (year.equals("third")) {
+                            check2 = "third";
+                        } else if (year.equals("fourth")) {
+                            check2 = "fourth";
+                        } else {
+                         //   Toast.makeText(Noticepagestudent.this, "Sorry!We are unable to find your account", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                      //  Toast.makeText(Noticepagestudent.this, "Sorry!Connection lost", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
 
 
 
@@ -114,6 +150,12 @@ public class Mainpage extends AppCompatActivity {
         img7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Intent intent = new Intent(Mainpage.this,Noticepagestudent.class);
+                intent.putExtra("check",check2);
+                startActivity(intent);
+
+               // startActivity(new Intent(Mainpage.this,Noticepagestudent.class));
                 Toast.makeText(Mainpage.this, "img7", Toast.LENGTH_SHORT).show();
 
             }
