@@ -50,7 +50,10 @@ public class NoticePageProff extends AppCompatActivity {
 
 
         rcv = (RecyclerView)findViewById(R.id.recyclerviewnotice);
-        rcv.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager manager = new LinearLayoutManager(this);
+        manager.setReverseLayout(true);
+        manager.setStackFromEnd(true);
+        rcv.setLayoutManager(manager);
         FirebaseRecyclerOptions<noticemodel> options =
                 new FirebaseRecyclerOptions.Builder<noticemodel>()
                         .setQuery(reference.child("Notice").child("all"), noticemodel.class)
@@ -81,7 +84,7 @@ public class NoticePageProff extends AppCompatActivity {
             public void onClick(View v) {
 
                 DialogPlus dialogPlus = DialogPlus.newDialog(NoticePageProff.this)
-                        .setExpanded(true,500)
+                        .setExpanded(true,600)
                         .setContentHolder(new ViewHolder(R.layout.noticealertdialog))
                         .setContentBackgroundResource(R.drawable.noticedialogbg)
                         .create();
@@ -103,7 +106,7 @@ public class NoticePageProff extends AppCompatActivity {
                         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd:MM:yyyy hh:mm:ss aa");
                         Calendar calendar = Calendar.getInstance();
                         timeone  = simpleDateFormat.format(calendar.getTime());
-                        time = timeone + " " +String.valueOf(System.currentTimeMillis());
+                        time = String.valueOf(System.currentTimeMillis());
                         String noticemessage = message.getText().toString();
                         if(noticemessage.isEmpty()){
                             message.setError("Please! Type a message");

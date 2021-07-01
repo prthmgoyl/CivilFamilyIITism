@@ -62,7 +62,7 @@ public class noticeadapter extends FirebaseRecyclerAdapter<noticemodel, noticead
                                     case R.id.edit_profile:
 
                                         DialogPlus dialogPlus = DialogPlus.newDialog(mContext)
-                                                .setExpanded(true,500)
+                                                .setExpanded(true,600)
                                                 .setContentHolder(new ViewHolder(R.layout.noticeeditdesign))
                                                 .setContentBackgroundResource(R.drawable.noticedialogbg)
                                                 .create();

@@ -41,7 +41,12 @@ public class Noticepagestudent extends AppCompatActivity {
    //     Toast.makeText(this, "this "+check, Toast.LENGTH_SHORT).show();
 
 
-        rcv.setLayoutManager(new LinearLayoutManager(Noticepagestudent.this));
+        LinearLayoutManager manager = new LinearLayoutManager(this);
+        manager.setReverseLayout(true);
+        manager.setStackFromEnd(true);
+
+        rcv.setLayoutManager(manager);
+
         FirebaseRecyclerOptions<noticemodel> options =
                 new FirebaseRecyclerOptions.Builder<noticemodel>()
                         .setQuery(reference.child("Notice").child(check), noticemodel.class)
