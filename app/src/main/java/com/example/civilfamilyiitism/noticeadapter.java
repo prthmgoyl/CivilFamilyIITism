@@ -54,7 +54,7 @@ public class noticeadapter extends FirebaseRecyclerAdapter<noticemodel, noticead
             public boolean onLongClick(View v) {
 
                 PopupMenu popupMenu = new PopupMenu(mContext,v);
-                        popupMenu.inflate(R.menu.itemsforproffsidestudentlist);
+                        popupMenu.inflate(R.menu.noticemenu);
                         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                             @Override
                             public boolean onMenuItemClick(MenuItem item) {

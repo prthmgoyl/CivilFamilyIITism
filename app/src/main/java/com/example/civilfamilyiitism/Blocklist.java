@@ -1,7 +1,10 @@
 package com.example.civilfamilyiitism;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -11,10 +14,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class Blocklist extends AppCompatActivity {
 
+    RecyclerView rcv;
+    blocklistadapter adapter;
     EditText edtuid;
     Button btn;
 
@@ -26,31 +35,79 @@ public class Blocklist extends AppCompatActivity {
         edtuid = (EditText)findViewById(R.id.editTextTextPersonName10);
         btn = (Button)findViewById(R.id.button13);
 
+
+
+        rcv = (RecyclerView)findViewById(R.id.rcvblocked);
+        GridLayoutManager manager = new GridLayoutManager(this,2,RecyclerView.VERTICAL,false);
+        rcv.setLayoutManager(manager);
+
+        FirebaseRecyclerOptions<studentinfo> options =
+                new FirebaseRecyclerOptions.Builder<studentinfo>()
+                        .setQuery(FirebaseDatabase.getInstance().getReference().child("Blocklist"), studentinfo.class)
+                        .build();
+
+        adapter=new blocklistadapter(options);
+        rcv.setAdapter(adapter);
+
+
+
+
+
+
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(Blocklist.this);
-                builder.setTitle("Block Confirmation");
-                builder.setMessage("Are you sure you want to block this uid");
-
-                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+              //  studentinfo info = new studentinfo();
+                String uid = edtuid.getText().toString();
+                FirebaseDatabase.getInstance().getReference().child("UserInfoWithUid")
+                        .child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        FirebaseDatabase.getInstance().getReference().child("Blocklist")
-                                .child(String.valueOf(System.currentTimeMillis()))
-                                .child("uid").setValue(edtuid.getText().toString());
-                        Toast.makeText(Blocklist.this, "Uid Blocked Successfully", Toast.LENGTH_SHORT).show();
-                    }
-                })    ;
-                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
 
+                       studentinfo info= snapshot.getValue(studentinfo.class);
+
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(Blocklist.this);
+                        builder.setTitle("Block Confirmation");
+                        builder.setMessage("Are you sure you want to block this uid");
+
+                        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                FirebaseDatabase.getInstance().getReference().child("Blocklist")
+                                        .child(uid)
+                                        .setValue(info);
+                                Toast.makeText(Blocklist.this, "Uid Blocked Successfully", Toast.LENGTH_SHORT).show();
+                            }
+                        })    ;
+                        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        })        ;
+                        builder.show();
                     }
-                })        ;
-                builder.show();
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(Blocklist.this, "Connection Lost!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
 
             }
         });
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        adapter.startListening();
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        adapter.stopListening();
     }
 }

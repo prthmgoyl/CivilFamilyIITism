@@ -9,13 +9,17 @@
     android:layout_marginTop="1sp"
     android:layout_marginEnd="1sp"
     android:layout_marginRight="1sp"
-    android:layout_marginBottom="1sp">
+    android:layout_marginBottom="1sp"
+    android:background="@android:color/transparent">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
+        android:background="@drawable/carddesignstudentlist"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,7 +27,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@drawable/carddesignstudentlist">
 
             <ImageView
                 android:id="@+id/imageView24"

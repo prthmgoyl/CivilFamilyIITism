@@ -13,10 +13,6 @@
         android:orderInCategory="101"
         android:title="Delete"
         app:showAsAction="never" />
-    <item
-        android:id="@+id/block"
-        android:orderInCategory="102"
-        android:title="Block" />
 
 
 </menu>
