@@ -23,7 +23,8 @@ import java.util.Calendar;
 public class Splashscreen extends AppCompatActivity {
 
     FirebaseUser user;
-    String uid,dateTime;
+    String uid,dateTime , blockeduid;
+    Boolean check = false;
 
 
 
@@ -43,33 +44,59 @@ public class Splashscreen extends AppCompatActivity {
                    // sleep(3000);
 
                     user = FirebaseAuth.getInstance().getCurrentUser();
-                    if(user !=null){
-                       uid= FirebaseAuth.getInstance().getUid();
-                        FirebaseDatabase.getInstance().getReference().child("UsersActivity")
-                                .child(dateTime +" "+String.valueOf(System.currentTimeMillis())).setValue(uid);
+                    if(user !=null) {
+                        uid = FirebaseAuth.getInstance().getUid();
 
-                        Query checkuser = FirebaseDatabase.getInstance().getReference().child("zero")
-                                .orderByChild("uid").equalTo(uid);
-                        checkuser.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                if(snapshot.exists()){
-                                    Toast.makeText(Splashscreen.this, "Professor Login Successful!", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(Splashscreen.this,Professormainpage.class));
-                                    finish();
-                                }
-                                else{
-                                    Toast.makeText(Splashscreen.this, "Login Successful!", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(Splashscreen.this,Mainpage.class));
-                                    finish();
-                                }
+
+                   Query checkblocked =  FirebaseDatabase.getInstance().getReference("Blocklist")
+                                             .orderByChild("uid").equalTo(uid);
+
+                    checkblocked.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                            if(snapshot.exists()){
+                                check = true;
                             }
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-                                Toast.makeText(Splashscreen.this, "OOps! Connection lost", Toast.LENGTH_SHORT).show();
+                            if(check){
+                                Toast.makeText(Splashscreen.this, "Sorry! Your Account is blocked", Toast.LENGTH_SHORT).show();
                             }
-                        });
+                            else {
+                                FirebaseDatabase.getInstance().getReference().child("UsersActivity")
+                                        .child(String.valueOf(System.currentTimeMillis()) + " " +  dateTime).setValue(uid);
+
+                                Query checkuser = FirebaseDatabase.getInstance().getReference().child("zero")
+                                        .orderByChild("uid").equalTo(uid);
+                                checkuser.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        if (snapshot.exists()) {
+                                            Toast.makeText(Splashscreen.this, "Professor Login Successful!", Toast.LENGTH_SHORT).show();
+                                            startActivity(new Intent(Splashscreen.this, Professormainpage.class));
+                                            finish();
+                                        } else {
+                                            Toast.makeText(Splashscreen.this, "Login Successful!", Toast.LENGTH_SHORT).show();
+                                            startActivity(new Intent(Splashscreen.this, Mainpage.class));
+                                            finish();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+                                        Toast.makeText(Splashscreen.this, "OOps! Connection lost", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            Toast.makeText(Splashscreen.this, "Connection lost!", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                     }
                     else{
                         sleep(1000);

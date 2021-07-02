@@ -1,6 +1,7 @@
 package com.example.civilfamilyiitism;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,7 +22,8 @@ public class Studentlistviewer extends AppCompatActivity {
         setContentView(R.layout.activity_studentlistviewer);
 
         rcv = (RecyclerView)findViewById(R.id.recyclerView);
-        rcv.setLayoutManager(new LinearLayoutManager(this));
+        GridLayoutManager manager = new GridLayoutManager(this,2,RecyclerView.VERTICAL,false);
+        rcv.setLayoutManager(manager);
 
         check = getIntent().getStringExtra("keycheck");
 

@@ -14,6 +14,7 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -42,7 +43,128 @@ public class RecyclerViewAdapter extends FirebaseRecyclerAdapter<studentinfo,Rec
         holder.txv2.setText(model.getEmail());
         holder.txv3.setText(model.getPhone());
 
+        holder.txv1.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
 
+                PopupMenu popupMenu;
+                popupMenu = new PopupMenu(mContext,v);
+                popupMenu.inflate(R.menu.itemsforproffsidestudentlist);
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()){
+                            case R.id.edit_profile:
+                            {
+                                final DialogPlus dialogPlus = DialogPlus.newDialog(holder.txv2.getContext())
+                                        .setContentHolder(new ViewHolder(R.layout.dialogcontent))
+                                        .setExpanded(true,1000)
+                                        .create();
+
+                                View myview = dialogPlus.getHolderView();
+                                EditText name = myview.findViewById(R.id.editTextTextPersonName3);
+                                TextView email = myview.findViewById(R.id.editTextTextEmailAddress3);
+                                EditText phone = myview.findViewById(R.id.editTextPhone2);
+                                Button submit = myview.findViewById(R.id.button5);
+
+                                name.setText(model.getUsername());
+                                email.setText(model.getEmail());
+                                phone.setText(model.getPhone());
+
+                                dialogPlus.show();
+                                submit.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Map<String,Object> map = new HashMap<>();
+                                        map.put("username",name.getText().toString());
+                                        map.put("phone",phone.getText().toString());
+                                        map.put("password",model.getPassword().toString());
+                                        map.put("uid",model.getUid().toString());
+                                        map.put("year",model.getYear().toString());
+                                        map.put("email",model.getEmail().toString());
+
+                                        FirebaseDatabase.getInstance().getReference().child(model.getYear().toString())
+                                                .child(getRef(position).getKey()).updateChildren(map)
+                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void unused) {
+
+                                                        FirebaseDatabase.getInstance().getReference()
+                                                                .child("UserInfo").child(model.getPhone().toString()).removeValue()
+                                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                    @Override
+                                                                    public void onSuccess(Void unused) {
+                                                                        FirebaseDatabase.getInstance().getReference()
+                                                                                .child("UserInfo").child(phone.getText().toString()).setValue(map)
+                                                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                                    @Override
+                                                                                    public void onSuccess(Void unused) {
+                                                                                        FirebaseDatabase.getInstance().getReference()
+                                                                                                .child("UserInfoWithUid").child(model.getUid().toString()).updateChildren(map);
+
+                                                                                        dialogPlus.dismiss();
+                                                                                    }
+                                                                                }) ;
+                                                                    }
+                                                                });
+
+                                                    }
+                                                });
+                                    }
+                                });
+                                //  dialogPlus.show();
+                            }
+                            return true;
+
+
+                            case R.id.delete_profile:
+                            {
+                                AlertDialog.Builder builder= new AlertDialog.Builder(holder.txv2.getContext());
+                                builder.setTitle("Delete Panel");
+                                builder.setMessage("Are You Sure...?");
+                                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        FirebaseDatabase.getInstance().getReference()
+                                                .child("UserInfo").child(model.getPhone().toString()).removeValue()
+                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void unused) {
+                                                        FirebaseDatabase.getInstance().getReference()
+                                                                .child("UserInfoWithUid").child(model.getUid().toString()).removeValue()
+                                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                    @Override
+                                                                    public void onSuccess(Void unused) {
+                                                                        FirebaseDatabase.getInstance().getReference()
+                                                                                .child(model.getYear().toString()).child(model.getUid().toString()).removeValue();
+                                                                    }
+                                                                });
+                                                    }
+                                                });
+                                    }
+                                });
+                                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                    }
+                                });
+                                builder.show();
+                            }
+                            return true;
+
+
+                            default:
+                                return false;
+                        }
+                    }
+                });
+                popupMenu.show();
+                return true;
+            }
+        });
+
+/*
         holder.menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -159,9 +281,10 @@ public class RecyclerViewAdapter extends FirebaseRecyclerAdapter<studentinfo,Rec
                     }
                 });
                 popupMenu.show();
-
             }
         });
+
+ */
 
     }
 
@@ -176,6 +299,7 @@ public class RecyclerViewAdapter extends FirebaseRecyclerAdapter<studentinfo,Rec
     class holder extends RecyclerView.ViewHolder{
         TextView txv1,txv2,txv3;
         ImageView edit, delete,menu;
+        CardView card;
 
         public holder(@NonNull View itemView) {
             super(itemView);
@@ -185,10 +309,13 @@ public class RecyclerViewAdapter extends FirebaseRecyclerAdapter<studentinfo,Rec
             txv1=(TextView)itemView.findViewById(R.id.textView7);
             txv2=(TextView)itemView.findViewById(R.id.textView6);
             txv3=(TextView)itemView.findViewById(R.id.textView5);
-            delete = (ImageView)itemView.findViewById(R.id.imageView19);
+            card = (CardView)itemView.findViewById(R.id.card);
+      /*     delete = (ImageView)itemView.findViewById(R.id.imageView19);
             edit = (ImageView)itemView.findViewById(R.id.imageView18);
             menu = (ImageView)itemView.findViewById(R.id.imageView27);
 
+
+       */
         }
 
 

@@ -12,8 +12,10 @@
     android:layout_marginBottom="1sp">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/card"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,84 +23,57 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/imageView24"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:background="@drawable/myrowdesign"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="2dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="?android:attr/fingerprintAuthDrawable" />
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/imageView19"
-                app:layout_constraintStart_toEndOf="@+id/imageView24"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <TextView
-                    android:id="@+id/textView7"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/myrowdesign"
-                    android:paddingLeft="7sp"
-                    android:textColor="#F8F4F2F2"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/textView6"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="2sp"
-                    android:background="@drawable/myrowdesign"
-                    android:paddingLeft="7sp"
-                    android:textColor="#F8F4F2F2" />
-
-                <TextView
-                    android:id="@+id/textView5"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="2sp"
-                    android:background="@drawable/myrowdesign"
-                    android:paddingLeft="7sp"
-                    android:textColor="#F8F4F2F2" />
-            </LinearLayout>
-
-            <ImageView
-                android:id="@+id/imageView27"
-                android:layout_width="30dp"
-                android:layout_height="25dp"
-                app:layout_constraintBottom_toTopOf="@+id/imageView19"
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:gravity="center"
+                android:textColor="#000"
+                android:textSize="15sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/menuoptionimage" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView24" />
 
-            <ImageView
-                android:id="@+id/imageView19"
-                android:layout_width="30dp"
-                android:layout_height="25dp"
-                android:background="@drawable/myrowdesign"
-                app:layout_constraintBottom_toTopOf="@+id/imageView18"
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:gravity="center"
+                android:textColor="#000"
+                android:textSize="10sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:srcCompat="@android:drawable/ic_menu_delete" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
-            <ImageView
-                android:id="@+id/imageView18"
-                android:layout_width="30dp"
-                android:layout_height="25dp"
-                android:layout_marginBottom="2sp"
-                android:background="@drawable/myrowdesign"
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:layout_marginBottom="1dp"
+                android:gravity="center"
+                android:textColor="#000"
+                android:textSize="10sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:srcCompat="@android:drawable/ic_menu_edit" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView6" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </androidx.cardview.widget.CardView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

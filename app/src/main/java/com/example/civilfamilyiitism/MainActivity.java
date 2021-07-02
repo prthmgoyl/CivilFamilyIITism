@@ -31,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     private String usermail,userpassword;
     ProgressDialog progressDialog;
     DatabaseReference reference;
+    Boolean check = false;
+    String uid , blockeduid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,31 +78,53 @@ public class MainActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if(task.isSuccessful()){
-                                        Query checkUser= reference.child("zero")
-                                                .orderByChild("uid").equalTo(FirebaseAuth.getInstance().getUid());
-                                        checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
-                                            @Override
-                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                                if(snapshot.exists()){
-                                                    progressDialog.dismiss();
-                                                    Toast.makeText(MainActivity.this, "Professor Login Successful!", Toast.LENGTH_SHORT).show();
-                                                    startActivity(new Intent(MainActivity.this,Professormainpage.class));
-                                                    finish();
-                                                }
-                                                else{
-                                                    progressDialog.dismiss();
-                                                    Toast.makeText(MainActivity.this, "Login Successful!", Toast.LENGTH_SHORT).show();
-                                                    startActivity(new Intent(MainActivity.this,Mainpage.class));
-                                                    finish();
+                                        uid = FirebaseAuth.getInstance().getUid();
+                                        Query checkblocked =  FirebaseDatabase.getInstance().getReference("Blocklist")
+                                                .orderByChild("uid").equalTo(uid);
+                                                checkblocked.addListenerForSingleValueEvent(new ValueEventListener() {
+                                                    @Override
+                                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                       if(snapshot.exists()){
+                                                           check = true;
+                                                       }
+                                                        if(check){
+                                                            progressDialog.dismiss();
+                                                            Toast.makeText(MainActivity.this, "Sorry! Your Account is blocked", Toast.LENGTH_SHORT).show();
+                                                        }
+                                                        else{
+                                                            Query checkUser= reference.child("zero")
+                                                                    .orderByChild("uid").equalTo(uid);
+                                                            checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
+                                                                @Override
+                                                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                                    if(snapshot.exists()){
+                                                                        progressDialog.dismiss();
+                                                                        Toast.makeText(MainActivity.this, "Professor Login Successful!", Toast.LENGTH_SHORT).show();
+                                                                        startActivity(new Intent(MainActivity.this,Professormainpage.class));
+                                                                        finish();
+                                                                    }
+                                                                    else{
+                                                                        progressDialog.dismiss();
+                                                                        Toast.makeText(MainActivity.this, "Login Successful!", Toast.LENGTH_SHORT).show();
+                                                                        startActivity(new Intent(MainActivity.this,Mainpage.class));
+                                                                        finish();
 
-                                                }
-                                            }
-                                            @Override
-                                            public void onCancelled(@NonNull DatabaseError error) {
-                                                progressDialog.dismiss();
-                                                Toast.makeText(MainActivity.this, "Oops!Connection Lost", Toast.LENGTH_SHORT).show();
-                                            }
-                                        });
+                                                                    }
+                                                                }
+                                                                @Override
+                                                                public void onCancelled(@NonNull DatabaseError error) {
+                                                                    progressDialog.dismiss();
+                                                                    Toast.makeText(MainActivity.this, "Oops!Connection Lost", Toast.LENGTH_SHORT).show();
+                                                                }
+                                                            });
+                                                        }
+                                                    }
+
+                                                    @Override
+                                                    public void onCancelled(@NonNull DatabaseError error) {
+                                                        Toast.makeText(MainActivity.this, "Connection lost!", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                });
                                     }
                                     else{
                                         progressDialog.dismiss();

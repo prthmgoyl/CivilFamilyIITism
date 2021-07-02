@@ -14,6 +14,7 @@
         android:background="@drawable/proffcardviewdesign"
         app:cardBackgroundColor="#595656"
         app:cardCornerRadius="20dp"
+        app:cardElevation="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
