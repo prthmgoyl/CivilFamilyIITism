@@ -27,6 +27,7 @@ public class UploadPdfpage extends AppCompatActivity {
     private RadioButton rdbtn1,rdbtn2,rdbtn3,rdbtn4;
     private Button uploadbtn;
     String filename;
+    String year;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +44,24 @@ public class UploadPdfpage extends AppCompatActivity {
         uploadbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if(rdbtn1.isChecked()){
+                    year = "first";
+
+                }
+                else if(rdbtn2.isChecked()){
+                    year = "second";
+                }
+                else if(rdbtn3.isChecked()){
+                    year = "third";
+                }
+                else if(rdbtn4.isChecked()){
+                    year = "fourth";
+                }
+                else{
+                    year = "notselected";
+                    Toast.makeText(UploadPdfpage.this, "Please Select Class", Toast.LENGTH_SHORT).show();
+                }
 
                 filename =edt.getText().toString();
                 Intent intent = new Intent();
@@ -79,7 +98,7 @@ public class UploadPdfpage extends AppCompatActivity {
                             Uri url = uri.getResult();
 
                             putpdf putpdf = new putpdf(filename,url.toString());
-                            FirebaseDatabase.getInstance().getReference().child("uploads").child(filename).setValue(putpdf);
+                            FirebaseDatabase.getInstance().getReference().child("uploads").child(year).child(String.valueOf(System.currentTimeMillis())).setValue(putpdf);
                             Toast.makeText(UploadPdfpage.this, "Successful!", Toast.LENGTH_SHORT).show();
                             progressdialog.dismiss();
 

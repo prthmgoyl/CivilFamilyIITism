@@ -29,7 +29,7 @@ public class Studentlistviewer extends AppCompatActivity {
 
         FirebaseRecyclerOptions<studentinfo> options =
                 new FirebaseRecyclerOptions.Builder<studentinfo>()
-                        .setQuery(FirebaseDatabase.getInstance().getReference().child(check), studentinfo.class)
+                        .setQuery(FirebaseDatabase.getInstance().getReference().child(check).orderByChild("username"), studentinfo.class)
                         .build();
 
         adapter=new RecyclerViewAdapter(options);

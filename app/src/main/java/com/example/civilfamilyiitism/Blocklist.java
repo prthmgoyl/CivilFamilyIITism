@@ -43,7 +43,7 @@ public class Blocklist extends AppCompatActivity {
 
         FirebaseRecyclerOptions<studentinfo> options =
                 new FirebaseRecyclerOptions.Builder<studentinfo>()
-                        .setQuery(FirebaseDatabase.getInstance().getReference().child("Blocklist"), studentinfo.class)
+                        .setQuery(FirebaseDatabase.getInstance().getReference().child("Blocklist").orderByChild("username"), studentinfo.class)
                         .build();
 
         adapter=new blocklistadapter(options);

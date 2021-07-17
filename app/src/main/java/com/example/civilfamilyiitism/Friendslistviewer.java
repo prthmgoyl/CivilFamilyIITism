@@ -1,6 +1,7 @@
 package com.example.civilfamilyiitism;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,14 +22,15 @@ public class Friendslistviewer extends AppCompatActivity {
         setContentView(R.layout.activity_friendslistviewer);
 
 
+        GridLayoutManager manager = new GridLayoutManager(Friendslistviewer.this,2,RecyclerView.VERTICAL,false);
         rcv = (RecyclerView)findViewById(R.id.recyclerViewstudent);
-        rcv.setLayoutManager(new LinearLayoutManager(this));
+        rcv.setLayoutManager(manager);
 
         check = getIntent().getStringExtra("keycheck");
 
         FirebaseRecyclerOptions<studentinfo> options =
                 new FirebaseRecyclerOptions.Builder<studentinfo>()
-                        .setQuery(FirebaseDatabase.getInstance().getReference().child(check), studentinfo.class)
+                        .setQuery(FirebaseDatabase.getInstance().getReference().child(check).orderByChild("username"), studentinfo.class)
                         .build();
 
         adapter=new RecyclerViewAdapterone(options);

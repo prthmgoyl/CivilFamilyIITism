@@ -41,7 +41,7 @@ public class RecyclerViewAdapterone extends FirebaseRecyclerAdapter<studentinfo,
     @NonNull
     @Override
     public holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.studentsiderow,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row,parent,false);
         return new holder(view);
     }
 
@@ -53,9 +53,9 @@ public class RecyclerViewAdapterone extends FirebaseRecyclerAdapter<studentinfo,
 
         //    itemView.setOnClickListener(this);
 
-            txv1=(TextView)itemView.findViewById(R.id.textView10);
-            txv2=(TextView)itemView.findViewById(R.id.textView11);
-            txv3=(TextView)itemView.findViewById(R.id.textView12);
+            txv1=(TextView)itemView.findViewById(R.id.textView7);
+            txv2=(TextView)itemView.findViewById(R.id.textView6);
+            txv3=(TextView)itemView.findViewById(R.id.textView5);
         //    txv4 = (TextView)itemView.findViewById(R.id.textView19);
 
         }

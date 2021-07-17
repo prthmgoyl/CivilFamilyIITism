@@ -46,7 +46,7 @@ public class RecyclerViewAdapter extends FirebaseRecyclerAdapter<studentinfo,Rec
         holder.txv2.setText(model.getEmail());
         holder.txv3.setText(model.getPhone());
 
-        holder.txv1.setOnLongClickListener(new View.OnLongClickListener() {
+        holder.img.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
 
@@ -215,12 +215,14 @@ public class RecyclerViewAdapter extends FirebaseRecyclerAdapter<studentinfo,Rec
 
     class holder extends RecyclerView.ViewHolder{
         TextView txv1,txv2,txv3;
+        ImageView img;
         public holder(@NonNull View itemView) {
             super(itemView);
 
             txv1=(TextView)itemView.findViewById(R.id.textView7);
             txv2=(TextView)itemView.findViewById(R.id.textView6);
             txv3=(TextView)itemView.findViewById(R.id.textView5);
+            img= (ImageView)itemView.findViewById(R.id.imageView24);
     }
 }
 }

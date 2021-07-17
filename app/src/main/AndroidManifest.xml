@@ -22,7 +22,8 @@
         <activity
             android:name=".ProffAccountConfirmation"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
-        <activity android:name=".PdfPageStudentSide" />
+        <activity android:name=".PdfPageStudentSide"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
         <activity
             android:name=".ProfessorAddStudent"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"></activity>
