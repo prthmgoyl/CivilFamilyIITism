@@ -21,9 +21,8 @@ import com.google.firebase.database.annotations.NotNull;
 
 public class PdfPageStudentSide extends AppCompatActivity {
 
-    RecyclerView rcv;
+   RecyclerView rcv;
    PdfRecyclerViewAdapter adapter;
-   BottomNavigationView navigation;
    String check = null;
    String uid;
 
@@ -32,31 +31,18 @@ public class PdfPageStudentSide extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pdf_page_student_side);
 
-        uid = FirebaseAuth.getInstance().getUid();
+        check = getIntent().getStringExtra("year");
 
-        FirebaseDatabase.getInstance().getReference("UserInfoWithUid")
-                .child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                        studentinfo info = snapshot.getValue(studentinfo.class);
-                        check = info.getYear();
-            }
 
-            @Override
-            public void onCancelled(@NonNull @NotNull DatabaseError error) {
-                Toast.makeText(PdfPageStudentSide.this, "Connection Error!", Toast.LENGTH_SHORT).show();
-            }
-        });
+                rcv = (RecyclerView)findViewById(R.id.recyclerViewPdfPage);
+                rcv.setLayoutManager(new LinearLayoutManager(PdfPageStudentSide.this));
+                FirebaseRecyclerOptions<putpdf> options =
+                        new FirebaseRecyclerOptions.Builder<putpdf>()
+                                .setQuery(FirebaseDatabase.getInstance().getReference("uploads").child(check), putpdf.class)
+                                .build();
 
-        rcv = (RecyclerView)findViewById(R.id.recyclerViewPdfPage);
-        rcv.setLayoutManager(new LinearLayoutManager(this));
-        FirebaseRecyclerOptions<putpdf> options =
-                new FirebaseRecyclerOptions.Builder<putpdf>()
-                        .setQuery(FirebaseDatabase.getInstance().getReference("uploads").child(check), putpdf.class)
-                        .build();
-
-        adapter=new PdfRecyclerViewAdapter(options);
-        rcv.setAdapter(adapter);
+                adapter=new PdfRecyclerViewAdapter(options);
+                rcv.setAdapter(adapter);
     }
     @Override
     protected void onStart() {
@@ -68,4 +54,6 @@ public class PdfPageStudentSide extends AppCompatActivity {
         super.onStop();
         adapter.stopListening();
     }
+
+
 }

@@ -27,6 +27,7 @@ public class Mainpage extends AppCompatActivity {
     RecyclerView rcv;
     ProfessorRecyclerViewAdapter adapter;
     String myuid;
+    String year = "null";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +62,7 @@ public class Mainpage extends AppCompatActivity {
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        String year = snapshot.child("year").getValue(String.class);
+                        year = snapshot.child("year").getValue(String.class);
                         // Toast.makeText(Noticepagestudent.this, "this"+year, Toast.LENGTH_SHORT).show();
                         if (year.equals("first")) {
                             check2 = "first";
@@ -135,8 +136,10 @@ public class Mainpage extends AppCompatActivity {
         img5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(Mainpage.this, "img5", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(Mainpage.this,PdfPageStudentSide.class));
+               // Toast.makeText(Mainpage.this, "img5", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(Mainpage.this,PdfPageStudentSide.class);
+                intent.putExtra("year",year);
+                startActivity(intent);
 
             }
         });
