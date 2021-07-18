@@ -16,7 +16,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class Professormainpage extends AppCompatActivity {
 
-    private ImageView img1,img2,img3,img4,img5,img6,img7,img8,img9,img10;
+    private ImageView img1,img2,img3,img4,img5,img6,img7,img8,img9,img10 , img11,img12;
     String check = "null";
 
     RecyclerView rcv;
@@ -38,6 +38,8 @@ public class Professormainpage extends AppCompatActivity {
         img8 = findViewById(R.id.imageView10);
         img9 = findViewById(R.id.imageView17);
         img10 = findViewById(R.id.imageView16);
+        img11 = findViewById(R.id.imageView29);
+        img12 = findViewById(R.id.imageView30);
 
 
 
@@ -63,7 +65,7 @@ public class Professormainpage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 check = "fourth";
-                Toast.makeText(Professormainpage.this, "img1"+check, Toast.LENGTH_SHORT).show();
+               // Toast.makeText(Professormainpage.this, "img1"+check, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(Professormainpage.this,Studentlistviewer.class);
                 intent.putExtra("keycheck",check);
                 startActivity(intent);
@@ -74,7 +76,7 @@ public class Professormainpage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 check = "third";
-                Toast.makeText(Professormainpage.this, "img2"+check, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(Professormainpage.this, "img2"+check, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(Professormainpage.this,Studentlistviewer.class);
                 intent.putExtra("keycheck",check);
                 startActivity(intent);
@@ -84,7 +86,7 @@ public class Professormainpage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 check = "second";
-                Toast.makeText(Professormainpage.this, "img3"+check, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(Professormainpage.this, "img3"+check, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(Professormainpage.this,Studentlistviewer.class);
                 intent.putExtra("keycheck",check);
                 startActivity(intent);
@@ -94,7 +96,7 @@ public class Professormainpage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 check = "first";
-                Toast.makeText(Professormainpage.this, "img4"+check, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(Professormainpage.this, "img4"+check, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(Professormainpage.this,Studentlistviewer.class);
                 intent.putExtra("keycheck",check);
                 startActivity(intent);
@@ -109,7 +111,7 @@ public class Professormainpage extends AppCompatActivity {
         img6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(Professormainpage.this, "img6", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(Professormainpage.this, "img6", Toast.LENGTH_SHORT).show();
                       startActivity(new Intent(Professormainpage.this,NoticePageProff.class));
             }
         });
@@ -136,8 +138,21 @@ public class Professormainpage extends AppCompatActivity {
         img10.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(Professormainpage.this, "img10", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(Professormainpage.this, "img10", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(Professormainpage.this,Stopregisteration.class));
+            }
+        });
+        img11.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(Professormainpage.this, "img11", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(Professormainpage.this,Updateclass.class));
+            }
+        });
+        img12.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(Professormainpage.this, "img12", Toast.LENGTH_SHORT).show();
             }
         });
 

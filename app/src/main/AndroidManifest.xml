@@ -12,21 +12,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CivilFamilyIITism">
-        <activity android:name=".Blocklist"></activity>
+        <activity android:name=".Updateclass"></activity>
+        <activity android:name=".Blocklist" />
         <activity
             android:name=".Noticepagestudent"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"></activity>
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
         <activity
             android:name=".NoticePageProff"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
         <activity
             android:name=".ProffAccountConfirmation"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
-        <activity android:name=".PdfPageStudentSide"
+        <activity
+            android:name=".PdfPageStudentSide"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
         <activity
             android:name=".ProfessorAddStudent"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"></activity>
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
         <activity android:name=".Stopregisteration" />
         <activity
             android:name=".Splashscreen"
