@@ -1,8 +1,10 @@
 package com.example.civilfamilyiitism;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -31,8 +33,8 @@ public class Updateclass extends AppCompatActivity {
     studentinfo info;
     String professorcode,developerscode;
     EditText edt1,edt2,edt3;
-    Button btn,sendotp;
-    String codebysystem;
+    Button btn,sendotp , backupbtn;
+    String codebysystem = "null";
     String uid, email,password;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,8 @@ public class Updateclass extends AppCompatActivity {
         btn = (Button)findViewById(R.id.button15);
         sendotp = (Button)findViewById(R.id.button16);
         uid = FirebaseAuth.getInstance().getUid();
+        backupbtn = (Button)findViewById(R.id.button17);
+
 
 
         FirebaseDatabase.getInstance().getReference("UserInfoWithUid")
@@ -62,6 +66,33 @@ public class Updateclass extends AppCompatActivity {
             }
         });
 
+
+        backupbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(Updateclass.this);
+                builder.setTitle("Cofirmation...");
+                builder.setMessage("Are you sure you want to backup all data..");
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if(edt1.getText().toString().equals("7027603081")
+                                &&edt2.getText().toString().equals("7027603081")
+                                &&edt3.getText().toString().equals("7027603081") )
+                        {
+                            Toast.makeText(Updateclass.this, "Backedup!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }) ;
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(Updateclass.this, "Cancelled!!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                builder.show();
+            }
+        });
 
         sendotp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,8 +118,19 @@ public class Updateclass extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                PhoneAuthCredential credential =PhoneAuthProvider.getCredential(codebysystem,edt3.getText().toString());
-                signInWithPhoneAuthCredential(credential);
+                if(edt3.getText().toString().length()!=6){
+                    edt3.setError("Please Enter a valid OTP!");
+                }
+                else{
+                    if(codebysystem.equals("null")){
+                        Toast.makeText(Updateclass.this, "Please Enter SendOTP", Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        PhoneAuthCredential credential =PhoneAuthProvider.getCredential(codebysystem,edt3.getText().toString());
+                        signInWithPhoneAuthCredential(credential);
+                    }
+                }
+
             }
         });
     }
@@ -113,7 +155,7 @@ public class Updateclass extends AppCompatActivity {
         public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
             super.onCodeSent(s, forceResendingToken);
             codebysystem = s;
-            Toast.makeText(Updateclass.this, "!!"+codebysystem, Toast.LENGTH_SHORT).show();
+            Toast.makeText(Updateclass.this, "OTP sent", Toast.LENGTH_SHORT).show();
         }
 
         @Override
