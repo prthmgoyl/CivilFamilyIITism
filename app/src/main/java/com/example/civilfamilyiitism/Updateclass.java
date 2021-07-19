@@ -88,6 +88,7 @@ public class Updateclass extends AppCompatActivity {
                                     .child("Backup").child("Backup" + time).child(info.getUid())
                                     .setValue(info);
                         }
+                        Toast.makeText(Updateclass.this, "Successful!", Toast.LENGTH_SHORT).show();
                     }
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
@@ -116,6 +117,9 @@ public class Updateclass extends AppCompatActivity {
                                 edt1.setText("");
                                 edt1.setError("Now Enter Backup name here");
                                 i=1;
+                            }
+                            else{
+                                Toast.makeText(Updateclass.this, "Contact Developers!", Toast.LENGTH_SHORT).show();
                             }
                         }
                     }) ;

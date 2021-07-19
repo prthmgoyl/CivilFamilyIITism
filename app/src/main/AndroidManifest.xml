@@ -12,7 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CivilFamilyIITism">
-        <activity android:name=".Updateclass"></activity>
+        <activity android:name=".Updateclass" android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
+
+        </activity>
         <activity android:name=".Blocklist" />
         <activity
             android:name=".Noticepagestudent"
