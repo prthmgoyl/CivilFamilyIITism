@@ -24,6 +24,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
 public class Updateclass extends AppCompatActivity {
@@ -33,9 +35,10 @@ public class Updateclass extends AppCompatActivity {
     studentinfo info;
     String professorcode,developerscode;
     EditText edt1,edt2,edt3;
-    Button btn,sendotp , backupbtn;
+    Button btn,sendotp , restablishbtn ,backup ;
     String codebysystem = "null";
-    String uid, email,password;
+    String uid, email,password,time;
+    int i = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +50,8 @@ public class Updateclass extends AppCompatActivity {
         btn = (Button)findViewById(R.id.button15);
         sendotp = (Button)findViewById(R.id.button16);
         uid = FirebaseAuth.getInstance().getUid();
-        backupbtn = (Button)findViewById(R.id.button17);
+       restablishbtn = (Button)findViewById(R.id.button17);
+       backup = (Button)findViewById(R.id.button18);
 
 
 
@@ -67,30 +71,81 @@ public class Updateclass extends AppCompatActivity {
         });
 
 
-        backupbtn.setOnClickListener(new View.OnClickListener() {
+        backup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(Updateclass.this);
-                builder.setTitle("Cofirmation...");
-                builder.setMessage("Are you sure you want to backup all data..");
-                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+                SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss aa");
+                time = format.format(Calendar.getInstance().getTime());
+
+                FirebaseDatabase.getInstance().getReference()
+                        .child("UserInfoWithUid").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if(edt1.getText().toString().equals("7027603081")
-                                &&edt2.getText().toString().equals("7027603081")
-                                &&edt3.getText().toString().equals("7027603081") )
-                        {
-                            Toast.makeText(Updateclass.this, "Backedup!", Toast.LENGTH_SHORT).show();
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for(DataSnapshot snp : snapshot.getChildren()) {
+                            info = snp.getValue(studentinfo.class);
+                            FirebaseDatabase.getInstance().getReference()
+                                    .child("Backup").child("Backup" + time).child(info.getUid())
+                                    .setValue(info);
                         }
                     }
-                }) ;
-                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(Updateclass.this, "Cancelled!!", Toast.LENGTH_SHORT).show();
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(Updateclass.this, "Connection Rejected!", Toast.LENGTH_SHORT).show();
                     }
                 });
-                builder.show();
+            }
+        });
+
+        restablishbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(i==0){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(Updateclass.this);
+                    builder.setTitle("Cofirmation...");
+                    builder.setMessage("Are you sure you want to backup all data..");
+                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if(edt1.getText().toString().equals("7027603081")
+                                    &&edt2.getText().toString().equals("7027603081")
+                                    &&edt3.getText().toString().equals("7027603081") )
+                            {
+                                Toast.makeText(Updateclass.this, "Plz follow next steps", Toast.LENGTH_SHORT).show();
+                                restablishbtn.setText("Confirm Reestablishmant");
+                                edt1.setText("");
+                                edt1.setError("Now Enter Backup name here");
+                                i=1;
+                            }
+                        }
+                    }) ;
+                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Toast.makeText(Updateclass.this, "Cancelled!!", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    builder.show();
+                }
+                else if(i==1){
+                    Toast.makeText(Updateclass.this, edt1.getText().toString(), Toast.LENGTH_SHORT).show();
+                    FirebaseDatabase.getInstance().getReference()
+                            .child("Backup").child(edt1.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            for(DataSnapshot snp :snapshot.getChildren()){
+                                info = snp.getValue(studentinfo.class);
+                                FirebaseDatabase.getInstance().getReference()
+                                        .child("UserInfoWithUid").child(info.getUid()).setValue(info);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            Toast.makeText(Updateclass.this, "Connection Unavailable!", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
             }
         });
 
@@ -172,6 +227,10 @@ public class Updateclass extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+
+                            SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss aa");
+                            time = format.format(Calendar.getInstance().getTime());
+
                             FirebaseDatabase.getInstance().getReference()
                                     .child("UserInfoWithUid").addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
@@ -179,9 +238,9 @@ public class Updateclass extends AppCompatActivity {
                                     for(DataSnapshot snp : snapshot.getChildren()){
                                         info = snp.getValue(studentinfo.class);
                                         year = info.getYear();
-                                        Toast.makeText(Updateclass.this, "!!"+year, Toast.LENGTH_SHORT).show();
+                                       // Toast.makeText(Updateclass.this, "!!"+year, Toast.LENGTH_SHORT).show();
                                         FirebaseDatabase.getInstance().getReference()
-                                                .child("Backup").child(info.getUid())
+                                                .child("Backup").child("Backup"+time).child(info.getUid())
                                                 .setValue(info);
 
                                         switch (year){
@@ -189,21 +248,25 @@ public class Updateclass extends AppCompatActivity {
                                                 info.setYear("second");
                                                 info.setDesignation("secondyear");
                                                 updatedata();
+                                                applydata();
                                                 break;
                                             case "second":
                                                 info.setYear("third");
                                                 info.setDesignation("thirdyear");
                                                 updatedata();
+                                                applydata();
                                                 break;
                                             case "third":
                                                 info.setYear("fourth");
                                                 info.setDesignation("fourthyear");
                                                 updatedata();
+                                                applydata();
                                                 break;
                                             case "fourth":
                                                 info.setYear("passout");
                                                 info.setDesignation("passout");
                                                 updatedata();
+                                                deletedata();
                                                 break;
                                             default:
                                                 updatedata();
@@ -212,6 +275,16 @@ public class Updateclass extends AppCompatActivity {
                                     FirebaseAuth.getInstance().signOut();
                                     FirebaseAuth.getInstance().signInWithEmailAndPassword(email,password);
                                     Toast.makeText(Updateclass.this, "Updated Successfully!", Toast.LENGTH_SHORT).show();
+                                }
+
+                                private void deletedata() {
+                                    FirebaseDatabase.getInstance().getReference()
+                                            .child("UserInfoWithUid").child(info.getUid()).removeValue();
+                                }
+
+                                private void applydata() {
+                                    FirebaseDatabase.getInstance().getReference()
+                                            .child("UserInfoWithUid").child(info.getUid()).setValue(info);
                                 }
 
                                 private void updatedata() {

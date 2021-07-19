@@ -49,7 +49,7 @@
         android:id="@+id/button16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="SendOtp"
+        android:text="Otp"
         app:layout_constraintBottom_toBottomOf="@+id/editTextTextPersonName13"
         app:layout_constraintStart_toEndOf="@+id/editTextTextPersonName13"
         app:layout_constraintTop_toTopOf="@+id/editTextTextPersonName13" />
@@ -70,8 +70,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:text="BackupData"
+        android:text="ReEstablish Previous data"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button15" />
+
+    <Button
+        android:id="@+id/button18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="Backup All Data"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button17" />
 </androidx.constraintlayout.widget.ConstraintLayout>
