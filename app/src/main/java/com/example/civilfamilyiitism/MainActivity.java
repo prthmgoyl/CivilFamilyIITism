@@ -2,10 +2,17 @@ package com.example.civilfamilyiitism;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,6 +30,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
+
 public class MainActivity extends AppCompatActivity {
 
     private TextView notReg;
@@ -32,7 +46,9 @@ public class MainActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
     DatabaseReference reference;
     Boolean check = false;
+    String read="" , line  = null , emaill="hello",passwordl="hello";
     String uid , blockeduid;
+    TextView onetap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +60,61 @@ public class MainActivity extends AppCompatActivity {
         notReg = findViewById(R.id.textView2);
         loginBtn = findViewById(R.id.button);
         reference = FirebaseDatabase.getInstance().getReference();
+        onetap = (TextView)findViewById(R.id.textView12);
+
+        try{
+
+            if(ContextCompat.checkSelfPermission(MainActivity.this,
+                    Manifest.permission.READ_EXTERNAL_STORAGE)== PackageManager.PERMISSION_DENIED){
+
+                ActivityCompat.requestPermissions(MainActivity.this,
+                        new String[]{ Manifest.permission.READ_EXTERNAL_STORAGE},1);
+
+            }
+            else if(ContextCompat.checkSelfPermission(MainActivity.this,
+                    Manifest.permission.READ_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED){
+                File file = new File(Environment.getExternalStorageDirectory(),"uid.txt");
+                FileInputStream fis = new FileInputStream(file);
+                InputStreamReader isr = new InputStreamReader(fis);
+                BufferedReader buff = new BufferedReader(isr);
+
+
+                while ((line= buff.readLine())!=null){
+                    read = read+line;
+                }
+                FirebaseDatabase.getInstance().getReference()
+                        .child("UserInfoWithUid")
+                        .child(read)
+                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                studentinfo info = snapshot.getValue(studentinfo.class);
+                                emaill = info.getEmail();
+                                passwordl = info.getPassword();
+                                if(emaill!="hello"&&passwordl!="hello"){
+                                    onetap.setVisibility(View.VISIBLE);
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                Toast.makeText(MainActivity.this, "Connection Rejected", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+            }
+
+        }catch (Exception e){
+
+        }
+
+        onetap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                email.setText(emaill);
+                password.setText(passwordl);
+            }
+        });
+
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,9 +208,55 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
     public void Changetoregisterpage(View view) {
 
         startActivity(new Intent(MainActivity.this,RegisterPage.class));
         finish();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode==1 && grantResults[0]==PackageManager.PERMISSION_GRANTED){
+            {
+                try{
+                File file = new File(Environment.getExternalStorageDirectory(),"uid.txt");
+                FileInputStream fis = new FileInputStream(file);
+                InputStreamReader isr = new InputStreamReader(fis);
+                BufferedReader buff = new BufferedReader(isr);
+
+
+                while ((line= buff.readLine())!=null){
+                    read = read+line;
+                }
+                FirebaseDatabase.getInstance().getReference()
+                        .child("UserInfoWithUid")
+                        .child(read)
+                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                studentinfo info = snapshot.getValue(studentinfo.class);
+                                emaill = info.getEmail();
+                                passwordl = info.getPassword();
+                                if(emaill!="hello"&&passwordl!="hello"){
+                                    onetap.setVisibility(View.VISIBLE);
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                Toast.makeText(MainActivity.this, "Connection Rejected", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+            }catch (Exception e){
+
+                }
+            }
+
+        }
+        else{
+            Toast.makeText(this, "Denying this you will not able to use autofill", Toast.LENGTH_SHORT).show();
+        }
     }
 }
