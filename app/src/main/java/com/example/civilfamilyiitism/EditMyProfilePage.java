@@ -1,8 +1,12 @@
 package com.example.civilfamilyiitism;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -25,9 +29,10 @@ import com.google.firebase.storage.FirebaseStorage;
 public class EditMyProfilePage extends AppCompatActivity {
     EditText admno , username , phoneno;
     TextView email , year;
-    String uid;
+    String uid,number;
     Button updatebtn;
     ImageView userimage;
+    studentinfo info;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,13 +52,21 @@ public class EditMyProfilePage extends AppCompatActivity {
                 .child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                studentinfo info = snapshot.getValue(studentinfo.class);
+                 info = snapshot.getValue(studentinfo.class);
+                 number = info.getPhone();
+                 admno.setText(info.getDesignation());
                 username.setText(info.getUsername());
                 phoneno.setText(info.getPhone());
                 email.setText(info.getEmail());
                 year.setText(info.getYear().toUpperCase());
 
                 try {
+                    Glide
+                            .with(getApplicationContext())
+                            .load(R.drawable.ic_baseline_person_24_userimage)
+                            .centerCrop()
+                            .into(userimage);
+
                     FirebaseStorage.getInstance().getReference().child("images")
                             .child(uid)
                             .getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -84,6 +97,35 @@ public class EditMyProfilePage extends AppCompatActivity {
         updatebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(EditMyProfilePage.this);
+                builder.setTitle("Update Profile");
+                builder.setMessage("Are you sure you want to update your profile...");
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        info.setDesignation(admno.getText().toString());
+                        info.setUsername(username.getText().toString());
+                        info.setPhone(phoneno.getText().toString());
+
+                        FirebaseDatabase.getInstance().getReference()
+                                .child("UserInfoWithUid").child(uid).setValue(info);
+                        FirebaseDatabase.getInstance().getReference()
+                                .child("UserInfo").child(number).removeValue();
+                        FirebaseDatabase.getInstance().getReference()
+                                .child("UserInfo").child(info.getPhone()).setValue(info);
+                        FirebaseDatabase.getInstance().getReference()
+                                .child(info.getYear()).child(info.getUid()).setValue(info);
+                        Toast.makeText(EditMyProfilePage.this, "Updated Successfully!", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                builder.show();
 
             }
         });

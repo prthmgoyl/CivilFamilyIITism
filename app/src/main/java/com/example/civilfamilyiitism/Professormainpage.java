@@ -43,7 +43,6 @@ public class Professormainpage extends AppCompatActivity {
     String check = "null";
     Uri filepath;
     ImageView userimage;
-    Bitmap bitmap;
      TextView name;
     RecyclerView rcv;
     ProfessorRecyclerViewAdapter adapter;
@@ -283,7 +282,8 @@ public class Professormainpage extends AppCompatActivity {
         if (requestCode == 1 && resultCode == RESULT_OK) {
             filepath = data.getData();
             try {
-                FirebaseStorage.getInstance().getReference().child("images").child(FirebaseAuth.getInstance().getUid())
+                FirebaseStorage.getInstance().getReference().child("images")
+                        .child(FirebaseAuth.getInstance().getUid())
                         .putFile(filepath)
                         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
@@ -294,10 +294,11 @@ public class Professormainpage extends AppCompatActivity {
                                         .addOnSuccessListener(new OnSuccessListener<Uri>() {
                                             @Override
                                             public void onSuccess(Uri uri) {
-                                                FirebaseDatabase.getInstance().getReference()
-                                                        .child("Images")
-                                                        .child(FirebaseAuth.getInstance().getUid())
-                                                        .setValue(uri.toString());
+                                                Glide
+                                                        .with(getApplicationContext())
+                                                        .load(uri.toString())
+                                                        .centerCrop()
+                                                        .into(userimage);
                                             }
                                         });
 
