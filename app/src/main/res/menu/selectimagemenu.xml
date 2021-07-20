@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/changeimage"
+        android:orderInCategory="100"
+        android:title="Change Image" />
+    <item
+        android:id="@+id/editprofile"
+        android:orderInCategory="101"
+        android:title="Edit Profile" />
+    <item
+        android:id="@+id/signout"
+        android:orderInCategory="102"
+        android:title="SignOut" />
+</menu>

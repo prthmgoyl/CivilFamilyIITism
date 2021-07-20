@@ -2,17 +2,21 @@ package com.example.civilfamilyiitism;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -118,9 +122,48 @@ public class Professormainpage extends AppCompatActivity {
         userimage.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
-               Intent intent = new Intent(Intent.ACTION_PICK);
-               intent.setType("image/");
-               startActivityForResult(Intent.createChooser(intent,"SelectImage"),1);
+
+               PopupMenu popupMenu = new PopupMenu(Professormainpage.this,v);
+               popupMenu.inflate(R.menu.selectimagemenu);
+               popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                   @Override
+                   public boolean onMenuItemClick(MenuItem item) {
+                       switch(item.getItemId()){
+                           case R.id.editprofile:
+                               startActivity(new Intent(Professormainpage.this,EditMyProfilePage.class));
+                               return true;
+                           case R.id.changeimage:
+                               Intent intent = new Intent(Intent.ACTION_PICK);
+                               intent.setType("image/");
+                               startActivityForResult(Intent.createChooser(intent,"SelectImage"),1);
+                               return true;
+                           case R.id.signout:
+                               AlertDialog.Builder builder = new AlertDialog.Builder(Professormainpage.this);
+                               builder.setTitle("SignOut");
+                               builder.setMessage("Are you sure you want to sign out...?");
+                               builder.setPositiveButton("SignOut", new DialogInterface.OnClickListener() {
+                                   @Override
+                                   public void onClick(DialogInterface dialog, int which) {
+                                       FirebaseAuth.getInstance().signOut();
+                                       startActivity(new Intent(Professormainpage.this,MainActivity.class));
+                                       finish();
+                                   }
+                               });
+                               builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                   @Override
+                                   public void onClick(DialogInterface dialog, int which) {
+
+                                   }
+                               });
+                               builder.show();
+                               return true;
+                           default:
+                               return false;
+                       }
+                   }
+               });
+               popupMenu.show();
+
            }
        });
 
