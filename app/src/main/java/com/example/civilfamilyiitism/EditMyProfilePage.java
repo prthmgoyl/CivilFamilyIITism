@@ -33,6 +33,7 @@ public class EditMyProfilePage extends AppCompatActivity {
     Button updatebtn;
     ImageView userimage;
     studentinfo info;
+    String check;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +59,27 @@ public class EditMyProfilePage extends AppCompatActivity {
                 username.setText(info.getUsername());
                 phoneno.setText(info.getPhone());
                 email.setText(info.getEmail());
-                year.setText(info.getYear().toUpperCase());
+                check = info.getYear();
+                if(check.equals("zero")){
+                    year.setText("Professor");
+                }
+                else if (check.equals("first")){
+                    year.setText("First Year");
+                }
+                else if (check.equals("second")){
+                    year.setText("Second Year");
+                }
+                else if (check.equals("third")){
+                    year.setText("Third Year");
+                }
+                else if (check.equals("fourth")){
+                    year.setText("Fourth Year");
+                }
+                else{
+                    year.setText("Not Found");
+                }
+
+
 
                 try {
                     Glide
@@ -116,6 +137,7 @@ public class EditMyProfilePage extends AppCompatActivity {
                         FirebaseDatabase.getInstance().getReference()
                                 .child(info.getYear()).child(info.getUid()).setValue(info);
                         Toast.makeText(EditMyProfilePage.this, "Updated Successfully!", Toast.LENGTH_SHORT).show();
+                        number = phoneno.getText().toString();
 
                     }
                 });
