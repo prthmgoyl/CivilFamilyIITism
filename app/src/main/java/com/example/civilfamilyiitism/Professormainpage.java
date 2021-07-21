@@ -46,7 +46,7 @@ public class Professormainpage extends AppCompatActivity {
      TextView name;
     RecyclerView rcv;
     ProfessorRecyclerViewAdapter adapter;
-
+    ImageView barprofile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +67,7 @@ public class Professormainpage extends AppCompatActivity {
         img12 = findViewById(R.id.imageView30);
        userimage = (ImageView)findViewById(R.id.imageView18);
        name = (TextView)findViewById(R.id.textView11);
+       barprofile = (ImageView)findViewById(R.id.imageView25);
 
 
         rcv = (RecyclerView)findViewById(R.id.recyclerViewproff);
@@ -262,6 +263,13 @@ public class Professormainpage extends AppCompatActivity {
                 Toast.makeText(Professormainpage.this, "img12", Toast.LENGTH_SHORT).show();
             }
         });
+        barprofile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Professormainpage.this,EditMyProfilePage.class));
+            }
+        });
+
 
     }
 

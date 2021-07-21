@@ -292,7 +292,7 @@
     <View
         android:id="@+id/view10"
         android:layout_width="wrap_content"
-        android:layout_height="70dp"
+        android:layout_height="100dp"
         android:layout_marginTop="35dp"
         android:background="@drawable/bardesignprofessormainpage"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -302,8 +302,8 @@
 
     <ImageView
         android:id="@+id/imageView25"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_marginTop="6dp"
         android:layout_marginBottom="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -315,8 +315,8 @@
 
     <ImageView
         android:id="@+id/imageView19"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_marginTop="6dp"
         android:layout_marginEnd="35dp"
         android:layout_marginRight="35dp"
@@ -328,8 +328,8 @@
 
     <ImageView
         android:id="@+id/imageView27"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_marginStart="35dp"
         android:layout_marginLeft="35dp"
         android:layout_marginTop="2dp"
@@ -342,8 +342,8 @@
 
     <ImageView
         android:id="@+id/imageView31"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_marginTop="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/floatingActionButton"
