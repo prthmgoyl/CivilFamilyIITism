@@ -47,6 +47,13 @@ public class RecyclerViewAdapterone extends FirebaseRecyclerAdapter<studentinfo,
         holder.txv2.setText(model.getDesignation());
         holder.txv3.setText(model.getYear());
         try {
+
+            Glide
+                    .with(mContext)
+                    .load(R.drawable.ic_baseline_fingerprint_24_2)
+                    .centerCrop()
+                    .into(holder.img);
+
             FirebaseStorage.getInstance().getReference().child("images")
                     .child(model.getUid())
                     .getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {

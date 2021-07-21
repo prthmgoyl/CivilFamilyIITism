@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -76,7 +77,7 @@ public class Professormainpage extends AppCompatActivity {
         rcv.setLayoutManager(new LinearLayoutManager(this,RecyclerView.HORIZONTAL,false));
         FirebaseRecyclerOptions<studentinfo> options =
                 new FirebaseRecyclerOptions.Builder<studentinfo>()
-                        .setQuery(FirebaseDatabase.getInstance().getReference().child("zero"), studentinfo.class)
+                        .setQuery(FirebaseDatabase.getInstance().getReference().child("zero").orderByChild("username"), studentinfo.class)
                         .build();
 
         adapter=new ProfessorRecyclerViewAdapter(options);
