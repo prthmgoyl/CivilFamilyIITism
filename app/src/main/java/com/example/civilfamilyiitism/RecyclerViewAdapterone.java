@@ -1,7 +1,12 @@
 package com.example.civilfamilyiitism;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,23 +14,29 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
+
+import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class RecyclerViewAdapterone extends FirebaseRecyclerAdapter<studentinfo, RecyclerViewAdapterone.holder> {
 
-
+    Context mContext;
     public RecyclerViewAdapterone(@NonNull FirebaseRecyclerOptions<studentinfo> options) {
         super(options);
     }
@@ -33,20 +44,79 @@ public class RecyclerViewAdapterone extends FirebaseRecyclerAdapter<studentinfo,
     @Override
     protected void onBindViewHolder(@NonNull final holder holder, final int position, @NonNull studentinfo model) {
         holder.txv1.setText(model.getUsername());
-        holder.txv2.setText(model.getEmail());
-        holder.txv3.setText(model.getPhone());
+        holder.txv2.setText(model.getDesignation());
+        holder.txv3.setText(model.getYear());
+        try {
+            FirebaseStorage.getInstance().getReference().child("images")
+                    .child(model.getUid())
+                    .getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    if(uri!=null){
+                        Glide
+                                .with(mContext)
+                                .load(uri.toString())
+                                .centerCrop()
+                                .into(holder.img);
+                    }
+                }
+            });
+
+        } catch (Exception e) {
+        }
        // holder.txv4.setText(model.getDesignation());
+        holder.img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Dialog dialog = new Dialog(mContext);
+                dialog.setContentView(R.layout.infodialog);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                ImageView image = (ImageView) dialog.findViewById(R.id.imageView35);
+                 TextView txv2 = (TextView)dialog.findViewById(R.id.editTextTextPersonName14);
+                 TextView txv3 = (TextView)dialog.findViewById(R.id.editTextTextPersonName15);
+                 TextView txv4 = (TextView)dialog.findViewById(R.id.editTextTextEmailAddress5);
+                 TextView txv5 = (TextView)dialog.findViewById(R.id.editTextPhone4);
+                TextView txv6 = (TextView)dialog.findViewById(R.id.textView25);
+
+                txv2.setText(model.getUsername());
+                txv3.setText(model.getDesignation());
+                txv4.setText(model.getEmail());
+                txv5.setText(model.getPhone());
+                txv6.setText(model.getYear());
+                try{
+                    FirebaseStorage.getInstance().getReference().child("images")
+                            .child(model.getUid())
+                            .getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            if(uri!=null){
+                                Glide
+                                        .with(mContext)
+                                        .load(uri.toString())
+                                        .centerCrop()
+                                        .into(image);
+                            }
+                        }
+                    });
+                }catch (Exception e){
+
+                }
+                dialog.show();
+            }
+        });
     }
 
     @NonNull
     @Override
     public holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row,parent,false);
+        mContext = parent.getContext();
         return new holder(view);
     }
 
     class holder extends RecyclerView.ViewHolder{
         TextView txv1,txv2,txv3;
+        ImageView img;
 
         public holder(@NonNull View itemView) {
             super(itemView);
@@ -56,6 +126,7 @@ public class RecyclerViewAdapterone extends FirebaseRecyclerAdapter<studentinfo,
             txv1=(TextView)itemView.findViewById(R.id.textView7);
             txv2=(TextView)itemView.findViewById(R.id.textView6);
             txv3=(TextView)itemView.findViewById(R.id.textView5);
+            img = (ImageView)itemView.findViewById(R.id.imageView24);
         //    txv4 = (TextView)itemView.findViewById(R.id.textView19);
 
         }

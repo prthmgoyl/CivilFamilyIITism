@@ -13,6 +13,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -46,7 +47,7 @@ public class Professormainpage extends AppCompatActivity {
      TextView name;
     RecyclerView rcv;
     ProfessorRecyclerViewAdapter adapter;
-    ImageView barprofile;
+    ImageView barprofile ,barsearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +69,7 @@ public class Professormainpage extends AppCompatActivity {
        userimage = (ImageView)findViewById(R.id.imageView18);
        name = (TextView)findViewById(R.id.textView11);
        barprofile = (ImageView)findViewById(R.id.imageView25);
+       barsearch = (ImageView)findViewById(R.id.imageView27);
 
 
         rcv = (RecyclerView)findViewById(R.id.recyclerViewproff);
@@ -267,6 +269,12 @@ public class Professormainpage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Professormainpage.this,EditMyProfilePage.class));
+            }
+        });
+        barsearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Professormainpage.this,Searchview.class));
             }
         });
 
