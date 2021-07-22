@@ -6,6 +6,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -34,6 +36,7 @@ public class Settingpage extends AppCompatActivity {
     Switch autofill;
     ImageView autofillimg;
     String read = "",line="";
+    TextView myaccount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +45,7 @@ public class Settingpage extends AppCompatActivity {
 
         autofill = (Switch)findViewById(R.id.switch1);
         autofillimg = (ImageView)findViewById(R.id.imageView37);
+        myaccount = (TextView)findViewById(R.id.textView26);
 
 
         try{
@@ -60,7 +64,7 @@ public class Settingpage extends AppCompatActivity {
         autofillimg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                autofill.setError("Turning this on here and giving required permission while login you will be able to login with one tap");
+                Toast.makeText(Settingpage.this, "Turning this on here and giving required permission while login you will be able to login with one tap", Toast.LENGTH_SHORT).show();
             }
         });
         autofill.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -77,8 +81,18 @@ public class Settingpage extends AppCompatActivity {
                 }
                 else{
 
+                     File file = new File(Environment.getExternalStorageDirectory(),"autofill.txt");
+                     if(file.exists()){
+                         file.delete();
+                     }
 
                 }
+            }
+        });
+        myaccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Settingpage.this,EditMyProfilePage.class));
             }
         });
 
