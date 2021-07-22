@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CivilFamilyIITism">
-        <activity android:name=".Searchview"></activity>
+        <activity android:name=".searchsplashscreen" android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"></activity>
+        <activity android:name=".Searchview" android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
         <activity
             android:name=".EditMyProfilePage"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />

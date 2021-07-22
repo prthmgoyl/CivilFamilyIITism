@@ -150,6 +150,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/ediitextdesignregisterpage"
+            android:buttonTint="#0E74C5"
+            android:checked="false"
             android:paddingRight="10sp"
             android:text="Professor"
             android:textColorHighlight="#0E74C5"
@@ -165,6 +167,7 @@
             android:paddingRight="10sp"
             android:text="1st Year"
             android:textColorHighlight="#0E74C5"
+            android:buttonTint="#0E74C5"
             android:textColorLink="#0E74C5" />
 
         <RadioButton
@@ -174,6 +177,7 @@
             android:layout_marginTop="1dp"
             android:background="@drawable/ediitextdesignregisterpage"
             android:paddingRight="10sp"
+            android:buttonTint="#0E74C5"
             android:text="2nd Year"
             android:textColorHighlight="#0E74C5"
             android:textColorLink="#0E74C5" />
@@ -185,6 +189,7 @@
             android:layout_marginTop="1dp"
             android:background="@drawable/ediitextdesignregisterpage"
             android:paddingRight="10sp"
+            android:buttonTint="#0E74C5"
             android:text="3rd Year"
             android:textColorHighlight="#0E74C5"
             android:textColorLink="#0E74C5" />
@@ -193,6 +198,7 @@
             android:id="@+id/radioButton2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:buttonTint="#0E74C5"
             android:layout_marginTop="1dp"
             android:background="@drawable/ediitextdesignregisterpage"
             android:paddingRight="10sp"

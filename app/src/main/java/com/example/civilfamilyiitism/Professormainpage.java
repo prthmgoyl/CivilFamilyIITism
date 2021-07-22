@@ -72,16 +72,22 @@ public class Professormainpage extends AppCompatActivity {
        barprofile = (ImageView)findViewById(R.id.imageView25);
        barsearch = (ImageView)findViewById(R.id.imageView27);
 
+      try {
+          rcv = (RecyclerView) findViewById(R.id.recyclerViewproff);
+          rcv.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+          FirebaseRecyclerOptions<studentinfo> options =
+                  new FirebaseRecyclerOptions.Builder<studentinfo>()
+                          .setQuery(FirebaseDatabase.getInstance().getReference().child("zero").orderByChild("username"), studentinfo.class)
+                          .build();
 
-        rcv = (RecyclerView)findViewById(R.id.recyclerViewproff);
-        rcv.setLayoutManager(new LinearLayoutManager(this,RecyclerView.HORIZONTAL,false));
-        FirebaseRecyclerOptions<studentinfo> options =
-                new FirebaseRecyclerOptions.Builder<studentinfo>()
-                        .setQuery(FirebaseDatabase.getInstance().getReference().child("zero").orderByChild("username"), studentinfo.class)
-                        .build();
+          adapter = new ProfessorRecyclerViewAdapter(options);
+          rcv.setAdapter(adapter);
+          adapter.startListening();
 
-        adapter=new ProfessorRecyclerViewAdapter(options);
-        rcv.setAdapter(adapter);
+      }
+      catch (Exception e){
+          Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+      }
 
         try{
             FirebaseDatabase.getInstance().getReference().child("UserInfoWithUid")
@@ -275,23 +281,13 @@ public class Professormainpage extends AppCompatActivity {
         barsearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Professormainpage.this,Searchview.class));
+                startActivity(new Intent(Professormainpage.this,searchsplashscreen.class));
             }
         });
 
 
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        adapter.startListening();
-    }
-    @Override
-    protected void onStop() {
-        super.onStop();
-        adapter.stopListening();
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

@@ -21,6 +21,7 @@ import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
@@ -37,8 +38,9 @@ public class Updateclass extends AppCompatActivity {
     EditText edt1,edt2,edt3;
     Button btn,sendotp , restablishbtn ,backup ;
     String codebysystem = "null";
-    String uid, email,password,time;
+    String uid, email,password,time,yr;
     int i = 0;
+    DatabaseReference reference;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +55,7 @@ public class Updateclass extends AppCompatActivity {
        restablishbtn = (Button)findViewById(R.id.button17);
        backup = (Button)findViewById(R.id.button18);
 
-
+        reference = FirebaseDatabase.getInstance().getReference();
 
         FirebaseDatabase.getInstance().getReference("UserInfoWithUid")
                 .child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -84,7 +86,7 @@ public class Updateclass extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         for(DataSnapshot snp : snapshot.getChildren()) {
                             info = snp.getValue(studentinfo.class);
-                            FirebaseDatabase.getInstance().getReference()
+                           reference
                                     .child("Backup").child("Backup" + time).child(info.getUid())
                                     .setValue(info);
                         }
@@ -133,14 +135,28 @@ public class Updateclass extends AppCompatActivity {
                 }
                 else if(i==1){
                     Toast.makeText(Updateclass.this, edt1.getText().toString(), Toast.LENGTH_SHORT).show();
-                    FirebaseDatabase.getInstance().getReference()
+                    reference
                             .child("Backup").child(edt1.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            reference
+                                    .child("first").removeValue();
+                            reference
+                                    .child("second").removeValue();
+                            reference
+                                    .child("third").removeValue();
+                            reference
+                                    .child("fourth").removeValue();
                             for(DataSnapshot snp :snapshot.getChildren()){
                                 info = snp.getValue(studentinfo.class);
-                                FirebaseDatabase.getInstance().getReference()
+                                reference
                                         .child("UserInfoWithUid").child(info.getUid()).setValue(info);
+                                reference
+                                        .child("UserInfo").child(info.getPhone()).setValue(info);
+                                reference
+                                        .child(info.getYear()).child(info.getUid()).setValue(info);
+                                reference
+                                        .child("passout").child(info.getUid()).removeValue();
                             }
                         }
 
@@ -233,7 +249,10 @@ public class Updateclass extends AppCompatActivity {
                         if (task.isSuccessful()) {
 
                             SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss aa");
+                            SimpleDateFormat formatyear = new SimpleDateFormat("yyyy");
+
                             time = format.format(Calendar.getInstance().getTime());
+                            yr = formatyear.format(Calendar.getInstance().getTime());
 
                             FirebaseDatabase.getInstance().getReference()
                                     .child("UserInfoWithUid").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -250,26 +269,23 @@ public class Updateclass extends AppCompatActivity {
                                         switch (year){
                                             case "first":
                                                 info.setYear("second");
-                                                info.setDesignation("secondyear");
                                                 updatedata();
                                                 applydata();
                                                 break;
                                             case "second":
                                                 info.setYear("third");
-                                                info.setDesignation("thirdyear");
                                                 updatedata();
                                                 applydata();
                                                 break;
                                             case "third":
                                                 info.setYear("fourth");
-                                                info.setDesignation("fourthyear");
                                                 updatedata();
                                                 applydata();
                                                 break;
                                             case "fourth":
-                                                info.setYear("passout");
-                                                info.setDesignation("passout");
+                                                info.setYear("Passout"+yr);
                                                 updatedata();
+                                                applydataforpassout();
                                                 deletedata();
                                                 break;
                                             default:
@@ -282,17 +298,31 @@ public class Updateclass extends AppCompatActivity {
                                 }
 
                                 private void deletedata() {
-                                    FirebaseDatabase.getInstance().getReference()
+                                    reference
                                             .child("UserInfoWithUid").child(info.getUid()).removeValue();
                                 }
 
                                 private void applydata() {
-                                    FirebaseDatabase.getInstance().getReference()
+                                   reference
                                             .child("UserInfoWithUid").child(info.getUid()).setValue(info);
+                                    reference
+                                            .child("UserInfo").child(info.getPhone()).setValue(info);
+                                    reference
+                                            .child(info.getYear()).child(info.getUid()).setValue(info);
+                                    reference
+                                            .child(year).child(info.getUid()).removeValue();
+                                }private void applydataforpassout() {
+
+                                    reference
+                                            .child("UserInfo").child(info.getPhone()).setValue(info);
+                                    reference
+                                            .child("passout").child(info.getUid()).setValue(info);
+                                    reference
+                                            .child(year).child(info.getUid()).removeValue();
                                 }
 
                                 private void updatedata() {
-                                    FirebaseDatabase.getInstance().getReference()
+                                    reference
                                             .child("Applicable").child(info.getUid()).setValue(info);
                                 }
                                 @Override

@@ -64,15 +64,21 @@ public class Mainpage extends AppCompatActivity {
         barprofile = (ImageView)findViewById(R.id.imageView25);
 
 
-        rcv = (RecyclerView)findViewById(R.id.recyclerViewproffstudentside);
-        rcv.setLayoutManager(new LinearLayoutManager(this,RecyclerView.HORIZONTAL,false));
-        FirebaseRecyclerOptions<studentinfo> options =
-                new FirebaseRecyclerOptions.Builder<studentinfo>()
-                        .setQuery(FirebaseDatabase.getInstance().getReference().child("zero"), studentinfo.class)
-                        .build();
+        try {
+            rcv = (RecyclerView) findViewById(R.id.recyclerViewproffstudentside);
+            rcv.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+            FirebaseRecyclerOptions<studentinfo> options =
+                    new FirebaseRecyclerOptions.Builder<studentinfo>()
+                            .setQuery(FirebaseDatabase.getInstance().getReference().child("zero"), studentinfo.class)
+                            .build();
 
-        adapter=new ProfessorRecyclerViewAdapter(options);
-        rcv.setAdapter(adapter);
+            adapter = new ProfessorRecyclerViewAdapter(options);
+            rcv.setAdapter(adapter);
+            adapter.startListening();
+
+        }catch (Exception e){
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
 
 
 
@@ -270,16 +276,6 @@ public class Mainpage extends AppCompatActivity {
                 startActivity(new Intent(Mainpage.this,EditMyProfilePage.class));
             }
         });
-    }
-    @Override
-    protected void onStart() {
-        super.onStart();
-        adapter.startListening();
-    }
-    @Override
-    protected void onStop() {
-        super.onStop();
-        adapter.stopListening();
     }
 
     @Override

@@ -6,18 +6,43 @@
     android:layout_height="match_parent"
     tools:context=".Searchview">
 
+    <View
+        android:id="@+id/view3"
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        android:background="@drawable/searchdesign"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <SearchView
         android:id="@+id/searchView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
         android:layout_marginRight="20dp"
+        android:background="@drawable/edittextborder"
         android:iconifiedByDefault="false"
         android:queryHint="Search Here"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" >
+
+    </SearchView>
+
+    <ScrollView
+        android:id="@+id/scrollView5"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="70dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -25,13 +50,86 @@
         android:id="@+id/rcv"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="2dp"
-        android:layout_marginLeft="2dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="2dp"
-        android:layout_marginRight="2dp"
+        android:layout_marginTop="62dp"
+        android:background="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchView" />
+        app:layout_constraintTop_toTopOf="@+id/scrollView5" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/view3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view3">
+
+        <RadioButton
+            android:id="@+id/radioButton16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2sp"
+            android:layout_marginLeft="2sp"
+            android:layout_marginEnd="2sp"
+            android:layout_marginRight="2sp"
+            android:background="@drawable/ediitextdesignregisterpage"
+            android:buttonTint="#000"
+            android:checked="true"
+            android:gravity="center"
+            android:paddingTop="5sp"
+            android:paddingRight="10dp"
+            android:paddingBottom="5sp"
+            android:rotationX="8"
+            android:selectAllOnFocus="false"
+
+            android:soundEffectsEnabled="false"
+            android:text="All        "
+            android:textColor="#000"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <RadioButton
+            android:id="@+id/radioButton17"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2sp"
+            android:layout_marginLeft="2sp"
+            android:layout_marginEnd="2sp"
+            android:layout_marginRight="2sp"
+            android:background="@drawable/ediitextdesignregisterpage"
+            android:gravity="center"
+            android:paddingTop="5sp"
+            android:paddingRight="10dp"
+            android:paddingBottom="5sp"
+            android:rotationX="8"
+            android:text="Existing"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:buttonTint="#000" />
+
+        <RadioButton
+            android:id="@+id/radioButton18"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2sp"
+            android:layout_marginLeft="2sp"
+            android:layout_marginEnd="2sp"
+            android:layout_marginRight="2sp"
+            android:background="@drawable/ediitextdesignregisterpage"
+            android:gravity="center"
+            android:paddingTop="5sp"
+            android:paddingRight="10dp"
+            android:paddingBottom="5sp"
+            android:rotationX="8"
+            android:text="Passouts"
+            android:textColor="#000"
+
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:buttonTint="#000" />
+    </RadioGroup>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
