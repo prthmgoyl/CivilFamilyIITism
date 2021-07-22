@@ -34,6 +34,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
@@ -66,8 +67,6 @@ public class MainActivity extends AppCompatActivity {
         reference = FirebaseDatabase.getInstance().getReference();
         onetap = (TextView)findViewById(R.id.textView12);
 
-        try{
-
             if(ContextCompat.checkSelfPermission(MainActivity.this,
                     Manifest.permission.READ_EXTERNAL_STORAGE)== PackageManager.PERMISSION_DENIED){
 
@@ -77,39 +76,14 @@ public class MainActivity extends AppCompatActivity {
             }
             else if(ContextCompat.checkSelfPermission(MainActivity.this,
                     Manifest.permission.READ_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED){
-                File file = new File(Environment.getExternalStorageDirectory(),"uid.txt");
-                FileInputStream fis = new FileInputStream(file);
-                InputStreamReader isr = new InputStreamReader(fis);
-                BufferedReader buff = new BufferedReader(isr);
 
+                try {
+                    autofill();
+                } catch (Exception e) {
 
-                while ((line= buff.readLine())!=null){
-                    read = read+line;
                 }
-                FirebaseDatabase.getInstance().getReference()
-                        .child("UserInfoWithUid")
-                        .child(read)
-                        .addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                studentinfo info = snapshot.getValue(studentinfo.class);
-                                emaill = info.getEmail();
-                                passwordl = info.getPassword();
-                                if(emaill!="hello"&&passwordl!="hello"){
-                                    onetap.setVisibility(View.VISIBLE);
-                                }
-                            }
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-                                Toast.makeText(MainActivity.this, "Connection Rejected", Toast.LENGTH_SHORT).show();
-                            }
-                        });
             }
-
-        }catch (Exception e){
-
-        }
 
         onetap.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -225,34 +199,7 @@ public class MainActivity extends AppCompatActivity {
         if(requestCode==1 && grantResults[0]==PackageManager.PERMISSION_GRANTED){
             {
                 try{
-                File file = new File(Environment.getExternalStorageDirectory(),"uid.txt");
-                FileInputStream fis = new FileInputStream(file);
-                InputStreamReader isr = new InputStreamReader(fis);
-                BufferedReader buff = new BufferedReader(isr);
-
-
-                while ((line= buff.readLine())!=null){
-                    read = read+line;
-                }
-                FirebaseDatabase.getInstance().getReference()
-                        .child("UserInfoWithUid")
-                        .child(read)
-                        .addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                studentinfo info = snapshot.getValue(studentinfo.class);
-                                emaill = info.getEmail();
-                                passwordl = info.getPassword();
-                                if(emaill!="hello"&&passwordl!="hello"){
-                                    onetap.setVisibility(View.VISIBLE);
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-                                Toast.makeText(MainActivity.this, "Connection Rejected", Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                autofill();
             }catch (Exception e){
 
                 }
@@ -262,5 +209,36 @@ public class MainActivity extends AppCompatActivity {
         else{
             Toast.makeText(this, "Denying this you will not able to use autofill", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void autofill() throws Exception {
+        File file = new File(Environment.getExternalStorageDirectory(),"autofill.txt");
+        FileInputStream fis = new FileInputStream(file);
+        InputStreamReader isr = new InputStreamReader(fis);
+        BufferedReader buff = new BufferedReader(isr);
+
+
+        while ((line= buff.readLine())!=null){
+            read = read+line;
+        }
+        FirebaseDatabase.getInstance().getReference()
+                .child("UserInfoWithUid")
+                .child(read)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        studentinfo info = snapshot.getValue(studentinfo.class);
+                        emaill = info.getEmail();
+                        passwordl = info.getPassword();
+                        if(emaill!="hello"&&passwordl!="hello"){
+                            onetap.setVisibility(View.VISIBLE);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(MainActivity.this, "Connection Rejected", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 }

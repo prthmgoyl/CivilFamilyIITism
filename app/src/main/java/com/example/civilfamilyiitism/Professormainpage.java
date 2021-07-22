@@ -48,7 +48,7 @@ public class Professormainpage extends AppCompatActivity {
      TextView name;
     RecyclerView rcv;
     ProfessorRecyclerViewAdapter adapter;
-    ImageView barprofile ,barsearch;
+    ImageView barprofile ,barsearch,barsetting;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +71,7 @@ public class Professormainpage extends AppCompatActivity {
        name = (TextView)findViewById(R.id.textView11);
        barprofile = (ImageView)findViewById(R.id.imageView25);
        barsearch = (ImageView)findViewById(R.id.imageView27);
+       barsetting = (ImageView)findViewById(R.id.imageView19);
 
       try {
           rcv = (RecyclerView) findViewById(R.id.recyclerViewproff);
@@ -282,6 +283,12 @@ public class Professormainpage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Professormainpage.this,searchsplashscreen.class));
+            }
+        });
+        barsetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Professormainpage.this,Settingpage.class));
             }
         });
 

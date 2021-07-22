@@ -12,10 +12,11 @@ public class searchsplashscreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_searchsplashscreen);
 
+
         Thread thread = new Thread(){
             public void run(){
                 try {
-                    sleep(2000);
+                    sleep(500);
                     startActivity(new Intent(searchsplashscreen.this,Searchview.class));
                     finish();
                 } catch (InterruptedException e) {

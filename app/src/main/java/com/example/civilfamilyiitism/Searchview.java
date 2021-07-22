@@ -113,5 +113,30 @@ public class Searchview extends AppCompatActivity {
             rcv.setAdapter(adapter);
             adapter.startListening();
         }
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        finish();
+       // adapter.stopListening();
+
+        Thread thread = new Thread(){
+            public void run(){
+                try {
+                    sleep(100);
+                } catch (InterruptedException e) {
+                }
+            }
+        };
+        thread.start();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        adapter.stopListening();
     }
 }
