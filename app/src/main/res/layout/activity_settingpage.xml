@@ -42,7 +42,7 @@
                         android:checked="false"
                         android:drawableStart="@android:drawable/ic_lock_power_off"
                         android:padding="5sp"
-                        android:text="Autofill "
+                        android:text=" Autofill "
                         android:textColor="#000"
                         android:textSize="28sp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -83,7 +83,7 @@
                     android:layout_marginLeft="5sp"
                     android:drawableStart="@drawable/ic_baseline_person_24_registerpage"
                     android:padding="5sp"
-                    android:text="My Account"
+                    android:text=" My Account"
                     android:textColor="#000"
                     android:textSize="28sp" />
             </androidx.cardview.widget.CardView>
@@ -105,7 +105,7 @@
                     android:layout_marginLeft="5sp"
                     android:drawableStart="@drawable/ic_baseline_contacts_24"
                     android:padding="5sp"
-                    android:text="My Personal Information"
+                    android:text=" Personal Info"
                     android:textColor="#000"
                     android:textSize="28sp" />
             </androidx.cardview.widget.CardView>
