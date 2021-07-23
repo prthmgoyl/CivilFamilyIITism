@@ -36,7 +36,7 @@ public class Settingpage extends AppCompatActivity {
     Switch autofill;
     ImageView autofillimg;
     String read = "",line="";
-    TextView myaccount;
+    TextView myaccount , mypersonalinformation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +46,7 @@ public class Settingpage extends AppCompatActivity {
         autofill = (Switch)findViewById(R.id.switch1);
         autofillimg = (ImageView)findViewById(R.id.imageView37);
         myaccount = (TextView)findViewById(R.id.textView26);
+        mypersonalinformation = (TextView)findViewById(R.id.textView27);
 
 
         try{
@@ -93,6 +94,12 @@ public class Settingpage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Settingpage.this,EditMyProfilePage.class));
+            }
+        });
+        mypersonalinformation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Settingpage.this,MyPersonalInformation.class));
             }
         });
 
