@@ -1,9 +1,12 @@
 package com.example.civilfamilyiitism;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.ClipData;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -36,7 +39,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RecyclerViewAdapter extends FirebaseRecyclerAdapter<studentinfo,RecyclerViewAdapter.holder> {
-
+    personalinfo personal;
     Context mContext;
 
     public RecyclerViewAdapter(@NonNull FirebaseRecyclerOptions<studentinfo> options) {
@@ -76,6 +79,101 @@ public class RecyclerViewAdapter extends FirebaseRecyclerAdapter<studentinfo,Rec
         } catch (Exception e) {
         }
 
+        holder.img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Dialog dialog = new Dialog(mContext);
+                dialog.setContentView(R.layout.infodialog);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                ImageView image = (ImageView) dialog.findViewById(R.id.imageView35);
+                TextView txv2 = (TextView)dialog.findViewById(R.id.editTextTextPersonName14);
+                TextView txv3 = (TextView)dialog.findViewById(R.id.editTextTextPersonName15);
+                TextView txv4 = (TextView)dialog.findViewById(R.id.editTextTextEmailAddress5);
+                TextView txv5 = (TextView)dialog.findViewById(R.id.editTextPhone4);
+                TextView txv6 = (TextView)dialog.findViewById(R.id.textView25);
+                TextView more = (TextView)dialog.findViewById(R.id.textView30);
+                TextView back = (TextView)dialog.findViewById(R.id.textView31);
+
+
+                txv2.setText(model.getUsername());
+                txv3.setText(model.getDesignation());
+                txv4.setText(model.getEmail());
+                txv5.setText(model.getPhone());
+                txv6.setText(model.getYear());
+                try{
+                    FirebaseStorage.getInstance().getReference().child("images")
+                            .child(model.getUid())
+                            .getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            if(uri!=null){
+                                Glide
+                                        .with(mContext)
+                                        .load(uri.toString())
+                                        .centerCrop()
+                                        .into(image);
+                            }
+                        }
+                    });
+                }catch (Exception e){
+
+                }
+                try{
+                    FirebaseDatabase.getInstance().getReference()
+                            .child("personalinfo").child(model.getUid())
+                            .addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    if(snapshot.exists()){
+                                        personal = snapshot.getValue(personalinfo.class);
+                                        if((personal.getVisibility()).equals("public")){
+
+                                            more.setVisibility(View.VISIBLE);
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+                }
+                catch(Exception e){
+
+                }
+
+                dialog.show();
+                more.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        more.setVisibility(View.INVISIBLE);
+                        back.setVisibility(View.VISIBLE);
+
+                        txv2.setText(personal.getAlternatephone());
+                        txv3.setText(personal.getPresentaddress());
+                        txv4.setText(personal.getPermanentaddress());
+                        txv5.setText(personal.getDob());
+                        txv6.setText("");
+
+                    }
+                });
+                back.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        more.setVisibility(View.VISIBLE);
+                        back.setVisibility(View.INVISIBLE);
+
+                        txv2.setText(model.getUsername());
+                        txv3.setText(model.getDesignation());
+                        txv4.setText(model.getEmail());
+                        txv5.setText(model.getPhone());
+                        txv6.setText(model.getYear());
+                    }
+                });
+            }
+        });
+
         holder.img.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -88,7 +186,7 @@ public class RecyclerViewAdapter extends FirebaseRecyclerAdapter<studentinfo,Rec
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.edit_profile: {
-                                final DialogPlus dialogPlus = DialogPlus.newDialog(holder.txv2.getContext())
+                                final DialogPlus dialogPlus = DialogPlus.newDialog(mContext)
                                         .setContentHolder(new ViewHolder(R.layout.dialogcontent))
                                         .setExpanded(true, 1000)
                                         .create();

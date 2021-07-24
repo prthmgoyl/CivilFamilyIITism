@@ -101,31 +101,6 @@ public class Searchview extends AppCompatActivity {
 
             }
         });
-
-       /* spin.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                 String temp = spin.getSelectedItem().toString();
-                 if(temp.equals("By name")){
-                     check = "username";
-                 }
-                 else if(temp.equals("By Admission no.")){
-                     check = "designation";
-                 }
-                 else if(temp.equals("By Email")){
-                     check = "email";
-                 }
-                 else if(temp.equals("By Phone")){
-                     check = "phone";
-                 }
-                 processsearch(srchview.getQuery().toString(),check);
-
-            }
-        });
-
-        */
-
-
     }
 
     private void processsearch(String query , String field) {

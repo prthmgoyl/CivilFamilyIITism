@@ -54,10 +54,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Friendslistviewer" />
+        <activity android:name=".Friendslistviewer" android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"/>
         <activity android:name=".Ascepage" />
         <activity android:name=".UploadPdfpage" />
-        <activity android:name=".Studentlistviewer" />
+        <activity android:name=".Studentlistviewer" android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"/>
         <activity
             android:name=".Professormainpage"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
