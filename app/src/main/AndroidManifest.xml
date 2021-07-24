@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CivilFamilyIITism">
-        <activity android:name=".MyPersonalInformation"></activity>
+        <activity android:name=".Professorslistview"></activity>
+        <activity android:name=".MyPersonalInformation" />
         <activity android:name=".Settingpage" />
         <activity
             android:name=".searchsplashscreen"

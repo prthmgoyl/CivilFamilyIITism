@@ -24,7 +24,10 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
@@ -35,7 +38,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RecyclerViewAdapterone extends FirebaseRecyclerAdapter<studentinfo, RecyclerViewAdapterone.holder> {
-
+    personalinfo personal;
     Context mContext;
     public RecyclerViewAdapterone(@NonNull FirebaseRecyclerOptions<studentinfo> options) {
         super(options);
@@ -84,6 +87,9 @@ public class RecyclerViewAdapterone extends FirebaseRecyclerAdapter<studentinfo,
                  TextView txv4 = (TextView)dialog.findViewById(R.id.editTextTextEmailAddress5);
                  TextView txv5 = (TextView)dialog.findViewById(R.id.editTextPhone4);
                 TextView txv6 = (TextView)dialog.findViewById(R.id.textView25);
+                TextView more = (TextView)dialog.findViewById(R.id.textView30);
+                TextView back = (TextView)dialog.findViewById(R.id.textView31);
+
 
                 txv2.setText(model.getUsername());
                 txv3.setText(model.getDesignation());
@@ -108,7 +114,59 @@ public class RecyclerViewAdapterone extends FirebaseRecyclerAdapter<studentinfo,
                 }catch (Exception e){
 
                 }
+                try{
+                    FirebaseDatabase.getInstance().getReference()
+                            .child("personalinfo").child(model.getUid())
+                            .addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    if(snapshot.exists()){
+                                         personal = snapshot.getValue(personalinfo.class);
+                                       if((personal.getVisibility()).equals("public")){
+
+                                           more.setVisibility(View.VISIBLE);
+                                       }
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+                }
+                catch(Exception e){
+
+                }
+
                 dialog.show();
+                more.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        more.setVisibility(View.INVISIBLE);
+                        back.setVisibility(View.VISIBLE);
+
+                        txv2.setText(personal.getAlternatephone());
+                        txv3.setText(personal.getPresentaddress());
+                        txv4.setText(personal.getPermanentaddress());
+                        txv5.setText(personal.getDob());
+                        txv6.setText("");
+
+                    }
+                });
+                back.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        more.setVisibility(View.VISIBLE);
+                        back.setVisibility(View.INVISIBLE);
+
+                        txv2.setText(model.getUsername());
+                        txv3.setText(model.getDesignation());
+                        txv4.setText(model.getEmail());
+                        txv5.setText(model.getPhone());
+                        txv6.setText(model.getYear());
+                    }
+                });
             }
         });
     }

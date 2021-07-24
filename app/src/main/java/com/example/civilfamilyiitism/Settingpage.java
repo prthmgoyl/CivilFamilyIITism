@@ -36,7 +36,7 @@ public class Settingpage extends AppCompatActivity {
     Switch autofill;
     ImageView autofillimg;
     String read = "",line="";
-    TextView myaccount , mypersonalinformation;
+    TextView myaccount , mypersonalinformation , professorinfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +47,7 @@ public class Settingpage extends AppCompatActivity {
         autofillimg = (ImageView)findViewById(R.id.imageView37);
         myaccount = (TextView)findViewById(R.id.textView26);
         mypersonalinformation = (TextView)findViewById(R.id.textView27);
-
+        professorinfo = (TextView)findViewById(R.id.textView28);
 
         try{
             if(ContextCompat.checkSelfPermission(Settingpage.this,
@@ -100,6 +100,12 @@ public class Settingpage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Settingpage.this,MyPersonalInformation.class));
+            }
+        });
+        professorinfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Settingpage.this,Professorslistview.class));
             }
         });
 

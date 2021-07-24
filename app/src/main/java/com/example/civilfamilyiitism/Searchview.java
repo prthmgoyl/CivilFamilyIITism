@@ -6,9 +6,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.SearchView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -20,6 +23,8 @@ public class Searchview extends AppCompatActivity {
     RecyclerView rcv;
     RecyclerViewAdapterone adapter;
     RadioButton all, existing, passout;
+    Spinner spin ;
+    String check = "username";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,49 +36,99 @@ public class Searchview extends AppCompatActivity {
         all = findViewById(R.id.radioButton16);
         existing = findViewById(R.id.radioButton17);
         passout = findViewById(R.id.radioButton18);
+        spin = (Spinner)findViewById(R.id.spinner2);
 
-        processsearch("");
+        processsearch("",check);
 
         all.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 String search = srchview.getQuery().toString();
-                processsearch(search);
+                processsearch(search , check);
             }
         });
         existing.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 String search = srchview.getQuery().toString();
-                processsearch(search);
+                processsearch(search , check);
             }
         });
         passout.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 String search = srchview.getQuery().toString();
-                processsearch(search);
+                processsearch(search , check);
             }
         });
 
         srchview.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                processsearch(query);
+                processsearch(query , check);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                processsearch(newText);
+                processsearch(newText , check);
                 return false;
             }
         });
 
+        spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String temp = (String) spin.getItemAtPosition(position);
+                if(temp.equals("By name")){
+                    check = "username";
+                }
+                else if(temp.equals("By Admission no.")){
+                    check = "designation";
+                }
+                else if(temp.equals("By Email")){
+                    check = "email";
+                }
+                else if(temp.equals("By Phone")){
+                    check = "phone";
+                }
+                processsearch(srchview.getQuery().toString(),check);
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+       /* spin.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                 String temp = spin.getSelectedItem().toString();
+                 if(temp.equals("By name")){
+                     check = "username";
+                 }
+                 else if(temp.equals("By Admission no.")){
+                     check = "designation";
+                 }
+                 else if(temp.equals("By Email")){
+                     check = "email";
+                 }
+                 else if(temp.equals("By Phone")){
+                     check = "phone";
+                 }
+                 processsearch(srchview.getQuery().toString(),check);
+
+            }
+        });
+
+        */
+
 
     }
 
-    private void processsearch(String query) {
+    private void processsearch(String query , String field) {
         GridLayoutManager manager = new GridLayoutManager(Searchview.this, 2, RecyclerView.VERTICAL, false);
 
         rcv.setLayoutManager(manager);
@@ -84,7 +139,7 @@ public class Searchview extends AppCompatActivity {
             FirebaseRecyclerOptions<studentinfo> options =
                     new FirebaseRecyclerOptions.Builder<studentinfo>()
                             .setQuery(FirebaseDatabase.getInstance().getReference().child("UserInfoWithUid")
-                                    .orderByChild("username").startAt(query).endAt(query + "\uf8ff"), studentinfo.class)
+                                    .orderByChild(field).startAt(query).endAt(query + "\uf8ff"), studentinfo.class)
                             .build();
 
             adapter = new RecyclerViewAdapterone(options);
@@ -95,7 +150,7 @@ public class Searchview extends AppCompatActivity {
             FirebaseRecyclerOptions<studentinfo> options =
                     new FirebaseRecyclerOptions.Builder<studentinfo>()
                             .setQuery(FirebaseDatabase.getInstance().getReference().child("passout")
-                                    .orderByChild("username").startAt(query).endAt(query + "\uf8ff"), studentinfo.class)
+                                    .orderByChild(field).startAt(query).endAt(query + "\uf8ff"), studentinfo.class)
                             .build();
             adapter = new RecyclerViewAdapterone(options);
             rcv.setAdapter(adapter);
@@ -106,7 +161,7 @@ public class Searchview extends AppCompatActivity {
             FirebaseRecyclerOptions<studentinfo> options =
                     new FirebaseRecyclerOptions.Builder<studentinfo>()
                             .setQuery(FirebaseDatabase.getInstance().getReference().child("UserInfo")
-                                    .orderByChild("username").startAt(query).endAt(query + "\uf8ff"), studentinfo.class)
+                                    .orderByChild(field).startAt(query).endAt(query + "\uf8ff"), studentinfo.class)
                             .build();
 
             adapter = new RecyclerViewAdapterone(options);

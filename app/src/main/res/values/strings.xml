@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">CivilFamilyIITism</string>
+    <string-array name="searchmenu">
+        <item>By name</item>
+        <item>By Admission no.</item>
+        <item>By Email</item>
+        <item>By Phone</item>
+    </string-array>
 </resources>
