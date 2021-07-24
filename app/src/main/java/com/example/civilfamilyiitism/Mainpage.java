@@ -26,6 +26,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.RemoteMessage;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.UploadTask;
@@ -41,8 +43,9 @@ public class Mainpage extends AppCompatActivity {
     String myuid;
     String year = "null";
     ImageView userimage;
-    TextView name;
-    ImageView barprofile;
+    TextView name , seeall;
+    ImageView barprofile ,barsearch,barsetting;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,11 +60,14 @@ public class Mainpage extends AppCompatActivity {
         img6=findViewById(R.id.imageView6);
         img7=findViewById(R.id.imageView7);
         img8=findViewById(R.id.imageView8);
+        seeall = (TextView)findViewById(R.id.textView37);
         userimage = (ImageView)findViewById(R.id.imageView18);
         name = (TextView)findViewById(R.id.textView11);
 
         myuid = FirebaseAuth.getInstance().getUid();
         barprofile = (ImageView)findViewById(R.id.imageView25);
+        barsearch = (ImageView)findViewById(R.id.imageView27);
+        barsetting = (ImageView)findViewById(R.id.imageView19);
 
 
         try {
@@ -135,9 +141,7 @@ public class Mainpage extends AppCompatActivity {
         } catch (Exception e) {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
-
-
-
+        
         userimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -274,6 +278,30 @@ public class Mainpage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Mainpage.this,EditMyProfilePage.class));
+            }
+        });
+        barprofile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Mainpage.this,EditMyProfilePage.class));
+            }
+        });
+        barsearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Mainpage.this,searchsplashscreen.class));
+            }
+        });
+        barsetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Mainpage.this,Settingpage.class));
+            }
+        });
+        seeall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Mainpage.this,Professorslistview.class));
             }
         });
     }

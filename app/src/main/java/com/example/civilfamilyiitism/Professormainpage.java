@@ -45,7 +45,7 @@ public class Professormainpage extends AppCompatActivity {
     String check = "null";
     Uri filepath;
     ImageView userimage;
-     TextView name;
+     TextView name ,seeall;
     RecyclerView rcv;
     ProfessorRecyclerViewAdapter adapter;
     ImageView barprofile ,barsearch,barsetting;
@@ -67,6 +67,7 @@ public class Professormainpage extends AppCompatActivity {
         img10 = findViewById(R.id.imageView16);
         img11 = findViewById(R.id.imageView29);
         img12 = findViewById(R.id.imageView30);
+        seeall = (TextView)findViewById(R.id.textView37);
        userimage = (ImageView)findViewById(R.id.imageView18);
        name = (TextView)findViewById(R.id.textView11);
        barprofile = (ImageView)findViewById(R.id.imageView25);
@@ -289,6 +290,12 @@ public class Professormainpage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Professormainpage.this,Settingpage.class));
+            }
+        });
+        seeall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Professormainpage.this,Professorslistview.class));
             }
         });
 

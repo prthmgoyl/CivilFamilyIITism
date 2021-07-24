@@ -78,7 +78,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp" />
+                android:layout_marginBottom="1dp" />
+
+            <TextView
+                android:id="@+id/textView37"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginEnd="10sp"
+                android:layout_marginRight="10sp"
+                android:text="See all..."
+                android:textColor="#000"
+                android:textSize="14sp"
+                android:textStyle="italic" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -306,6 +318,7 @@
         android:layout_height="35dp"
         android:layout_marginTop="6dp"
         android:layout_marginBottom="4dp"
+        android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/imageView19"
         app:layout_constraintStart_toEndOf="@+id/floatingActionButton"
@@ -321,6 +334,7 @@
         android:layout_marginEnd="35dp"
         android:layout_marginRight="35dp"
         android:layout_marginBottom="4dp"
+        android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/view10"
@@ -334,6 +348,7 @@
         android:layout_marginLeft="35dp"
         android:layout_marginTop="2dp"
         android:layout_weight="1"
+        android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/view10"
@@ -345,6 +360,7 @@
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_marginTop="2dp"
+        android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/floatingActionButton"
         app:layout_constraintStart_toEndOf="@+id/imageView27"
@@ -355,7 +371,6 @@
         android:id="@+id/floatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clickable="true"
         app:backgroundTint="#96e6a1"
         app:elevation="6dp"
         app:layout_constraintBottom_toTopOf="@+id/view10"
