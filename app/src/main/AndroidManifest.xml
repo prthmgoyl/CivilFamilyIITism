@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.civilfamilyiitism">
+    package="com.example.civilfamilyiitism" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -12,8 +12,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.CivilFamilyIITism">
-        <activity android:name=".Professorslistview"></activity>
+        android:theme="@style/Theme.CivilFamilyIITism" >
+        <activity android:name=".Ascepagestudent" >
+        </activity>
+        <activity android:name=".Professorslistview" />
         <activity android:name=".MyPersonalInformation" />
         <activity android:name=".Settingpage" />
         <activity
@@ -44,20 +46,26 @@
         <activity
             android:name=".ProfessorAddStudent"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
-        <activity android:name=".Stopregisteration" />
+        <activity
+            android:name=".Stopregisteration"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
         <activity
             android:name=".Splashscreen"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Friendslistviewer" android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"/>
+        <activity
+            android:name=".Friendslistviewer"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
         <activity android:name=".Ascepage" />
         <activity android:name=".UploadPdfpage" />
-        <activity android:name=".Studentlistviewer" android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"/>
+        <activity
+            android:name=".Studentlistviewer"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
         <activity
             android:name=".Professormainpage"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />

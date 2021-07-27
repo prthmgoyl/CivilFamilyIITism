@@ -6,4 +6,12 @@
         <item>By Email</item>
         <item>By Phone</item>
     </string-array>
+    <string-array name="changeclass">
+        <item>First Year</item>
+        <item>Second Year</item>
+        <item>Third Year</item>
+        <item>Fourth Year</item>
+        <item>Passout</item>
+
+    </string-array>
 </resources>

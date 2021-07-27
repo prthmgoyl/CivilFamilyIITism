@@ -47,22 +47,11 @@ public class NoticePageProff extends AppCompatActivity {
         uid = FirebaseAuth.getInstance().getUid();
 
 
+        try {
+            fetchdata();
+        } catch (Exception e) {
 
-
-        rcv = (RecyclerView)findViewById(R.id.recyclerviewnotice);
-        LinearLayoutManager manager = new LinearLayoutManager(this);
-        manager.setReverseLayout(true);
-        manager.setStackFromEnd(true);
-        rcv.setLayoutManager(manager);
-        FirebaseRecyclerOptions<noticemodel> options =
-                new FirebaseRecyclerOptions.Builder<noticemodel>()
-                        .setQuery(reference.child("Notice").child("all"), noticemodel.class)
-                        .build();
-
-        adapter=new noticeadapter(options);
-        rcv.setAdapter(adapter);
-
-
+        }
         FirebaseDatabase.getInstance().getReference().child("zero").child(uid)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -75,8 +64,6 @@ public class NoticePageProff extends AppCompatActivity {
                         Toast.makeText(NoticePageProff.this, "OOps!Connection lost", Toast.LENGTH_SHORT).show();
                     }
                 });
-
-
 
 
         btn.setOnClickListener(new View.OnClickListener() {
@@ -129,6 +116,11 @@ public class NoticePageProff extends AppCompatActivity {
 
                                 year = "fourth";
                                 reference.child("Notice").child(year).child(time).setValue(messageinfo);
+                                try {
+                                    fetchdata();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
                                 dialogPlus.dismiss();
                             }
                             else if(rdbtn2.isChecked()){
@@ -138,6 +130,11 @@ public class NoticePageProff extends AppCompatActivity {
                                 //Toast.makeText(NoticePageProff.this, "=="+noticemessage, Toast.LENGTH_SHORT).show();
                                 reference.child("Notice").child(year).child(time).setValue(messageinfo);
                                 reference.child("Notice").child("all").child(time).setValue(messageinfo);
+                                try {
+                                    fetchdata();
+                                } catch (Exception e) {
+
+                                }
                                 dialogPlus.dismiss();
                             }
                             else if (rdbtn3.isChecked()){
@@ -147,6 +144,11 @@ public class NoticePageProff extends AppCompatActivity {
                                 //Toast.makeText(NoticePageProff.this, "=="+noticemessage, Toast.LENGTH_SHORT).show();
                                 reference.child("Notice").child(year).child(time).setValue(messageinfo);
                                 reference.child("Notice").child("all").child(time).setValue(messageinfo);
+                                try {
+                                    fetchdata();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
                                 dialogPlus.dismiss();
                             }
                             else if(rdbtn4.isChecked()){
@@ -156,6 +158,11 @@ public class NoticePageProff extends AppCompatActivity {
                                 //Toast.makeText(NoticePageProff.this, "=="+noticemessage, Toast.LENGTH_SHORT).show();
                                 reference.child("Notice").child(year).child(time).setValue(messageinfo);
                                 reference.child("Notice").child("all").child(time).setValue(messageinfo);
+                                try {
+                                    fetchdata();
+                                } catch (Exception e) {
+
+                                }
                                 dialogPlus.dismiss();
                             }
                             else if(rdbtn5.isChecked()){
@@ -165,6 +172,11 @@ public class NoticePageProff extends AppCompatActivity {
                                 //Toast.makeText(NoticePageProff.this, "=="+noticemessage, Toast.LENGTH_SHORT).show();
                                 reference.child("Notice").child(year).child(time).setValue(messageinfo);
                                 reference.child("Notice").child("all").child(time).setValue(messageinfo);
+                                try {
+                                    fetchdata();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
                                 dialogPlus.dismiss();
                             }
                             else{
@@ -180,6 +192,22 @@ public class NoticePageProff extends AppCompatActivity {
         });
 
      //   getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.noticepagebackground));
+    }
+
+    private void fetchdata() throws Exception{
+        rcv = (RecyclerView)findViewById(R.id.recyclerviewnotice);
+        LinearLayoutManager manager = new LinearLayoutManager(this);
+        manager.setReverseLayout(true);
+        manager.setStackFromEnd(true);
+        rcv.setLayoutManager(manager);
+        FirebaseRecyclerOptions<noticemodel> options =
+                new FirebaseRecyclerOptions.Builder<noticemodel>()
+                        .setQuery(reference.child("Notice").child("all"), noticemodel.class)
+                        .build();
+
+        adapter=new noticeadapter(options);
+        rcv.setAdapter(adapter);
+        adapter.startListening();
     }
 
     @Override

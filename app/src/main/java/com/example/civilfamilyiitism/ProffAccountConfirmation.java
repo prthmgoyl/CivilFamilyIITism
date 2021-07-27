@@ -72,7 +72,7 @@ public class ProffAccountConfirmation extends AppCompatActivity {
                     progressDialog.dismiss();
                 }
                 else{
-                    reference.child("Access").addListenerForSingleValueEvent(new ValueEventListener() {
+                    reference.child("permissions").child("Securitycode").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             if (snapshot.exists()) {
@@ -80,8 +80,6 @@ public class ProffAccountConfirmation extends AppCompatActivity {
                                 if (securitycode.equals(check)) {
                                     createUser();
                                     progressDialog.dismiss();
-                                    //    startActivity(new Intent(ProffAccountConfirmation.this, Professormainpage.class));
-                                    //   finish();
                                 } else {
                                     progressDialog.dismiss();
                                     Toast.makeText(ProffAccountConfirmation.this, "Sorry!Wrong Security Code", Toast.LENGTH_SHORT).show();

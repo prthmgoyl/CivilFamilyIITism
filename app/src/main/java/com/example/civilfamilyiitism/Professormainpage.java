@@ -10,10 +10,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
+import android.provider.MediaStore;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -23,29 +22,25 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.UploadTask;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.ByteArrayOutputStream;
 
 public class Professormainpage extends AppCompatActivity {
 
     private ImageView img1,img2,img3,img4,img5,img6,img7,img8,img9,img10 , img11,img12;
-    String check = "null";
+    String check = "null",uid;
     Uri filepath;
     ImageView userimage;
-     TextView name ,seeall;
+    TextView name ,seeall;
     RecyclerView rcv;
     ProfessorRecyclerViewAdapter adapter;
     ImageView barprofile ,barsearch,barsetting;
@@ -73,6 +68,7 @@ public class Professormainpage extends AppCompatActivity {
        barprofile = (ImageView)findViewById(R.id.imageView25);
        barsearch = (ImageView)findViewById(R.id.imageView27);
        barsetting = (ImageView)findViewById(R.id.imageView19);
+       uid = FirebaseAuth.getInstance().getUid();
 
       try {
           rcv = (RecyclerView) findViewById(R.id.recyclerViewproff);
@@ -93,7 +89,7 @@ public class Professormainpage extends AppCompatActivity {
 
         try{
             FirebaseDatabase.getInstance().getReference().child("UserInfoWithUid")
-                    .child(FirebaseAuth.getInstance().getUid())
+                    .child(uid)
                     .addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -112,7 +108,7 @@ public class Professormainpage extends AppCompatActivity {
         }
         try {
             FirebaseStorage.getInstance().getReference().child("images")
-                    .child(FirebaseAuth.getInstance().getUid())
+                    .child(uid)
                     .getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
                 public void onSuccess(Uri uri) {
@@ -184,18 +180,15 @@ public class Professormainpage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 check = "fourth";
-               // Toast.makeText(Professormainpage.this, "img1"+check, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(Professormainpage.this,Studentlistviewer.class);
                 intent.putExtra("keycheck",check);
                 startActivity(intent);
-       //         startActivity(new Intent(Professormainpage.this,Studentlistviewer.class));
             }
         });
         img2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 check = "third";
-                //Toast.makeText(Professormainpage.this, "img2"+check, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(Professormainpage.this,Studentlistviewer.class);
                 intent.putExtra("keycheck",check);
                 startActivity(intent);
@@ -205,7 +198,6 @@ public class Professormainpage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 check = "second";
-                //Toast.makeText(Professormainpage.this, "img3"+check, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(Professormainpage.this,Studentlistviewer.class);
                 intent.putExtra("keycheck",check);
                 startActivity(intent);
@@ -215,7 +207,6 @@ public class Professormainpage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 check = "first";
-                //Toast.makeText(Professormainpage.this, "img4"+check, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(Professormainpage.this,Studentlistviewer.class);
                 intent.putExtra("keycheck",check);
                 startActivity(intent);
@@ -230,7 +221,6 @@ public class Professormainpage extends AppCompatActivity {
         img6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Toast.makeText(Professormainpage.this, "img6", Toast.LENGTH_SHORT).show();
                       startActivity(new Intent(Professormainpage.this,NoticePageProff.class));
             }
         });
@@ -309,14 +299,30 @@ public class Professormainpage extends AppCompatActivity {
         if (requestCode == 1 && resultCode == RESULT_OK) {
             filepath = data.getData();
             try {
+
+             /*   File actualImage = new File(filepath.getPath());
+                Bitmap compressedImage = new Compressor(this)
+                        .setMaxWidth(250)
+                        .setMaxHeight(250)
+                        .setQuality(40)
+                        .compressToBitmap(actualImage);
+
+
+              *//*Bitmap bmp = MediaStore.Images.Media.getBitmap(getContentResolver(), filepath);
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                bmp.compress(Bitmap.CompressFormat.JPEG, 25, baos);
+                byte[] userdata = baos.toByteArray();
+*/
+
+
                 FirebaseStorage.getInstance().getReference().child("images")
-                        .child(FirebaseAuth.getInstance().getUid())
+                        .child(uid)
                         .putFile(filepath)
                         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                 FirebaseStorage.getInstance().getReference().child("images")
-                                        .child(FirebaseAuth.getInstance().getUid())
+                                        .child(uid)
                                         .getDownloadUrl()
                                         .addOnSuccessListener(new OnSuccessListener<Uri>() {
                                             @Override

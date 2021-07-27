@@ -4,9 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -25,6 +28,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
+
+import org.jetbrains.annotations.NotNull;
 
 public class EditMyProfilePage extends AppCompatActivity {
     EditText admno , username , phoneno;
@@ -60,6 +65,7 @@ public class EditMyProfilePage extends AppCompatActivity {
                 phoneno.setText(info.getPhone());
                 email.setText(info.getEmail());
                 check = info.getYear();
+
                 if(check.equals("zero")){
                     year.setText("Professor");
                 }
@@ -114,6 +120,43 @@ public class EditMyProfilePage extends AppCompatActivity {
             }
         });
 
+        year.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseDatabase.getInstance().getReference()
+                        .child("permissions").child("Changeclass").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                        if(snapshot.exists()){
+                            try{
+                                if((snapshot.getValue(String.class)).equalsIgnoreCase("allow")){
+                                    Dialog dialog  = new Dialog(EditMyProfilePage.this);
+                                    dialog.setContentView(R.layout.changeclassdialog);
+                                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                    dialog.show();
+                                }
+                                else{
+                                    Toast.makeText(EditMyProfilePage.this, "Contact Professor!", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                            catch (Exception e){
+                                Toast.makeText(EditMyProfilePage.this, "Error!!!", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        else{
+                            Toast.makeText(EditMyProfilePage.this, "Contact Professor!!!", Toast.LENGTH_SHORT).show();
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull @NotNull DatabaseError error) {
+                        Toast.makeText(EditMyProfilePage.this, "Connection lost", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
 
         updatebtn.setOnClickListener(new View.OnClickListener() {
             @Override

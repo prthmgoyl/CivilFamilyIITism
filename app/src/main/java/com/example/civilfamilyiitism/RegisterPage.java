@@ -75,7 +75,7 @@ public class RegisterPage extends AppCompatActivity {
                 );
 
 
-                reference.child("Access").addListenerForSingleValueEvent(new ValueEventListener() {
+                reference.child("permissions").child("Access").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if(snapshot.exists()){

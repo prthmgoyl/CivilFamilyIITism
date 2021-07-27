@@ -43,6 +43,7 @@
                         android:drawableStart="@android:drawable/ic_lock_power_off"
                         android:padding="5sp"
                         android:text=" Autofill "
+                        android:buttonTint="#0E74C5"
                         android:textColor="#000"
                         android:textSize="28sp"
                         app:layout_constraintBottom_toBottomOf="parent"

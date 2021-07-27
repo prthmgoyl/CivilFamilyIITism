@@ -250,6 +250,7 @@ public class Mainpage extends AppCompatActivity {
         img6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startActivity(new Intent(Mainpage.this,Ascepagestudent.class));
                 Toast.makeText(Mainpage.this, "img6", Toast.LENGTH_SHORT).show();
 
             }
