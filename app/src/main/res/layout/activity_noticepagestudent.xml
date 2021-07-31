@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#EAE5E5"
-    tools:context=".Noticepagestudent">
+    tools:context=".NoticePages.Noticepagestudent">
 
     <View
         android:id="@+id/view10"

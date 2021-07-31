@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.civilfamilyiitism" >
+    package="com.example.civilfamilyiitism">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -12,9 +12,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.CivilFamilyIITism" >
-        <activity android:name=".Ascepagestudent" >
-        </activity>
+        android:theme="@style/Theme.CivilFamilyIITism">
+        <activity
+            android:name=".ProfessorSideOnly.ApproveChangeClassRequest"
+            android:exported="true" />
         <activity android:name=".Professorslistview" />
         <activity android:name=".MyPersonalInformation" />
         <activity android:name=".Settingpage" />
@@ -30,28 +31,28 @@
         <activity
             android:name=".Updateclass"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
-        <activity android:name=".Blocklist" />
+        <activity android:name=".ProfessorSideOnly.Blocklist" />
         <activity
-            android:name=".Noticepagestudent"
+            android:name=".NoticePages.Noticepagestudent"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
         <activity
-            android:name=".NoticePageProff"
+            android:name=".NoticePages.NoticePageProff"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
         <activity
-            android:name=".ProffAccountConfirmation"
+            android:name=".ProfessorSideOnly.ProffAccountConfirmation"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
         <activity
-            android:name=".PdfPageStudentSide"
+            android:name=".StudentSideOnly.PdfPageStudentSide"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
         <activity
-            android:name=".ProfessorAddStudent"
+            android:name=".ProfessorSideOnly.ProfessorAddStudent"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
         <activity
-            android:name=".Stopregisteration"
+            android:name=".ProfessorSideOnly.Stopregisteration"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
         <activity
             android:name=".Splashscreen"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" >
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -59,18 +60,18 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Friendslistviewer"
+            android:name=".StudentSideOnly.Friendslistviewer"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
-        <activity android:name=".Ascepage" />
-        <activity android:name=".UploadPdfpage" />
+        <activity android:name=".ProfessorSideOnly.Ascepage" />
+        <activity android:name=".ProfessorSideOnly.UploadPdfpage" />
         <activity
-            android:name=".Studentlistviewer"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
-        <activity
-            android:name=".Professormainpage"
+            android:name=".ProfessorSideOnly.Studentlistviewer"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
         <activity
-            android:name=".Mainpage"
+            android:name=".ProfessorSideOnly.Professormainpage"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+        <activity
+            android:name=".StudentSideOnly.Mainpage"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
         <activity
             android:name=".RegisterPage"

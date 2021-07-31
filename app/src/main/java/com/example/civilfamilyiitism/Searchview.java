@@ -2,7 +2,6 @@ package com.example.civilfamilyiitism;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
@@ -12,8 +11,8 @@ import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.SearchView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
+import com.example.civilfamilyiitism.Adapters.RecyclerViewAdapterone;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.FirebaseDatabase;
 

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#0E74C5"
-    tools:context=".ProfessorAddStudent">
+    tools:context=".ProfessorSideOnly.ProfessorAddStudent">
 
     <View
         android:id="@+id/view4"

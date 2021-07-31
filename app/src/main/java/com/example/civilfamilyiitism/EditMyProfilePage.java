@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -129,11 +130,24 @@ public class EditMyProfilePage extends AppCompatActivity {
                     public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                         if(snapshot.exists()){
                             try{
-                                if((snapshot.getValue(String.class)).equalsIgnoreCase("allow")){
+                                if((snapshot.getValue(String.class)).equalsIgnoreCase("allow")&&
+                                   !(check.equalsIgnoreCase("zero"))){
                                     Dialog dialog  = new Dialog(EditMyProfilePage.this);
-                                    dialog.setContentView(R.layout.changeclassdialog);
+                                    dialog.setContentView(R.layout.classdialog);
                                     dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                                     dialog.show();
+                                    Spinner spin = (Spinner)dialog.findViewById(R.id.spinner);
+                                    Button btn = (Button)dialog.findViewById(R.id.button22);
+
+                                    btn.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                           String changedclass = spin.getSelectedItem().toString();
+                                            dialog.dismiss();
+                                            sendrequest(changedclass);
+                                            Toast.makeText(EditMyProfilePage.this,"Request Sent: " +changedclass, Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
                                 }
                                 else{
                                     Toast.makeText(EditMyProfilePage.this, "Contact Professor!", Toast.LENGTH_SHORT).show();
@@ -194,5 +208,18 @@ public class EditMyProfilePage extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void sendrequest(String changedclass) {
+        try{
+
+            FirebaseDatabase.getInstance().getReference()
+                    .child("ChangeClassRequests").child(uid).setValue(info);
+            FirebaseDatabase.getInstance().getReference()
+                    .child("ChangeClassRequests").child(uid).child("changeto").setValue(changedclass);
+        }
+        catch (Exception e){
+
+        }
     }
 }

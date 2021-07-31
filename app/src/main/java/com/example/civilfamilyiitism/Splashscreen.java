@@ -3,12 +3,12 @@ package com.example.civilfamilyiitism;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.DownloadManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.widget.Toast;
 
+import com.example.civilfamilyiitism.ProfessorSideOnly.Professormainpage;
+import com.example.civilfamilyiitism.StudentSideOnly.Mainpage;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;

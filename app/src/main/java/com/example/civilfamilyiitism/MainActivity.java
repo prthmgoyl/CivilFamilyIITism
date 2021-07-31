@@ -6,9 +6,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -19,6 +17,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.civilfamilyiitism.ProfessorSideOnly.Professormainpage;
+import com.example.civilfamilyiitism.StudentSideOnly.Mainpage;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -34,10 +34,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStreamReader;
-
-import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -118,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else{
                     if(usermail.equals("prathamdefault@gmail.com")&&userpassword.equals("prathamdefault")){
-                        startActivity(new Intent(MainActivity.this,Professormainpage.class));
+                        startActivity(new Intent(MainActivity.this, Professormainpage.class));
                         progressDialog.dismiss();
                         finish();
                     }
@@ -155,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
                                                                     else{
                                                                         progressDialog.dismiss();
                                                                         Toast.makeText(MainActivity.this, "Login Successful!", Toast.LENGTH_SHORT).show();
-                                                                        startActivity(new Intent(MainActivity.this,Mainpage.class));
+                                                                        startActivity(new Intent(MainActivity.this, Mainpage.class));
                                                                         finish();
 
                                                                     }
