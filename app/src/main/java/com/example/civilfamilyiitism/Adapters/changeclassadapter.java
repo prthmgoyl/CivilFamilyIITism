@@ -36,7 +36,26 @@ public class changeclassadapter extends FirebaseRecyclerAdapter<studentinfoinclu
 
     @Override
     protected void onBindViewHolder(@NonNull changeclassadapter.holder holder, int position, @NonNull studentinfoincludechangeto model) {
-        holder.txv1.setText("From: "+model.getYear());
+        String check = model.getYear();
+        if(check.equalsIgnoreCase("zero")){
+            holder.txv1.setText("From: "+check);
+        }
+        else if (check.equalsIgnoreCase("first")){
+            holder.txv1.setText("From: First Year");
+        }
+        else if (check.equalsIgnoreCase("second")){
+            holder.txv1.setText("From: Second Year");
+        }
+        else if (check.equalsIgnoreCase("third")){
+            holder.txv1.setText("From: Third Year");
+        }
+        else if (check.equalsIgnoreCase("fourth")){
+            holder.txv1.setText("From: Fourth Year");
+        }
+        else{
+            holder.txv1.setText("From: "+check);
+        }
+
         holder.txv2.setText("To: "+model.getChangeto());
         holder.txv3.setText(model.getUsername());
         holder.txv4.setText(model.getEmail());
