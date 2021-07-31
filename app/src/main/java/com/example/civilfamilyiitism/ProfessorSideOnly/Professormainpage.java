@@ -307,22 +307,6 @@ public class Professormainpage extends AppCompatActivity {
         if (requestCode == 1 && resultCode == RESULT_OK) {
             filepath = data.getData();
             try {
-
-             /*   File actualImage = new File(filepath.getPath());
-                Bitmap compressedImage = new Compressor(this)
-                        .setMaxWidth(250)
-                        .setMaxHeight(250)
-                        .setQuality(40)
-                        .compressToBitmap(actualImage);
-
-
-              *//*Bitmap bmp = MediaStore.Images.Media.getBitmap(getContentResolver(), filepath);
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                bmp.compress(Bitmap.CompressFormat.JPEG, 25, baos);
-                byte[] userdata = baos.toByteArray();
-*/
-
-
                 FirebaseStorage.getInstance().getReference().child("images")
                         .child(uid)
                         .putFile(filepath)
