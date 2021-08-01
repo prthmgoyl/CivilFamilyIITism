@@ -15,10 +15,11 @@
         android:theme="@style/Theme.CivilFamilyIITism">
         <activity
             android:name=".ProfessorSideOnly.ApproveChangeClassRequest"
-            android:exported="true" />
-        <activity android:name=".Professorslistview" />
-        <activity android:name=".MyPersonalInformation" />
-        <activity android:name=".Settingpage" />
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"/>
+        <activity android:name=".Professorslistview" android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+        <activity android:name=".MyPersonalInformation" android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"/>
+        <activity android:name=".Settingpage" android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"/>
         <activity
             android:name=".searchsplashscreen"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
@@ -72,6 +73,9 @@
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
         <activity
             android:name=".StudentSideOnly.Mainpage"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+        <activity
+            android:name=".StudentSideOnly.AscepageStudentSide"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
         <activity
             android:name=".RegisterPage"
