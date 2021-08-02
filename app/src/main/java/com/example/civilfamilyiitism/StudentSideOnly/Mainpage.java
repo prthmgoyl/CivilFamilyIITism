@@ -34,6 +34,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
@@ -77,77 +78,90 @@ public class Mainpage extends AppCompatActivity {
         barsetting = (ImageView)findViewById(R.id.imageView19);
 
 
-        try {
-            rcv = (RecyclerView) findViewById(R.id.recyclerViewproffstudentside);
-            rcv.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
-            FirebaseRecyclerOptions<studentinfo> options =
-                    new FirebaseRecyclerOptions.Builder<studentinfo>()
-                            .setQuery(FirebaseDatabase.getInstance().getReference().child("zero"), studentinfo.class)
-                            .build();
+        Thread threadone = new Thread(){
+            public void run(){
+                try {
+                    rcv = (RecyclerView) findViewById(R.id.recyclerViewproffstudentside);
+                    rcv.setLayoutManager(new LinearLayoutManager(Mainpage.this, RecyclerView.HORIZONTAL, false));
+                    FirebaseRecyclerOptions<studentinfo> options =
+                            new FirebaseRecyclerOptions.Builder<studentinfo>()
+                                    .setQuery(FirebaseDatabase.getInstance().getReference().child("zero"), studentinfo.class)
+                                    .build();
 
-            adapter = new ProfessorRecyclerViewAdapter(options);
-            rcv.setAdapter(adapter);
-            adapter.startListening();
+                    adapter = new ProfessorRecyclerViewAdapter(options);
+                    rcv.setAdapter(adapter);
+                    adapter.startListening();
 
-        }catch (Exception e){
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-
-
-
-      try {
-          FirebaseDatabase.getInstance().getReference().child("UserInfoWithUid").child(myuid)
-                  .addListenerForSingleValueEvent(new ValueEventListener() {
-                      @Override
-                      public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                          name.setText("Welcome! " + snapshot.child("username").getValue(String.class).toUpperCase());
-
-                          year = snapshot.child("year").getValue(String.class);
-                          // Toast.makeText(Noticepagestudent.this, "this"+year, Toast.LENGTH_SHORT).show();
-                          if (year.equals("first")) {
-                              check2 = "first";
-                          } else if (year.equals("second")) {
-                              check2 = "second";
-                          } else if (year.equals("third")) {
-                              check2 = "third";
-                          } else if (year.equals("fourth")) {
-                              check2 = "fourth";
-                          } else {
-                              //   Toast.makeText(Noticepagestudent.this, "Sorry!We are unable to find your account", Toast.LENGTH_SHORT).show();
-                          }
-                      }
-
-
-                      @Override
-                      public void onCancelled(@NonNull DatabaseError error) {
-                          //  Toast.makeText(Noticepagestudent.this, "Sorry!Connection lost", Toast.LENGTH_SHORT).show();
-                      }
-                  });
-      }
-      catch (Exception e){
-          Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
-      }
-
-        try {
-            FirebaseStorage.getInstance().getReference().child("images")
-                    .child(myuid)
-                    .getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                @Override
-                public void onSuccess(Uri uri) {
-                    if(uri!=null){
-                        Glide
-                                .with(getApplicationContext())
-                                .load(uri.toString())
-                                .centerCrop()
-                                .into(userimage);
-                    }
+                }catch (Exception e){
+                    Toast.makeText(Mainpage.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
-            });
+            }
+        };threadone.start();
 
-        } catch (Exception e) {
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
+        Thread threadtwo = new Thread(){
+            public void run(){
+                try {
+                    FirebaseDatabase.getInstance().getReference().child("UserInfoWithUid").child(myuid)
+                            .addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                    name.setText("Welcome! " + snapshot.child("username").getValue(String.class).toUpperCase());
+
+                                    year = snapshot.child("year").getValue(String.class);
+                                    // Toast.makeText(Noticepagestudent.this, "this"+year, Toast.LENGTH_SHORT).show();
+                                    if (year.equals("first")) {
+                                        check2 = "first";
+                                    } else if (year.equals("second")) {
+                                        check2 = "second";
+                                    } else if (year.equals("third")) {
+                                        check2 = "third";
+                                    } else if (year.equals("fourth")) {
+                                        check2 = "fourth";
+                                    } else {
+                                        //   Toast.makeText(Noticepagestudent.this, "Sorry!We are unable to find your account", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+                                    //  Toast.makeText(Noticepagestudent.this, "Sorry!Connection lost", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                }
+                catch (Exception e){
+                    Toast.makeText(Mainpage.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
+        threadtwo.start();
+
+        Thread threadthree = new Thread(){
+            public void run(){
+                try {
+                    FirebaseStorage.getInstance().getReference().child("images")
+                            .child(myuid)
+                            .getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            if(uri!=null){
+                                Glide
+                                        .with(getApplicationContext())
+                                        .load(uri.toString())
+                                        .centerCrop()
+                                        .into(userimage);
+                            }
+                        }
+                    });
+
+                } catch (Exception e) {
+                    Toast.makeText(Mainpage.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
+        threadthree.start();
+
         
         userimage.setOnClickListener(new View.OnClickListener() {
             @Override

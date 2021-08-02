@@ -29,42 +29,49 @@
         app:layout_constraintStart_toStartOf="@+id/bottomNavigationView"
         app:layout_constraintTop_toTopOf="@+id/bottomNavigationView">
 
-        <ImageButton
+        <ImageView
             android:id="@+id/imageButton3"
             android:layout_width="50dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="8dp"
             android:layout_marginRight="20dp"
+            android:layout_marginBottom="8dp"
             android:background="@android:color/transparent"
             android:src="@drawable/ic_baseline_home_24" />
 
-        <ImageButton
+        <ImageView
             android:id="@+id/imageButton5"
-            android:layout_width="50dp"
+            android:layout_width="40dp"
             android:layout_height="match_parent"
-
             android:layout_marginLeft="20dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="5dp"
             android:background="@android:color/transparent"
-            android:src="@drawable/ic_baseline_info_24" />
+            android:src="@drawable/facebook" />
 
-        <ImageButton
+        <ImageView
             android:id="@+id/imageButton6"
             android:layout_width="50dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="15dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
             android:layout_marginRight="20dp"
+            android:layout_marginBottom="5dp"
             android:background="@android:color/transparent"
-            android:src="@drawable/ic_baseline_article_24" />
+            android:src="@drawable/twitter" />
 
-        <ImageButton
+        <ImageView
             android:id="@+id/imageButton4"
             android:layout_width="50dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
             android:background="@android:color/transparent"
-            android:src="@drawable/ic_baseline_person_outline_24" />
+            android:src="@drawable/linkedin" />
     </LinearLayout>
 
     <FrameLayout

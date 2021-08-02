@@ -45,6 +45,8 @@
         <activity
             android:name=".StudentSideOnly.PdfPageStudentSide"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+
+
         <activity
             android:name=".ProfessorSideOnly.ProfessorAddStudent"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />

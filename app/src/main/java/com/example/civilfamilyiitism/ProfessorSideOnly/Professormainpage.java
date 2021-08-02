@@ -77,61 +77,82 @@ public class Professormainpage extends AppCompatActivity {
        barsetting = (ImageView)findViewById(R.id.imageView19);
        uid = FirebaseAuth.getInstance().getUid();
 
-      try {
-          rcv = (RecyclerView) findViewById(R.id.recyclerViewproff);
-          rcv.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
-          FirebaseRecyclerOptions<studentinfo> options =
-                  new FirebaseRecyclerOptions.Builder<studentinfo>()
-                          .setQuery(FirebaseDatabase.getInstance().getReference().child("zero").orderByChild("username"), studentinfo.class)
-                          .build();
 
-          adapter = new ProfessorRecyclerViewAdapter(options);
-          rcv.setAdapter(adapter);
-          adapter.startListening();
+       Thread threadone = new Thread(){
+           public void run(){
+               try {
+                   rcv = (RecyclerView) findViewById(R.id.recyclerViewproff);
+                   rcv.setLayoutManager(new LinearLayoutManager(Professormainpage.this, RecyclerView.HORIZONTAL, false));
+                   FirebaseRecyclerOptions<studentinfo> options =
+                           new FirebaseRecyclerOptions.Builder<studentinfo>()
+                                   .setQuery(FirebaseDatabase.getInstance().getReference().child("zero").orderByChild("username"), studentinfo.class)
+                                   .build();
 
-      }
-      catch (Exception e){
-          Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
-      }
+                   adapter = new ProfessorRecyclerViewAdapter(options);
+                   rcv.setAdapter(adapter);
+                   adapter.startListening();
 
-        try{
-            FirebaseDatabase.getInstance().getReference().child("UserInfoWithUid")
-                    .child(uid)
-                    .addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            studentinfo info = snapshot.getValue(studentinfo.class);
-                            name.setText("Welcome! "+info.getUsername().toUpperCase());
-                        }
+               }
+               catch (Exception e){
+                   Toast.makeText(Professormainpage.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+               }
+           }
+       };
+       threadone.start();
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
+       Thread threadtwo = new Thread(){
+           public void run(){
+               try{
+                   FirebaseDatabase.getInstance().getReference().child("UserInfoWithUid")
+                           .child(uid)
+                           .addListenerForSingleValueEvent(new ValueEventListener() {
+                               @Override
+                               public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                   studentinfo info = snapshot.getValue(studentinfo.class);
+                                   name.setText("Welcome! "+info.getUsername().toUpperCase());
+                               }
 
-                        }
-                    });
-        }
-        catch (Exception e){
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-        try {
-            FirebaseStorage.getInstance().getReference().child("images")
-                    .child(uid)
-                    .getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                @Override
-                public void onSuccess(Uri uri) {
-                         if(uri!=null){
-                             Glide
-                                     .with(getApplicationContext())
-                                     .load(uri.toString())
-                                     .centerCrop()
-                                     .into(userimage);
-                         }
-                }
-            });
+                               @Override
+                               public void onCancelled(@NonNull DatabaseError error) {
 
-        } catch (Exception e) {
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
+                               }
+                           });
+               }
+               catch (Exception e){
+                   Toast.makeText(Professormainpage.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+               }
+           }
+       };
+       threadtwo.start();
+
+       Thread threadthree = new Thread(){
+           public void run(){
+               try {
+                   FirebaseStorage.getInstance().getReference().child("images")
+                           .child(uid)
+                           .getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                       @Override
+                       public void onSuccess(Uri uri) {
+                           if(uri!=null){
+                               Glide
+                                       .with(getApplicationContext())
+                                       .load(uri.toString())
+                                       .centerCrop()
+                                       .into(userimage);
+                           }
+                       }
+                   });
+
+               } catch (Exception e) {
+                   Toast.makeText(Professormainpage.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+               }
+           }
+       };
+       threadthree.start();
+
+
+
+
 
         userimage.setOnClickListener(new View.OnClickListener() {
            @Override

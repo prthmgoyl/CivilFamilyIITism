@@ -9,7 +9,7 @@
         <entry key="..\:/Users/LENOVO/AndroidStudioProjects/CivilFamilyIITism/app/src/main/res/drawable/ic_baseline_person_outline_24.xml" value="0.2203125" />
         <entry key="..\:/Users/LENOVO/AndroidStudioProjects/CivilFamilyIITism/app/src/main/res/layout/activity_approve_change_class_request.xml" value="0.13677536231884058" />
         <entry key="..\:/Users/LENOVO/AndroidStudioProjects/CivilFamilyIITism/app/src/main/res/layout/activity_ascepage.xml" value="0.1503623188405797" />
-        <entry key="..\:/Users/LENOVO/AndroidStudioProjects/CivilFamilyIITism/app/src/main/res/layout/activity_ascepage_student_side.xml" value="0.18" />
+        <entry key="..\:/Users/LENOVO/AndroidStudioProjects/CivilFamilyIITism/app/src/main/res/layout/activity_ascepage_student_side.xml" value="0.22" />
         <entry key="..\:/Users/LENOVO/AndroidStudioProjects/CivilFamilyIITism/app/src/main/res/layout/activity_blocklist.xml" value="0.1480978260869565" />
         <entry key="..\:/Users/LENOVO/AndroidStudioProjects/CivilFamilyIITism/app/src/main/res/layout/activity_friendslistviewer.xml" value="0.1480978260869565" />
         <entry key="..\:/Users/LENOVO/AndroidStudioProjects/CivilFamilyIITism/app/src/main/res/layout/activity_main.xml" value="0.13451086956521738" />
@@ -17,7 +17,10 @@
         <entry key="..\:/Users/LENOVO/AndroidStudioProjects/CivilFamilyIITism/app/src/main/res/layout/activity_stopregisteration.xml" value="0.25" />
         <entry key="..\:/Users/LENOVO/AndroidStudioProjects/CivilFamilyIITism/app/src/main/res/layout/activity_studentlistviewer.xml" value="0.1480978260869565" />
         <entry key="..\:/Users/LENOVO/AndroidStudioProjects/CivilFamilyIITism/app/src/main/res/layout/classrequestrow.xml" value="0.33" />
+        <entry key="..\:/Users/LENOVO/AndroidStudioProjects/CivilFamilyIITism/app/src/main/res/layout/fragment_asce_facebook.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/LENOVO/AndroidStudioProjects/CivilFamilyIITism/app/src/main/res/layout/fragment_ascefragment1.xml" value="0.22" />
+        <entry key="..\:/Users/LENOVO/AndroidStudioProjects/CivilFamilyIITism/app/src/main/res/layout/fragment_insta_page.xml" value="0.33" />
+        <entry key="..\:/Users/LENOVO/AndroidStudioProjects/CivilFamilyIITism/app/src/main/res/layout/fragment_linkedin.xml" value="0.14356884057971014" />
         <entry key="..\:/Users/LENOVO/AndroidStudioProjects/CivilFamilyIITism/app/src/main/res/layout/main_activity.xml" value="0.1503623188405797" />
         <entry key="..\:/Users/LENOVO/AndroidStudioProjects/CivilFamilyIITism/app/src/main/res/menu/itemsforproffsidestudentlist.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/LENOVO/AndroidStudioProjects/CivilFamilyIITism/app/src/main/res/menu/noticemenu.xml" value="0.20416666666666666" />
