@@ -1,12 +1,12 @@
 package com.example.civilfamilyiitism;
 
 public class studentinfo {
-    private String username,email,phone , password,uid,year,designation;
+    private String username,email,phone , password,uid,year,designation , imgurl;
 
     public studentinfo() {
     }
 
-    public studentinfo(String username, String email, String phone, String password,String uid,String year,String designation) {
+    public studentinfo(String username, String email, String phone, String password,String uid,String year,String designation , String imgurl) {
         this.username = username;
         this.email = email;
         this.phone = phone;
@@ -14,6 +14,15 @@ public class studentinfo {
         this.uid = uid;
         this.year = year;
         this.designation = designation;
+        this.imgurl = imgurl;
+    }
+
+    public String getImgurl() {
+        return imgurl;
+    }
+
+    public void setImgurl(String imgurl) {
+        this.imgurl = imgurl;
     }
 
     public String getDesignation() {

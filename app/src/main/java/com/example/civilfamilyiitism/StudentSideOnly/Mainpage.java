@@ -23,6 +23,7 @@ import com.example.civilfamilyiitism.Adapters.ProfessorRecyclerViewAdapter;
 import com.example.civilfamilyiitism.EditMyProfilePage;
 import com.example.civilfamilyiitism.MainActivity;
 import com.example.civilfamilyiitism.NoticePages.Noticepagestudent;
+import com.example.civilfamilyiitism.ProfessorSideOnly.Professormainpage;
 import com.example.civilfamilyiitism.Professorslistview;
 import com.example.civilfamilyiitism.R;
 import com.example.civilfamilyiitism.Settingpage;
@@ -33,6 +34,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
@@ -53,7 +55,7 @@ public class Mainpage extends AppCompatActivity {
     ImageView userimage;
     TextView name , seeall;
     ImageView barprofile ,barsearch,barsetting;
-
+    studentinfo info;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,7 +107,7 @@ public class Mainpage extends AppCompatActivity {
                             .addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-
+                                    info = snapshot.getValue(studentinfo.class);
                                     name.setText("Welcome! " + snapshot.child("username").getValue(String.class).toUpperCase());
 
                                     year = snapshot.child("year").getValue(String.class);
@@ -120,6 +122,35 @@ public class Mainpage extends AppCompatActivity {
                                         check2 = "fourth";
                                     } else {
                                         //   Toast.makeText(Noticepagestudent.this, "Sorry!We are unable to find your account", Toast.LENGTH_SHORT).show();
+                                    }
+
+                                    if(info.getImgurl()!=null && !((info.getImgurl()).isEmpty())){
+                                        Glide
+                                                .with(getApplicationContext())
+                                                .load(info.getImgurl())
+                                                .centerCrop()
+                                                .into(userimage);
+                                    }
+                                    else{
+                                        try {
+                                            FirebaseStorage.getInstance().getReference().child("images")
+                                                    .child(myuid)
+                                                    .getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                                @Override
+                                                public void onSuccess(Uri uri) {
+                                                    if(uri!=null){
+                                                        Glide
+                                                                .with(getApplicationContext())
+                                                                .load(uri.toString())
+                                                                .centerCrop()
+                                                                .into(userimage);
+                                                    }
+                                                }
+                                            });
+
+                                        } catch (Exception e) {
+                                            Toast.makeText(Mainpage.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
                                     }
                                 }
 
@@ -136,31 +167,6 @@ public class Mainpage extends AppCompatActivity {
             }
         };
         threadtwo.start();
-
-        Thread threadthree = new Thread(){
-            public void run(){
-                try {
-                    FirebaseStorage.getInstance().getReference().child("images")
-                            .child(myuid)
-                            .getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
-                            if(uri!=null){
-                                Glide
-                                        .with(getApplicationContext())
-                                        .load(uri.toString())
-                                        .centerCrop()
-                                        .into(userimage);
-                            }
-                        }
-                    });
-
-                } catch (Exception e) {
-                    Toast.makeText(Mainpage.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }
-        };
-        threadthree.start();
 
         
         userimage.setOnClickListener(new View.OnClickListener() {
@@ -344,11 +350,36 @@ public class Mainpage extends AppCompatActivity {
                                         .addOnSuccessListener(new OnSuccessListener<Uri>() {
                                             @Override
                                             public void onSuccess(Uri uri) {
-                                                Glide
-                                                        .with(getApplicationContext())
-                                                        .load(uri.toString())
-                                                        .centerCrop()
-                                                        .into(userimage);
+                                                DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+
+                                                try{
+                                                    reference.child("UserInfoWithUid")
+                                                            .child(myuid)
+                                                            .addListenerForSingleValueEvent(new ValueEventListener() {
+                                                                @Override
+                                                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                                    info = snapshot.getValue(studentinfo.class);
+                                                                    name.setText("Welcome! "+info.getUsername().toUpperCase());
+                                                                    reference.child(info.getYear()).child(myuid).child("imgurl").setValue(uri.toString());
+                                                                    reference.child("UserInfoWithUid").child(myuid).child("imgurl").setValue(uri.toString());
+                                                                    reference.child("UserInfo").child(info.getPhone()).child("imgurl").setValue(uri.toString());
+
+                                                                    Glide
+                                                                            .with(getApplicationContext())
+                                                                            .load(uri.toString())
+                                                                            .centerCrop()
+                                                                            .into(userimage);
+                                                                }
+
+                                                                @Override
+                                                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                                                }
+                                                            });
+                                                }
+                                                catch (Exception e){
+                                                    Toast.makeText(Mainpage.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                }
                                             }
                                         });
 

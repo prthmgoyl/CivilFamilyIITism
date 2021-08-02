@@ -37,31 +37,45 @@ public class blocklistadapter extends FirebaseRecyclerAdapter<studentinfo,blockl
         holder.txv2.setText(model.getEmail());
         holder.txv3.setText(model.getPhone());
 
+        Glide
+                .with(mContext)
+                .load(R.drawable.ic_baseline_fingerprint_24_2)
+                .centerCrop()
+                .into(holder.img);
         try {
-
-            Glide
-                    .with(mContext)
-                    .load(R.drawable.ic_baseline_fingerprint_24_2)
-                    .centerCrop()
-                    .into(holder.img);
-
-            FirebaseStorage.getInstance().getReference().child("images")
-                    .child(model.getUid())
-                    .getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                @Override
-                public void onSuccess(Uri uri) {
-                    if(uri!=null){
-                        Glide
-                                .with(mContext)
-                                .load(uri.toString())
-                                .centerCrop()
-                                .into(holder.img);
-                    }
+            if(model.getImgurl()!=null && !((model.getImgurl()).isEmpty())){
+                Glide
+                        .with(mContext)
+                        .load(model.getImgurl())
+                        .centerCrop()
+                        .into(holder.img);
+            }else{
+                try{
+                    FirebaseStorage.getInstance().getReference().child("images")
+                            .child(model.getUid())
+                            .getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            if(uri!=null){
+                                Glide
+                                        .with(mContext)
+                                        .load(uri.toString())
+                                        .centerCrop()
+                                        .into(holder.img);
+                            }
+                        }
+                    });
                 }
-            });
+                catch (Exception ee){
+
+                }
+            }
 
         } catch (Exception e) {
+
         }
+
+
         holder.img.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {

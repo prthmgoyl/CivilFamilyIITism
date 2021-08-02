@@ -35,6 +35,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -51,6 +52,7 @@ public class Professormainpage extends AppCompatActivity {
     RecyclerView rcv;
     ProfessorRecyclerViewAdapter adapter;
     ImageView barprofile ,barsearch,barsetting;
+    studentinfo info;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,8 +110,37 @@ public class Professormainpage extends AppCompatActivity {
                            .addListenerForSingleValueEvent(new ValueEventListener() {
                                @Override
                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                   studentinfo info = snapshot.getValue(studentinfo.class);
+                                   info = snapshot.getValue(studentinfo.class);
                                    name.setText("Welcome! "+info.getUsername().toUpperCase());
+
+                                   if(info.getImgurl()!=null && !((info.getImgurl()).isEmpty())){
+                                       Glide
+                                               .with(getApplicationContext())
+                                               .load(info.getImgurl())
+                                               .centerCrop()
+                                               .into(userimage);
+                                   }
+                                   else{
+                                       try {
+                                           FirebaseStorage.getInstance().getReference().child("images")
+                                                   .child(uid)
+                                                   .getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                               @Override
+                                               public void onSuccess(Uri uri) {
+                                                   if(uri!=null){
+                                                       Glide
+                                                               .with(getApplicationContext())
+                                                               .load(uri.toString())
+                                                               .centerCrop()
+                                                               .into(userimage);
+                                                   }
+                                               }
+                                           });
+
+                                       } catch (Exception e) {
+                                           Toast.makeText(Professormainpage.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                       }
+                                   }
                                }
 
                                @Override
@@ -124,34 +155,6 @@ public class Professormainpage extends AppCompatActivity {
            }
        };
        threadtwo.start();
-
-       Thread threadthree = new Thread(){
-           public void run(){
-               try {
-                   FirebaseStorage.getInstance().getReference().child("images")
-                           .child(uid)
-                           .getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                       @Override
-                       public void onSuccess(Uri uri) {
-                           if(uri!=null){
-                               Glide
-                                       .with(getApplicationContext())
-                                       .load(uri.toString())
-                                       .centerCrop()
-                                       .into(userimage);
-                           }
-                       }
-                   });
-
-               } catch (Exception e) {
-                   Toast.makeText(Professormainpage.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-               }
-           }
-       };
-       threadthree.start();
-
-
-
 
 
         userimage.setOnClickListener(new View.OnClickListener() {
@@ -340,11 +343,36 @@ public class Professormainpage extends AppCompatActivity {
                                         .addOnSuccessListener(new OnSuccessListener<Uri>() {
                                             @Override
                                             public void onSuccess(Uri uri) {
-                                                Glide
-                                                        .with(getApplicationContext())
-                                                        .load(uri.toString())
-                                                        .centerCrop()
-                                                        .into(userimage);
+                                                DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+
+                                                try{
+                                                    reference.child("UserInfoWithUid")
+                                                            .child(uid)
+                                                            .addListenerForSingleValueEvent(new ValueEventListener() {
+                                                                @Override
+                                                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                                    info = snapshot.getValue(studentinfo.class);
+                                                                    name.setText("Welcome! "+info.getUsername().toUpperCase());
+                                                                    reference.child("zero").child(uid).child("imgurl").setValue(uri.toString());
+                                                                    reference.child("UserInfoWithUid").child(uid).child("imgurl").setValue(uri.toString());
+                                                                    reference.child("UserInfo").child(info.getPhone()).child("imgurl").setValue(uri.toString());
+
+                                                                    Glide
+                                                                            .with(getApplicationContext())
+                                                                            .load(uri.toString())
+                                                                            .centerCrop()
+                                                                            .into(userimage);
+                                                                }
+
+                                                                @Override
+                                                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                                                }
+                                                            });
+                                                }
+                                                catch (Exception e){
+                                                    Toast.makeText(Professormainpage.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                }
                                             }
                                         });
 

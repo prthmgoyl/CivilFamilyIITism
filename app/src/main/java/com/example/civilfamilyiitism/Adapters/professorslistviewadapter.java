@@ -36,31 +36,43 @@ public class professorslistviewadapter extends FirebaseRecyclerAdapter<studentin
         holder.txv3.setText(model.getPhone());
         holder.txv4.setText(model.getEmail());
 
-        try {
-
             Glide
                     .with(mContext)
                     .load(R.drawable.ic_baseline_fingerprint_24_2)
                     .centerCrop()
                     .into(holder.img);
+            try {
+                if(model.getImgurl()!=null && !((model.getImgurl()).isEmpty())){
+                    Glide
+                            .with(mContext)
+                            .load(model.getImgurl())
+                            .centerCrop()
+                            .into(holder.img);
+                }else{
+                    try{
+                        FirebaseStorage.getInstance().getReference().child("images")
+                                .child(model.getUid())
+                                .getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                if(uri!=null){
+                                    Glide
+                                            .with(mContext)
+                                            .load(uri.toString())
+                                            .centerCrop()
+                                            .into(holder.img);
+                                }
+                            }
+                        });
+                    }
+                    catch (Exception ee){
 
-            FirebaseStorage.getInstance().getReference().child("images")
-                    .child(model.getUid())
-                    .getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                @Override
-                public void onSuccess(Uri uri) {
-                    if(uri!=null){
-                        Glide
-                                .with(mContext)
-                                .load(uri.toString())
-                                .centerCrop()
-                                .into(holder.img);
                     }
                 }
-            });
 
-        } catch (Exception e) {
-        }
+            } catch (Exception e) {
+
+            }
         holder.call.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

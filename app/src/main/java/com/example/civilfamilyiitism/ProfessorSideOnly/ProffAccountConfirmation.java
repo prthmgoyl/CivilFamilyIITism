@@ -109,7 +109,7 @@ public class ProffAccountConfirmation extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful()){
                         uid = FirebaseAuth.getInstance().getUid();
-                        studentinfo student = new studentinfo(username,email,phone,password,uid,year,designation);
+                        studentinfo student = new studentinfo(username,email,phone,password,uid,year,designation,null);
                         reference.child("UserInfo").child(phone).setValue(student).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {

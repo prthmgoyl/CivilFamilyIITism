@@ -133,7 +133,7 @@ public class ProfessorAddStudent extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             uid = FirebaseAuth.getInstance().getUid();
-                            studentinfo student = new studentinfo(username1,email1,phone1,password1,uid,year,designation);
+                            studentinfo student = new studentinfo(username1,email1,phone1,password1,uid,year,designation ,null);
                             reference.child("UserInfo").child(phone1).setValue(student).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
