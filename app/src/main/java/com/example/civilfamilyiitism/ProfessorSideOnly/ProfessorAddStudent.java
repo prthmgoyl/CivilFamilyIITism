@@ -3,6 +3,7 @@ package com.example.civilfamilyiitism.ProfessorSideOnly;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -52,31 +53,39 @@ public class ProfessorAddStudent extends AppCompatActivity {
 
         reference = FirebaseDatabase.getInstance().getReference();
 
+        try {
+            profuid = FirebaseAuth.getInstance().getUid();
+            reference.child("UserInfoWithUid").child(profuid)
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            email12 = snapshot.child("email").getValue(String.class);
+                            password12 = snapshot.child("password").getValue(String.class);
+
+                            // Toast.makeText(ProfessorAddStudent.this, "Added Successfully!", Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            Toast.makeText(ProfessorAddStudent.this, "Error!", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(ProfessorAddStudent.this, Professormainpage.class));
+                            finish();
+                        }
+                    });
+        }
+        catch (Exception e){
+            Toast.makeText(ProfessorAddStudent.this, "Error!", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(ProfessorAddStudent.this, Professormainpage.class));
+            finish();
+        }
+
+
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                profuid = FirebaseAuth.getInstance().getUid();
+
                 FirebaseAuth.getInstance().signOut();
                 createUser();
-                FirebaseAuth.getInstance().signOut();
-                studentinfo studentinfo = new studentinfo();
-                reference.child("UserInfoWithUid").child(profuid)
-                        .addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                email12 = snapshot.child("email").getValue(String.class);
-                                password12 = snapshot.child("password").getValue(String.class);
-
-                                FirebaseAuth.getInstance().signInWithEmailAndPassword(email12,password12);
-                                Toast.makeText(ProfessorAddStudent.this, "Added Successfully!", Toast.LENGTH_SHORT).show();
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-                                Toast.makeText(ProfessorAddStudent.this, "Error!", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-
             }
         });
 
@@ -132,22 +141,24 @@ public class ProfessorAddStudent extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
+                            try{
                             uid = FirebaseAuth.getInstance().getUid();
                             studentinfo student = new studentinfo(username1,email1,phone1,password1,uid,year,designation ,null);
-                            reference.child("UserInfo").child(phone1).setValue(student).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if(task.isSuccessful()){
-                                        reference.child(year).child(uid).setValue(student);
-                                        reference.child("UserInfoWithUid").child(uid).setValue(student);
-                                        Toast.makeText(ProfessorAddStudent.this, "Registeration Successful!", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
-
-
+                            reference.child("UserInfo").child(phone1).setValue(student);
+                            reference.child(year).child(uid).setValue(student);
+                            reference.child("UserInfoWithUid").child(uid).setValue(student);
+                            FirebaseAuth.getInstance().signOut();
+                            FirebaseAuth.getInstance().signInWithEmailAndPassword(email12,password12);
+                            Toast.makeText(ProfessorAddStudent.this, "Registeration Successful!", Toast.LENGTH_SHORT).show();
+                            }catch (Exception e){
+                                FirebaseAuth.getInstance().signOut();
+                                FirebaseAuth.getInstance().signInWithEmailAndPassword(email12,password12);
+                                Toast.makeText(ProfessorAddStudent.this, "OOps! Failed", Toast.LENGTH_SHORT).show();
+                            }
                         }
                         else{
+                            FirebaseAuth.getInstance().signOut();
+                            FirebaseAuth.getInstance().signInWithEmailAndPassword(email12,password12);
                             Toast.makeText(ProfessorAddStudent.this, "OOps! Try Again Later", Toast.LENGTH_SHORT).show();
                         }
                     }
