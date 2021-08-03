@@ -112,7 +112,27 @@ public class RecyclerViewAdapter extends FirebaseRecyclerAdapter<studentinfo,Rec
                 txv3.setText(model.getDesignation());
                 txv4.setText(model.getEmail());
                 txv5.setText(model.getPhone());
-                txv6.setText(model.getYear());
+                String year = model.getYear();
+                if(year.equalsIgnoreCase("zero")){
+                    txv6.setText(model.getDesignation().toUpperCase());
+                }
+                else if(year.equalsIgnoreCase("first")){
+                    txv6.setText("First Year");
+                }
+                else if(year.equalsIgnoreCase("second")){
+                    txv6.setText("Second Year");
+                }
+                else if(year.equalsIgnoreCase("third")){
+                    txv6.setText("Third Year");
+                }
+                else if(year.equalsIgnoreCase("fourth")){
+                    txv6.setText("Fourth Year");
+                }
+                else{
+                    txv6.setText(year);
+                }
+
+
                 try{
                     FirebaseStorage.getInstance().getReference().child("images")
                             .child(model.getUid())

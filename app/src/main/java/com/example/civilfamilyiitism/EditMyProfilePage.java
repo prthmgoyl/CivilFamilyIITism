@@ -6,13 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -87,31 +86,39 @@ public class EditMyProfilePage extends AppCompatActivity {
                 }
 
 
+                Glide
+                        .with(getApplicationContext())
+                        .load(R.drawable.ic_baseline_person_24_userimage)
+                        .centerCrop()
+                        .into(userimage);
 
-                try {
+                if(info.getImgurl()!=null && !((info.getImgurl()).isEmpty())){
                     Glide
                             .with(getApplicationContext())
-                            .load(R.drawable.ic_baseline_person_24_userimage)
+                            .load(info.getImgurl())
                             .centerCrop()
                             .into(userimage);
-
-                    FirebaseStorage.getInstance().getReference().child("images")
-                            .child(uid)
-                            .getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
-                            if(uri!=null){
-                                Glide
-                                        .with(getApplicationContext())
-                                        .load(uri.toString())
-                                        .centerCrop()
-                                        .into(userimage);
+                }
+                else{
+                    try {
+                        FirebaseStorage.getInstance().getReference().child("images")
+                                .child(uid)
+                                .getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                if(uri!=null){
+                                    Glide
+                                            .with(getApplicationContext())
+                                            .load(uri.toString())
+                                            .centerCrop()
+                                            .into(userimage);
+                                }
                             }
-                        }
-                    });
+                        });
 
-                } catch (Exception e) {
-                    Toast.makeText(EditMyProfilePage.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    } catch (Exception e) {
+                        Toast.makeText(EditMyProfilePage.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 

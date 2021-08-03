@@ -65,7 +65,7 @@
         <activity
             android:name=".StudentSideOnly.Friendslistviewer"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
-        <activity android:name=".ProfessorSideOnly.Ascepage" />
+        <activity android:name=".ProfessorSideOnly.Ascepage" android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"/>
         <activity android:name=".ProfessorSideOnly.UploadPdfpage" />
         <activity
             android:name=".ProfessorSideOnly.Studentlistviewer"

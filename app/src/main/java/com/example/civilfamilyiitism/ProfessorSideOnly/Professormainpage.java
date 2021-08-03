@@ -259,7 +259,7 @@ public class Professormainpage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(Professormainpage.this, "ASCE PAGE!", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(Professormainpage.this, AscepageStudentSide.class));
+                startActivity(new Intent(Professormainpage.this, Ascepage.class));
             }
         });
         img8.setOnClickListener(new View.OnClickListener() {

@@ -38,7 +38,27 @@ public class RecyclerViewAdapterone extends FirebaseRecyclerAdapter<studentinfo,
     protected void onBindViewHolder(@NonNull final holder holder, final int position, @NonNull studentinfo model) {
         holder.txv1.setText(model.getUsername());
         holder.txv2.setText(model.getDesignation());
-        holder.txv3.setText(model.getYear());
+
+        String year = model.getYear();
+        if(year.equalsIgnoreCase("zero")){
+            holder.txv3.setText(model.getDesignation().toUpperCase());
+        }
+        else if(year.equalsIgnoreCase("first")){
+            holder.txv3.setText("First Year");
+        }
+        else if(year.equalsIgnoreCase("second")){
+            holder.txv3.setText("Second Year");
+        }
+        else if(year.equalsIgnoreCase("third")){
+            holder.txv3.setText("Third Year");
+        }
+        else if(year.equalsIgnoreCase("fourth")){
+            holder.txv3.setText("Fourth Year");
+        }
+        else{
+            holder.txv3.setText(year);
+        }
+
         Glide
                 .with(mContext)
                 .load(R.drawable.ic_baseline_fingerprint_24)
@@ -98,7 +118,28 @@ public class RecyclerViewAdapterone extends FirebaseRecyclerAdapter<studentinfo,
                 txv3.setText(model.getDesignation());
                 txv4.setText(model.getEmail());
                 txv5.setText(model.getPhone());
-                txv6.setText(model.getYear());
+
+                String year = model.getYear();
+                if(year.equalsIgnoreCase("zero")){
+                    txv6.setText(model.getDesignation().toUpperCase());
+                }
+                else if(year.equalsIgnoreCase("first")){
+                    txv6.setText("First Year");
+                }
+                else if(year.equalsIgnoreCase("second")){
+                    txv6.setText("Second Year");
+                }
+                else if(year.equalsIgnoreCase("third")){
+                    txv6.setText("Third Year");
+                }
+                else if(year.equalsIgnoreCase("fourth")){
+                    txv6.setText("Fourth Year");
+                }
+                else{
+                    txv6.setText(year);
+                }
+
+
                 try{
                     FirebaseStorage.getInstance().getReference().child("images")
                             .child(model.getUid())

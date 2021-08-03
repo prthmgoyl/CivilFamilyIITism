@@ -1,12 +1,15 @@
 package com.example.civilfamilyiitism;
 
 import android.os.Bundle;
+
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.Toast;
+import android.widget.ImageButton;
+import android.widget.SearchView;
 
 public class Ascefragment1 extends Fragment {
 
@@ -58,6 +61,36 @@ public class Ascefragment1 extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view =inflater.inflate(R.layout.fragment_ascefragment1, container, false);
+        SearchView srch = (SearchView)view.findViewById(R.id.searchView4);
+        ImageButton cross= (ImageButton)view.findViewById(R.id.imageButton7);
+        CardView card = (CardView)view.findViewById(R.id.cardView3);
+
+
+        srch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                cross.setVisibility(View.VISIBLE);
+                card.setVisibility(View.VISIBLE);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                cross.setVisibility(View.VISIBLE);
+                card.setVisibility(View.VISIBLE);
+                return true;
+            }
+        });
+
+        cross.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cross.setVisibility(View.VISIBLE);
+                card.setVisibility(View.VISIBLE);
+                srch.setQuery(null,false);
+            }
+        });
+
 
         return view;
     }

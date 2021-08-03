@@ -23,8 +23,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 
-import java.util.HashMap;
-
 public class MyPersonalInformation extends AppCompatActivity {
     Switch visibleswitch;
     TextView name;
