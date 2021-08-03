@@ -62,32 +62,31 @@ public class Ascefragment1 extends Fragment {
         // Inflate the layout for this fragment
         view =inflater.inflate(R.layout.fragment_ascefragment1, container, false);
         SearchView srch = (SearchView)view.findViewById(R.id.searchView4);
-        ImageButton cross= (ImageButton)view.findViewById(R.id.imageButton7);
         CardView card = (CardView)view.findViewById(R.id.cardView3);
 
 
         srch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                cross.setVisibility(View.VISIBLE);
-                card.setVisibility(View.VISIBLE);
+                if(query.isEmpty()){
+                    card.setVisibility(View.INVISIBLE);
+                }
+                else{
+                    card.setVisibility(View.INVISIBLE);
+                }
+
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                cross.setVisibility(View.VISIBLE);
-                card.setVisibility(View.VISIBLE);
+                if(newText.isEmpty()){
+                    card.setVisibility(View.INVISIBLE);
+                }
+                else{
+                    card.setVisibility(View.VISIBLE);
+                }
                 return true;
-            }
-        });
-
-        cross.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cross.setVisibility(View.VISIBLE);
-                card.setVisibility(View.VISIBLE);
-                srch.setQuery(null,false);
             }
         });
 

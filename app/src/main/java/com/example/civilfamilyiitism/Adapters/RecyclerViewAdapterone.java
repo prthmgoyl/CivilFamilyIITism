@@ -41,7 +41,7 @@ public class RecyclerViewAdapterone extends FirebaseRecyclerAdapter<studentinfo,
 
         String year = model.getYear();
         if(year.equalsIgnoreCase("zero")){
-            holder.txv3.setText(model.getDesignation().toUpperCase());
+            holder.txv3.setText("Professor");
         }
         else if(year.equalsIgnoreCase("first")){
             holder.txv3.setText("First Year");
@@ -121,7 +121,7 @@ public class RecyclerViewAdapterone extends FirebaseRecyclerAdapter<studentinfo,
 
                 String year = model.getYear();
                 if(year.equalsIgnoreCase("zero")){
-                    txv6.setText(model.getDesignation().toUpperCase());
+                    txv6.setText("Professor");
                 }
                 else if(year.equalsIgnoreCase("first")){
                     txv6.setText("First Year");
@@ -140,24 +140,38 @@ public class RecyclerViewAdapterone extends FirebaseRecyclerAdapter<studentinfo,
                 }
 
 
-                try{
-                    FirebaseStorage.getInstance().getReference().child("images")
-                            .child(model.getUid())
-                            .getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
-                            if(uri!=null){
-                                Glide
-                                        .with(mContext)
-                                        .load(uri.toString())
-                                        .centerCrop()
-                                        .into(image);
-                            }
+                try {
+                    if(model.getImgurl()!=null && !((model.getImgurl()).isEmpty())){
+                        Glide
+                                .with(mContext)
+                                .load(model.getImgurl())
+                                .centerCrop()
+                                .into(image);
+                    }
+                    else{
+                        try{
+                            FirebaseStorage.getInstance().getReference().child("images")
+                                    .child(model.getUid())
+                                    .getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    if(uri!=null){
+                                        Glide
+                                                .with(mContext)
+                                                .load(uri.toString())
+                                                .centerCrop()
+                                                .into(image);
+                                    }
+                                }
+                            });
+                        }catch (Exception e){
+
                         }
-                    });
-                }catch (Exception e){
+                    }
+                }catch (Exception ee){
 
                 }
+
                 try{
                     FirebaseDatabase.getInstance().getReference()
                             .child("personalinfo").child(model.getUid())
