@@ -25,6 +25,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -39,6 +40,7 @@ public class EditMyProfilePage extends AppCompatActivity {
     ImageView userimage;
     studentinfo info;
     String check;
+    DatabaseReference reference;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,9 +54,10 @@ public class EditMyProfilePage extends AppCompatActivity {
         year = (TextView)findViewById(R.id.textView25);
         updatebtn = (Button)findViewById(R.id.button20);
         userimage = (ImageView)findViewById(R.id.imageView32);
+        reference = FirebaseDatabase.getInstance().getReference();
 
 
-        FirebaseDatabase.getInstance().getReference().child("UserInfoWithUid")
+        reference.child("UserInfoWithUid")
                 .child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -131,7 +134,7 @@ public class EditMyProfilePage extends AppCompatActivity {
         year.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseDatabase.getInstance().getReference()
+                reference
                         .child("permissions").child("Changeclass").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
@@ -192,13 +195,13 @@ public class EditMyProfilePage extends AppCompatActivity {
                         info.setUsername(username.getText().toString());
                         info.setPhone(phoneno.getText().toString());
 
-                        FirebaseDatabase.getInstance().getReference()
+                        reference
                                 .child("UserInfoWithUid").child(uid).setValue(info);
-                        FirebaseDatabase.getInstance().getReference()
+                        reference
                                 .child("UserInfo").child(number).removeValue();
-                        FirebaseDatabase.getInstance().getReference()
+                        reference
                                 .child("UserInfo").child(info.getPhone()).setValue(info);
-                        FirebaseDatabase.getInstance().getReference()
+                        reference
                                 .child(info.getYear()).child(info.getUid()).setValue(info);
                         Toast.makeText(EditMyProfilePage.this, "Updated Successfully!", Toast.LENGTH_SHORT).show();
                         number = phoneno.getText().toString();
@@ -220,9 +223,9 @@ public class EditMyProfilePage extends AppCompatActivity {
     private void sendrequest(String changedclass) {
         try{
 
-            FirebaseDatabase.getInstance().getReference()
+            reference
                     .child("ChangeClassRequests").child(uid).setValue(info);
-            FirebaseDatabase.getInstance().getReference()
+            reference
                     .child("ChangeClassRequests").child(uid).child("changeto").setValue(changedclass);
         }
         catch (Exception e){

@@ -30,6 +30,7 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -251,41 +252,34 @@ public class RecyclerViewAdapter extends FirebaseRecyclerAdapter<studentinfo,Rec
                                 submit.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                        Map<String, Object> map = new HashMap<>();
-                                        map.put("username", name.getText().toString());
-                                        map.put("phone", phone.getText().toString());
-                                        map.put("password", model.getPassword().toString());
-                                        map.put("uid", model.getUid().toString());
-                                        map.put("year", model.getYear().toString());
-                                        map.put("email", model.getEmail().toString());
 
-                                        FirebaseDatabase.getInstance().getReference().child(model.getYear().toString())
-                                                .child(getRef(position).getKey()).updateChildren(map)
-                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                    @Override
-                                                    public void onSuccess(Void unused) {
+                                       FirebaseDatabase.getInstance().getReference()
+                                               .child("UserInfoWithUid").child(model.getUid())
+                                               .addListenerForSingleValueEvent(new ValueEventListener() {
+                                                   @Override
+                                                   public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                       studentinfo info = snapshot.getValue(studentinfo.class);
+                                                       DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
 
-                                                        FirebaseDatabase.getInstance().getReference()
-                                                                .child("UserInfo").child(model.getPhone().toString()).removeValue()
-                                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                                    @Override
-                                                                    public void onSuccess(Void unused) {
-                                                                        FirebaseDatabase.getInstance().getReference()
-                                                                                .child("UserInfo").child(phone.getText().toString()).setValue(map)
-                                                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                                                    @Override
-                                                                                    public void onSuccess(Void unused) {
-                                                                                        FirebaseDatabase.getInstance().getReference()
-                                                                                                .child("UserInfoWithUid").child(model.getUid().toString()).updateChildren(map);
+                                                       info.setUsername(name.getText().toString());
+                                                       info.setPhone(phone.getText().toString());
 
-                                                                                        dialogPlus.dismiss();
-                                                                                    }
-                                                                                });
-                                                                    }
-                                                                });
+                                                       reference.child("UserInfoWithUid").child(model.getUid())
+                                                               .setValue(info);
+                                                       reference.child("UserInfo").child(model.getPhone())
+                                                               .removeValue();
+                                                       reference.child("UserInfo").child(phone.getText().toString())
+                                                               .setValue(info);
+                                                       reference.child(model.getYear()).child(model.getUid())
+                                                               .setValue(info);
+                                                       dialogPlus.dismiss();
+                                                   }
 
-                                                    }
-                                                });
+                                                   @Override
+                                                   public void onCancelled(@NonNull DatabaseError error) {
+
+                                                   }
+                                               });
                                     }
                                 });
                                 //  dialogPlus.show();

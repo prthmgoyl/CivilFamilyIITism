@@ -4,12 +4,21 @@ import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.SearchView;
+
+import com.example.civilfamilyiitism.Adapters.RecyclerViewAdapter;
+import com.example.civilfamilyiitism.Adapters.asceteamadapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class Ascefragment1 extends Fragment {
 
@@ -63,6 +72,7 @@ public class Ascefragment1 extends Fragment {
         view =inflater.inflate(R.layout.fragment_ascefragment1, container, false);
         SearchView srch = (SearchView)view.findViewById(R.id.searchView4);
         CardView card = (CardView)view.findViewById(R.id.cardView3);
+        RecyclerView rcv = (RecyclerView)view.findViewById(R.id.rcv);
 
 
         srch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -70,13 +80,30 @@ public class Ascefragment1 extends Fragment {
             public boolean onQueryTextSubmit(String query) {
                 if(query.isEmpty()){
                     card.setVisibility(View.INVISIBLE);
+
                 }
                 else{
-                    card.setVisibility(View.INVISIBLE);
+                    card.setVisibility(View.VISIBLE);
+                    search(query);
                 }
 
                 return true;
             }
+
+            private void search(String s) {
+                asceteamadapter adapter;
+                rcv.setLayoutManager(new LinearLayoutManager(getActivity()));
+                FirebaseRecyclerOptions<studentinfo> options =
+                        new FirebaseRecyclerOptions.Builder<studentinfo>()
+                                .setQuery(FirebaseDatabase.getInstance().getReference().child("UserInfoWithUid").orderByChild("username").startAt(s).endAt(s + "\uf8ff"), studentinfo.class)
+                                .build();
+
+                adapter = new asceteamadapter(options);
+                rcv.setAdapter(adapter);
+                adapter.startListening();
+            }
+
+
 
             @Override
             public boolean onQueryTextChange(String newText) {
@@ -85,6 +112,7 @@ public class Ascefragment1 extends Fragment {
                 }
                 else{
                     card.setVisibility(View.VISIBLE);
+                    search(newText);
                 }
                 return true;
             }
